@@ -42,7 +42,7 @@ async function loadKMPFCMD(client: any) {
         });
     }
     const embebedMSG: Array<{name: any; value: any}> = new Array(0);
-    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: '-'}); }
+    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: ''}); }
     client.channels.get('614258469066768424').send({ embed: { author: '_**JUEGOS**_', fields: embebedMSG }}).then((sendEmbed: any) => {
         for(let r_ of MSG_.juegos) { sendEmbed.react(r_.EID); }
     });
