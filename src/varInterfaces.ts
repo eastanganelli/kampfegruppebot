@@ -1,0 +1,1 @@
+export interface uProfile { nombre: string; birth: any; joinAt: any; lastCon: any }
