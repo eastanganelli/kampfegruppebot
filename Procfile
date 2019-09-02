@@ -1,1 +1,2 @@
-web: npm install && node .
+web: npm install
+worker: node .
