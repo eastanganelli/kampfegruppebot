@@ -36,3 +36,16 @@ function sinRango(guildMember: any, roles: any) {
         if(guildMember.roles.has(role_)) { return true; }
     } return false;
 }
+export function quiteRoles(reaction: any, user: any) {
+    const guildMember: any = reaction.message.guild.members.get(user.id);
+    if(reaction.message.channel.id === '614258469066768424' && !user.bot ) {
+        switch(reaction.emoji.name) {
+            case "bf1":  { guildMember.removeRole('614411015236616206'); break; }
+            case "bf4":  { guildMember.removeRole('614411509036089346'); break; }
+            case "bf5":  { guildMember.removeRole('614410633282191371'); break; }
+            case "ets2": { guildMember.removeRole('614556408524046371'); break; }
+            case "gtav": { guildMember.removeRole('614556113798561843'); break; }
+            case "wt":   { guildMember.removeRole('614555777402667008'); break; }
+        }
+    }
+}

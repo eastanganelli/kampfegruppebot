@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import * as MSG_ from "./textos";
 const emojiCTM: Array<{ n: string; id: any }> = [
     { n: 'bf1', id: '613181668672536600' },
     { n: 'bf4', id: '613182924745080862' },
@@ -29,13 +30,21 @@ async function loadKMPFCMD(client: any) {
         messages.forEach((msg: any)  => {
             msg.delete();
         })
-        let lastMessage = messages.first(); 
-        /* if (lastMessage.author.bot && lastMessage.id !== undefined) { 
-            client.channels.get('614258469066768424').messages.get(lastMessage.id).delete(); 
-        } */}).catch(console.error);
-    client.channels.get('614258469066768424').send('_**PERFIL**_\n:new:➽ **CARGAR PERFIL**\n>Nombre, Fecha Nacimiento\n\n:pencil:➽ **EDITAR PERFIL** _(DESHABILITADO)_\n>Modificar los datos ya cargados').then((sendEmbed: any) => { sendEmbed.react("🆕"); sendEmbed.react("📝"); });
-    client.channels.get('614258469066768424').send(`_**JUEGOS**_\n${client.emojis.get('613182924745080862')} ➽ **Battlefield 4**\n${client.emojis.get('613181668672536600')} ➽ **Battlefield 1**\n${client.emojis.get('613181661273653291')} ➽ **Battlefield V**\n${client.emojis.get('613182915563618315')} ➽ **Warthunder**\n${client.emojis.get('613182913676050442')} ➽ **Euro Truck Simulator 2**\n${client.emojis.get('617123585701445659')} ➽ **GTA V**`).then((sendEmbed: any) => { 
-        sendEmbed.react("613181668672536600"); sendEmbed.react("613182924745080862"); sendEmbed.react("613181661273653291"); sendEmbed.react("613182913676050442"); sendEmbed.react("617123585701445659"); sendEmbed.react("613182915563618315");
+    let lastMessage = messages.first(); 
+    /* if (lastMessage.author.bot && lastMessage.id !== undefined) { 
+        client.channels.get('614258469066768424').messages.get(lastMessage.id).delete(); 
+    } */}).catch(console.error);
+    for(let txt_ of MSG_.kmpfMSG.kmpfcmd) {
+        client.channels.get('614258469066768424').send(txt_.texto).then((sendEmbed: any) => { 
+            if(txt_.emojis.length > 0) {
+                for(let emoji_ of txt_.emojis) { sendEmbed.react(emoji_); }
+            }
+        });
+    }
+    const embebedMSG: Array<{name: any; value: any}> = new Array(0);
+    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: '-'}); }
+    client.channels.get('614258469066768424').send({ embed: { author: '_**JUEGOS**_', fields: embebedMSG }}).then((sendEmbed: any) => {
+        for(let r_ of MSG_.juegos) { sendEmbed.react(r_.EID); }
     });
 }
 function changeFuhrer(client: any) {

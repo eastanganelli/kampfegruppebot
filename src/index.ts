@@ -132,17 +132,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     console.log(`${user.username} reacted with "${reaction.emoji.name}".`);
 });
 client.on('messageReactionRemove', async (reaction, user) => {
-    const guildMember: any = reaction.message.guild.members.get(user.id);
-    if(reaction.message.channel.id === '614258469066768424' && !user.bot ) {
-        switch(reaction.emoji.name) {
-            case "bf1":  { guildMember.removeRole('614411015236616206'); break; }
-            case "bf4":  { guildMember.removeRole('614411509036089346'); break; }
-            case "bf5":  { guildMember.removeRole('614410633282191371'); break; }
-            case "ets2": { guildMember.removeRole('614556408524046371'); break; }
-            case "gtav": { guildMember.removeRole('614556113798561843'); break; }
-            case "wt":   { guildMember.removeRole('614555777402667008'); break; }
-        }
-    }
+    rolesFN.quiteRoles(reaction, user);
     console.log(`${user.username} removed their "${reaction.emoji.name}" reaction.`); 
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
