@@ -185,7 +185,6 @@ function playSongs(connection: any, nextSong: any, msg_: any, pos: number) {
         }
     });
 }
-
 //#region help code
     //if(!msg.content.startsWith(ConfigFile.config.prefix) + `quien es el más puto?`) { msg.channel.send(`JERE`); }
     //msg.channel.send(`${msg.author.username} just used a command!`);
