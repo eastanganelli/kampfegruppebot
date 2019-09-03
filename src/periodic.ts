@@ -34,6 +34,7 @@ async function loadKMPFCMD(client: any) {
     /* if (lastMessage.author.bot && lastMessage.id !== undefined) { 
         client.channels.get('614258469066768424').messages.get(lastMessage.id).delete(); 
     } */}).catch(console.error);
+    
     for(let txt_ of MSG_.kmpfMSG.kmpfcmd) {
         client.channels.get('614258469066768424').send(txt_.texto).then((sendEmbed: any) => { 
             if(txt_.emojis.length > 0) {
@@ -42,10 +43,8 @@ async function loadKMPFCMD(client: any) {
         });
     }
     const embebedMSG: Array<{name: any; value: any}> = new Array(0);
-    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: ''}); }
-    client.channels.get('614258469066768424').send({ embed: { author: '_**JUEGOS**_', fields: embebedMSG }}).then((sendEmbed: any) => {
-        for(let r_ of MSG_.juegos) { sendEmbed.react(r_.EID); }
-    });
+    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: '-'}); }
+    client.channels.get('614258469066768424').send({ embed: { author: '_**JUEGOS**_', fields: embebedMSG }}).then((sendEmbed: any) => { for(let r_ of MSG_.juegos) { sendEmbed.react(r_.EID); } });
 }
 function changeFuhrer(client: any) {
     firebase.database().ref('/NowLD').on('value', Users => {
