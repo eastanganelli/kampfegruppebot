@@ -10,7 +10,7 @@ export async function FnPeriodic(client: any) {
     changeFuhrer(client);
 }
 async function loadKMPFCMD(client: any) {
-    client.channels.get('614258469066768424').fetchMessages({ limit: 2 }).then((messages: any) => { 
+    client.channels.get('614258469066768424').fetchMessages({ limit: 3 }).then((messages: any) => { 
         messages.forEach((msg: any)  => {
             msg.delete();
         })
@@ -20,15 +20,15 @@ async function loadKMPFCMD(client: any) {
     } */}).catch(console.error);
     //#region kmpfMSG
         for(let t_ of MSG_.kmpfMSG.kmpfcmd) {
-            let embedMSG = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
-            for(let d_ of t_.data) { embedMSG.addField(d_.texto, d_.desc, true); emojiArr.push(d_.emoji); }
-            client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
+            let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+            for(let d_ of t_.data) { embedMSG.addField(d_.texto, d_.desc, false); emojiArr.push(d_.emoji); }
+            client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } embedMSG = null; });
         }
     //#endregion
     //#region gameList{
-        let embedMSG = new Discord.RichEmbed().setTitle('_**JUEGOS**_'), emojiArr: Array<any> = new Array(0);
-        for(let d_ of MSG_.juegos) { embedMSG.addField(client.emojis.get(d_.EID) + ' ➽' + d_.nombre, '', true); emojiArr.push(d_.EID); }
-        client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
+        let embedMSGGame = new Discord.RichEmbed().setTitle('_**JUEGOS**_'), emojiArr: Array<any> = new Array(0);
+        for(let d_ of MSG_.juegos) { embedMSGGame.addField(client.emojis.get(d_.EID) + ' ➽' + d_.nombre, '', false); emojiArr.push(d_.EID); }
+        client.channels.get('614258469066768424').send(embedMSGGame).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
     //#endregion
 }
 function changeFuhrer(client: any) {
