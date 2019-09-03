@@ -17,7 +17,6 @@ export async function CargarPerfil(user: any, reaction: any) {
 			console.log(`${user.tag} began applying.`);
 			applying.push(user.id);
 			await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
-
 			for (let i = 0; i < questions.length && cancel === false; i++) {
 			await user.sendMessage(questions[i].txt);
 			await user.dmChannel.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
@@ -39,12 +38,11 @@ export async function CargarPerfil(user: any, reaction: any) {
 			await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
 			console.log(`${user.tag} finished applying.`);
 		} catch(err) { console.error(err); }
-	} else { user.sendMessage('Su perfil ya existe') } console.log(data_);
+	} console.log(data_);
 }
 
 export async function noLoaded(dID: string) {
     await firebase.database().ref('/Users/').child(dID).on('value', data => {  if(data.val() == null) { return true; } return false; }, (Err: any) => { console.log(Err) });
-    return false;
 }  
 
 async function saveData(data: string, idQ: number, raction_: any, user: any) {

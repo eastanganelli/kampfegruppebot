@@ -4,7 +4,7 @@ export const kmpfMSG = {
     kmpfcmd: [
         {
             titulo: '_**INFORMACIÓN IMPORTANTE**_',
-            desc: 'Si sos un _USUARIO NUEVO_ y no podes participar dentro de ningún _canal de texto o de voz_, debes:',
+            desc: 'Si sos un _USUARIO NUEVO_  y no podes participar dentro de ningún _canal de texto_ o _de voz_, debes:',
             data: [
                 { texto: '**Reacciona a los msj**', desc: 'Haz click en las reaciones para realizar las acciones', emoji: '' },
                 { texto: '**Selecionar juegos**', desc: 'Te hablita los canales ocultos y te signa el role _Invitado_ o _Candidato_', emoji: '' },
