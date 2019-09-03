@@ -10,41 +10,10 @@ const applying: any = [];
 let data_: uProfile = { nombre: '', birth: new Date(), joinAt: 0, lastCon: 0 };
 
 export async function CargarPerfil(user: any, reaction: any) {
-	if(noLoaded(user.id)) {
-		if (applying.includes(user.id)) return; 
-		try {
-			let cancel: boolean = false
-			console.log(`${user.tag} began applying.`);
-			applying.push(user.id);
-			await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
-			for (let i = 0; i < questions.length && cancel === false; i++) {
-			await user.sendMessage(questions[i].txt);
-			await user.dmChannel.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
-				.then((collected: any) => {
-					if (collected.first().content.toLowerCase() === "#cancelar") { //#cancel
-						user.sendMessage(":x: **Carga cancelada!**"); //Application cancelled.
-						applying.splice(applying.indexOf(user.id), 1);
-						cancel = true;
-						console.log(`${user.tag} cancelled their application.`);
-					} else { console.log(collected.first().content); saveData(collected.first().content, i, reaction, user); }
-				}).catch(() => {
-					user.sendMessage(":hourglass: **Se termino el tiempo.**"); //Application timed out.
-					applying.splice(applying.indexOf(user.id), 1);
-					cancel = true;
-					console.log(`${user.tag} let their application time out.`);
-				});
-			}
-			if(!cancel) { firebase.database().ref('/Users/').child(user.id).set(data_); }
-			await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
-			console.log(`${user.tag} finished applying.`);
-		} catch(err) { console.error(err); }
-	} console.log(data_);
+	await firebase.database().ref('/Users/').child(user.id).on('value', data => { 
+		if(data.val() == null) { cargarProfile(reaction, user); }	
+	}, (Err: any) => { console.log(Err) });
 }
-
-export async function noLoaded(dID: string) {
-    await firebase.database().ref('/Users/').child(dID).on('value', data => {  if(data.val() == null) { return true; } return false; }, (Err: any) => { console.log(Err) });
-}  
-
 async function saveData(data: string, idQ: number, raction_: any, user: any) {
 	const guildMember = raction_.message.guild.members.get(user.id);
     switch(idQ) {
@@ -55,6 +24,36 @@ async function saveData(data: string, idQ: number, raction_: any, user: any) {
 			break;
 		}
     }
+}
+async function cargarProfile(reaction: any, user: any) {
+	if (applying.includes(user.id)) return; 
+	try {
+		let cancel: boolean = false
+		console.log(`${user.tag} began applying.`);
+		applying.push(user.id);
+		await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
+		for (let i = 0; i < questions.length && cancel === false; i++) {
+		await user.sendMessage(questions[i].txt);
+		await user.dmChannel.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
+			.then((collected: any) => {
+				if (collected.first().content.toLowerCase() === "#cancelar") { //#cancel
+					user.sendMessage(":x: **Carga cancelada!**"); //Application cancelled.
+					applying.splice(applying.indexOf(user.id), 1);
+					cancel = true;
+					console.log(`${user.tag} cancelled their application.`);
+				} else { console.log(collected.first().content); saveData(collected.first().content, i, reaction, user); }
+			}).catch(() => {
+				user.sendMessage(":hourglass: **Se termino el tiempo.**"); //Application timed out.
+				applying.splice(applying.indexOf(user.id), 1);
+				cancel = true;
+				console.log(`${user.tag} let their application time out.`);
+			});
+		}
+		if(!cancel) { firebase.database().ref('/Users/').child(user.id).set(data_); }
+		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
+		console.log(`${user.tag} finished applying.`);
+	} catch(err) { console.error(err); }
+ 	console.log(data_);
 }
 function isNewMem(guildMember: any, guild: any) {
 	const game_ = ['BF4', 'BF1', 'BFV'];
