@@ -3,11 +3,20 @@ import { uJuego } from "./varInterfaces";
 export const kmpfMSG = {
     kmpfcmd: [
         {
-            texto: '_**INFORMACIÓN IMPORTANTE**_\nSi sos un _USUARIO NUEVO_ y no podes participar dentro de ningún canal de texto, debes\n-> Seleccionar los juegos',
-            emojis: []
-        }, {
-            texto: '_**PERFIL**_\n:new:➽ **CARGAR PERFIL**\n>Nombre, Fecha Nacimiento\n\n:pencil:➽ **EDITAR PERFIL** _(DESHABILITADO)_\n>Modificar los datos ya cargados',
-            emojis: ['🆕', '📝']
+            titulo: '_**INFORMACIÓN IMPORTANTE**_',
+            desc: 'Si sos un _USUARIO NUEVO_ y no podes participar dentro de ningún _canal de texto o de voz_, debes:',
+            data: [
+                { texto: '**Reacciona a los msj**', desc: 'Haz click en las reaciones para realizar las acciones', emoji: '' },
+                { texto: '**Selecionar juegos**', desc: 'Te hablita los canales ocultos y te signa el role <@533069497561513994> o <@521709396863090698>', emoji: '' },
+                { texto: '**Crear tu Perfil**', desc: 'Nos permite saber cuando es tu cumple', emoji: '' }
+            ]
+        },{
+            titulo: '_**PERFIL**_',
+            desc: 'Carga de datos de perfil de _USUARIO_ o edición del mismo',
+            data: [
+                { texto: '**CARGAR PERFIL**', desc: 'Nombre, Fecha Nacimiento', emoji: '🆕' },
+                { texto: '**EDITAR PERFIL** _(DESHABILITADO)_', desc: 'Modificar los datos ya cargados', emoji: '📝' }
+            ]
         }
     ]
 };

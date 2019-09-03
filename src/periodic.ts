@@ -1,14 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import * as Discord from "discord.js";
 import * as MSG_ from "./textos";
-const emojiCTM: Array<{ n: string; id: any }> = [
-    { n: 'bf1', id: '613181668672536600' },
-    { n: 'bf4', id: '613182924745080862' },
-    { n: 'bf5', id: '613181661273653291' },
-    { n: 'ets2', id: '613182913676050442' },
-    { n: 'wt', id: '613182915563618315' },
-    { n: 'gtav', id: '617123585701445659'},
-]
 
 export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
@@ -16,35 +9,27 @@ export async function FnPeriodic(client: any) {
     client.user.setPresence({ status: 'online', game: { name: 'kmpf help para ayuda' } });
     changeFuhrer(client);
 }
-
-function getWeekNumber(){
-    let d: any = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
-    let dayNum: any = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    let yearStart: any = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
-};
-
 async function loadKMPFCMD(client: any) {
     client.channels.get('614258469066768424').fetchMessages({ limit: 2 }).then((messages: any) => { 
         messages.forEach((msg: any)  => {
             msg.delete();
         })
-    let lastMessage = messages.first(); 
+        let lastMessage = messages.first(); 
     /* if (lastMessage.author.bot && lastMessage.id !== undefined) { 
         client.channels.get('614258469066768424').messages.get(lastMessage.id).delete(); 
     } */}).catch(console.error);
-    
-    for(let txt_ of MSG_.kmpfMSG.kmpfcmd) {
-        client.channels.get('614258469066768424').send(txt_.texto).then((sendEmbed: any) => { 
-            if(txt_.emojis.length > 0) {
-                for(let emoji_ of txt_.emojis) { sendEmbed.react(emoji_); }
-            }
-        });
-    }
-    const embebedMSG: Array<{name: any; value: any}> = new Array(0);
-    for(let j_ of MSG_.juegos) { embebedMSG.push({ name: client.emojis.get(j_.EID) + ' ➽' + j_.nombre, value: '-'}); }
-    client.channels.get('614258469066768424').send({ embed: { author: '_**JUEGOS**_', fields: embebedMSG }}).then((sendEmbed: any) => { for(let r_ of MSG_.juegos) { sendEmbed.react(r_.EID); } });
+    //#region kmpfMSG
+        for(let t_ of MSG_.kmpfMSG.kmpfcmd) {
+            let embedMSG = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+            for(let d_ of t_.data) { embedMSG.addField(d_.texto, d_.desc, true); emojiArr.push(d_.emoji); }
+            client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
+        }
+    //#endregion
+    //#region gameList{
+        let embedMSG = new Discord.RichEmbed().setTitle('_**JUEGOS**_'), emojiArr: Array<any> = new Array(0);
+        for(let d_ of MSG_.juegos) { embedMSG.addField(client.emojis.get(d_.EID) + ' ➽' + d_.nombre, '', true); emojiArr.push(d_.EID); }
+        client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
+    //#endregion
 }
 function changeFuhrer(client: any) {
     firebase.database().ref('/NowLD').on('value', Users => {
@@ -59,4 +44,11 @@ function changeFuhrer(client: any) {
             });
         })
     });
+}
+function getWeekNumber() {
+    let d: any = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
+    let dayNum: any = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    let yearStart: any = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
 }
