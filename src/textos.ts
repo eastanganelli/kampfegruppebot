@@ -7,7 +7,7 @@ export const kmpfMSG = {
             desc: 'Si sos un _USUARIO NUEVO_ y no podes participar dentro de ningún _canal de texto o de voz_, debes:',
             data: [
                 { texto: '**Reacciona a los msj**', desc: 'Haz click en las reaciones para realizar las acciones', emoji: '' },
-                { texto: '**Selecionar juegos**', desc: 'Te hablita los canales ocultos y te signa el role <@533069497561513994> o <@521709396863090698>', emoji: '' },
+                { texto: '**Selecionar juegos**', desc: 'Te hablita los canales ocultos y te signa el role _Invitado_ o _Candidato_', emoji: '' },
                 { texto: '**Crear tu Perfil**', desc: 'Nos permite saber cuando es tu cumple', emoji: '' }
             ]
         },{

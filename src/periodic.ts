@@ -10,14 +10,7 @@ export async function FnPeriodic(client: any) {
     changeFuhrer(client);
 }
 async function loadKMPFCMD(client: any) {
-    client.channels.get('614258469066768424').fetchMessages({ limit: 3 }).then((messages: any) => { 
-        messages.forEach((msg: any)  => {
-            msg.delete();
-        })
-        let lastMessage = messages.first(); 
-    /* if (lastMessage.author.bot && lastMessage.id !== undefined) { 
-        client.channels.get('614258469066768424').messages.get(lastMessage.id).delete(); 
-    } */}).catch(console.error);
+    client.channels.get('614258469066768424').fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of MSG_.kmpfMSG.kmpfcmd) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
@@ -27,7 +20,7 @@ async function loadKMPFCMD(client: any) {
     //#endregion
     //#region gameList{
         let embedMSGGame = new Discord.RichEmbed().setTitle('_**JUEGOS**_'), emojiArr: Array<any> = new Array(0);
-        for(let d_ of MSG_.juegos) { embedMSGGame.addField(client.emojis.get(d_.EID) + ' ➽' + d_.nombre, '', false); emojiArr.push(d_.EID); }
+        for(let d_ of MSG_.juegos) { embedMSGGame.addField(client.emojis.get(d_.EID) + ' ➽ ' + d_.nombre, ' ', false); emojiArr.push(d_.EID); }
         client.channels.get('614258469066768424').send(embedMSGGame).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(e_); } } });
     //#endregion
 }
