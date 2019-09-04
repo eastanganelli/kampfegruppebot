@@ -19,7 +19,7 @@ client.on("ready", () => {
 });
 client.on("message", async msg => {
     let author_ = msg.member;
-    firebase.database().ref('/Users/').child(author_.id).update({ lastCon: new Date() });
+    if(!(msg.author.bot)) { firebase.database().ref('/Users/').child(author_.id).update({ lastCon: new Date() }); }
     if(msg.author.bot) { return; }
     if(msg.content.startsWith('kmpf')) {
         if(msg.content.startsWith('kmpf h') && dmMSG(msg)) {
@@ -137,7 +137,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
-    if(oldUserChannel === undefined && newUserChannel !== undefined) { firebase.database().ref('/Users/').child(newMember.id).update({ lastCon: new Date() }); } 
+    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot)) { firebase.database().ref('/Users/').child(newMember.id).update({ lastCon: new Date() }); } 
     else if(newUserChannel === undefined){ /*Leaves VC*/ }
   })
 client.on("presenceUpdate", (oldMember, newMember) => {
