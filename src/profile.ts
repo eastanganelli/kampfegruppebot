@@ -11,7 +11,7 @@ let data_: uProfile = { nombre: '', birth: new Date(), joinAt: 0, lastCon: 0 };
 
 export async function CargarPerfil(user: any, reaction: any) {
 	await firebase.database().ref('/Users/').child(user.id).on('value', data => { 
-		if(data.val() == null) { cargarProfile(reaction, user); }	
+		if(data.val().nombre == null) { cargarProfile(reaction, user); }	
 	}, (Err: any) => { console.log(Err) });
 }
 async function saveData(data: string, idQ: number, raction_: any, user: any) {
