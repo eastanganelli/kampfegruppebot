@@ -7,7 +7,7 @@ export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
     await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.name == 'KMPF').id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
     client.user.setPresence({ status: 'online', game: { name: 'kmpf help para ayuda' } });
-    changeFuhrer(client);
+    setInterval(() => { changeFuhrer(client); },3600*24);
 }
 async function loadKMPFCMD(client: any) {
     client.channels.get('614258469066768424').fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);

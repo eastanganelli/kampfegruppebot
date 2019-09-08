@@ -1,7 +1,8 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
-import { R_OK } from "constants";
+import undefined = require("firebase/database");
+import { UV_UDP_REUSEADDR } from "constants";
 
 let disarmy_: boolean = true;
 const client: Discord.Client = new Discord.Client();
@@ -85,20 +86,18 @@ export async function menuBOT(msg: any) {
         } else if(msg.content.startsWith('kmpf perfil') && dmMSG(msg)) {
             if(author_.roles.has('517168972483919929')) {
                 let MSG_ = msg.content.split('kmpf perfil ').slice(0);
-                if(MSG_[0] == 'lista') {
-                    let mbdMSG = new Discord.RichEmbed(), listaUsuarios: Array<{ name: string; value: string; }> = new Array(0);
-                    msg.guild.members.foreach((u_: any) => {
-                        firebase.database().ref('/Users/').child(u_.id).once("value",snapshot => {
+                if(MSG_[1] == 'lista') {
+                    msg.channel.send('__**KMPF USUARIOS**__\n');
+                    msg.guild.members.find((u_: any) => {
+                        firebase.database().ref('/Users/').child(u_.user.id).once('value', snapshot => {
                             let uData = snapshot.val();
-                            if(uData.nombre != null) {
+                            if(uData != null && uData.nombre != 'undefined') {
                                 let hasRoles: boolean = false;
-                                for(let r_ of msg.guild.roles) { if(u_.roles.find((r: any) => r.name === r_.name)) { hasRoles = true; };
-                                    listaUsuarios.push({ name: '<@' + u_.id + '>', value: 'Cumpleaños: ' +new Date(uData.birth) + '\nUltima Conexión: ' + new Date(u_.lastCon) + '\nPerfil Cargado: SI --- : ' });
-                                }
+                                msg.guild.roles.find((r_: any) => { if(u_.roles.find((r: any) => r.name === r_.name)) { hasRoles = true; }; });
+                                msg.channel.send('```' + "<@"+u_.user.id+"> {" + u_.user.name + "}" + '\nCumpleaños: ' + uData.birth + '\tUltima Conexión: ' + uData.lastCon + '\tPerfil Cargado: SI --- : ' + '```');
                             }
-                        });
+                        }, (Err: any) => { console.log(Err) });
                     });
-                    msg.channel.send({ embed: { ttle: 'KMPF USERS', fields: listaUsuarios } });
                 }
             } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
         } else if (msg.content.startsWith('kmpf p ') ||  msg.content.startsWith('kmpf play') && dmMSG(msg)) {

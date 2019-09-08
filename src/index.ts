@@ -23,11 +23,11 @@ client.on("message", async msg => {
 });
 client.on('messageReactionAdd', async (reaction, user) => {
     rolesFN.ponerRoles(reaction, user);
-    console.log(`${user.username} reacted with "${reaction.emoji.name}".`);
+    //console.log(`${user.username} reacted with "${reaction.emoji.name}".`);
 });
 client.on('messageReactionRemove', async (reaction, user) => {
     rolesFN.quiteRoles(reaction, user);
-    console.log(`${user.username} removed their "${reaction.emoji.name}" reaction.`); 
+    //console.log(`${user.username} removed their "${reaction.emoji.name}" reaction.`); 
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
