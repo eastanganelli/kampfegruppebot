@@ -3,6 +3,8 @@ import 'firebase/auth';
 import * as Discord from "discord.js";
 import * as MSG_ from "./textos";
 
+const nextReich: number = 3;
+
 export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
     await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.name == 'KMPF').id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
@@ -33,7 +35,7 @@ function changeFuhrer(client: any) {
             role_.members.find((u: any) => { 
                 if((User.val()).nWeek == getWeekNumber() && User.key != u.id) { 
                     guildMem.addRole(role_); 
-                    u.removeRole(role_); firebase.database().ref('/NowLD/' + User.key).update({ nWeek:  (getWeekNumber() + 3) });
+                    u.removeRole(role_); firebase.database().ref('/NowLD/' + User.key).update({ nWeek:  (getWeekNumber() + nextReich) });
                 } 
             });
         })
