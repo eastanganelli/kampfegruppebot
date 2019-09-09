@@ -12,22 +12,22 @@ export async function FnPeriodic(client: any) {
     setInterval(() => { changeFuhrer(client); },3600*24);
 }
 async function loadKMPFCMD(client: any) {
-    client.channels.get('614258469066768424').fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
-        for(let t_ of MSG_.kmpfMSG.kmpfcmd) {
+        for(let t_ of MSG_.kmpfMSG.kmpfroles.data) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
             for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get('614258469066768424').send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
+            client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
         }
     //#endregion
     //#region gameList{
         let embedMSGGame = new Discord.RichEmbed().setTitle('_**JUEGOS**_'), emojiArr: Array<any> = new Array(0);
         for(let d_ of MSG_.juegos) { embedMSGGame.addField(String(client.emojis.get(d_.EID)) + ' ➽ ' + d_.nombre, d_.code, false); emojiArr.push(d_.EID); }
         
-        client.channels.get('614258469066768424').send(embedMSGGame).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
+        client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).send(embedMSGGame).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
     //#endregion
 }
-function changeFuhrer(client: any) {
+function changeFuhrer(client: any) {+
     firebase.database().ref('/NowLD').on('value', Users => {
         Users.forEach(User => {
             const role_    = client.guilds.find((g: any) => g.id == '451837050618904577').roles.find((role: any) => role.id === "521184706142797834");
@@ -35,11 +35,21 @@ function changeFuhrer(client: any) {
             role_.members.find((u: any) => { 
                 if((User.val()).nWeek == getWeekNumber() && User.key != u.id) { 
                     guildMem.addRole(role_); 
-                    u.removeRole(role_); firebase.database().ref('/NowLD/' + User.key).update({ nWeek:  (getWeekNumber() + nextReich) });
+                    u.removeRole(role_); firebase.database().ref('/NowLD/' + u.key).update({ nWeek:  (getWeekNumber() + nextReich) });
                 } 
             });
         })
     });
+}
+function CoronlesKMPFRoles(client: any) {
+    client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    //#region kmpfMSG
+        for(let t_ of MSG_.kmpfMSG.kmpfroles.data) {
+            let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+            for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
+            client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
+        }
+    //#endregion
 }
 function getWeekNumber() {
     let d: any = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));

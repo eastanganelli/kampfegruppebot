@@ -1,8 +1,9 @@
 import { uJuego } from "./varInterfaces";
 
 export const kmpfMSG = {
-    kmpfcmd: [
-        {
+    kmpfroles: {
+        MC: '614258469066768424',
+        data: [{
             titulo: '_**INFORMACIÓN IMPORTANTE**_',
             desc: 'Si sos un _USUARIO NUEVO_  y no podes participar dentro de ningún _canal de texto_ o _de voz_, debes:',
             data: [
@@ -18,7 +19,25 @@ export const kmpfMSG = {
                 { texto: '**EDITAR PERFIL** _(DESHABILITADO)_', desc: 'Modificar los datos ya cargados', emoji: '📝' }
             ]
         }
-    ]
+    ]}, kmpfCoroneles: {
+        MC: '620642948660330506',
+        data: [{
+                titulo: '_**KMPF CORONELES**_',
+                desc: ':exclamation::exclamation: _UTILIZAR LAS ACCIONES CON RESPONSABILIDAD_',
+                data: [
+                    { texto: '**PRUNE** _(DESHABILITADO)_', desc: 'Elimina a todos los jugadores ya inactivos hace 30 o más días', emoji: ':x:' },
+                    { texto: '**PERFILES DE USUARIOS** _(DESHABILITADO)_', desc: 'Permite ver los perfil de los usuarios, votar para eliminar, enviar msj de advertencia', emoji: '' }
+                ]
+            }, {
+                titulo: '_**KMPF FÜHRER**_',
+                desc: ' ',
+                data: [
+                    { texto: '**PRESENTE** _(DESHABILITADO)_', desc: 'Permite vovler a ser Führer', emoji: ':back:' },
+                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: ':soon:' }
+                ]
+            }
+        ]
+    }
 };
 export const juegos: Array<uJuego> = [
     { nombre: 'Battlefield 1', code: 'bf1', EID: '613181668672536600' },
