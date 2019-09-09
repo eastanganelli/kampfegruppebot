@@ -3,7 +3,7 @@ import { uJuego } from "./varInterfaces";
 export const kmpfMSG = {
     kmpfroles: {
         MC: '614258469066768424',
-        data: [{
+        Arr: [{
             titulo: '_**INFORMACIÓN IMPORTANTE**_',
             desc: 'Si sos un _USUARIO NUEVO_  y no podes participar dentro de ningún _canal de texto_ o _de voz_, debes:',
             data: [
@@ -21,19 +21,19 @@ export const kmpfMSG = {
         }
     ]}, kmpfCoroneles: {
         MC: '620642948660330506',
-        data: [{
+        Arr: [{
                 titulo: '_**KMPF CORONELES**_',
                 desc: ':exclamation::exclamation: _UTILIZAR LAS ACCIONES CON RESPONSABILIDAD_',
                 data: [
-                    { texto: '**PRUNE** _(DESHABILITADO)_', desc: 'Elimina a todos los jugadores ya inactivos hace 30 o más días', emoji: ':x:' },
-                    { texto: '**PERFILES DE USUARIOS** _(DESHABILITADO)_', desc: 'Permite ver los perfil de los usuarios, votar para eliminar, enviar msj de advertencia', emoji: '' }
+                    { texto: '**PRUNE** _(DESHABILITADO)_', desc: 'Elimina a todos los jugadores ya inactivos hace 30 o más días', emoji: '❌' },
+                    { texto: '**PERFILES DE USUARIOS** _(DESHABILITADO)_', desc: 'Permite ver los perfil de los usuarios, votar para eliminar, enviar msj de advertencia', emoji: '🗂️' }
                 ]
             }, {
                 titulo: '_**KMPF FÜHRER**_',
                 desc: ' ',
                 data: [
-                    { texto: '**PRESENTE** _(DESHABILITADO)_', desc: 'Permite vovler a ser Führer', emoji: ':back:' },
-                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: ':soon:' }
+                    { texto: '**PRESENTE** _(DESHABILITADO)_', desc: 'Permite vovler a ser Führer', emoji: '🔙' },
+                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: '🔜' }
                 ]
             }
         ]
