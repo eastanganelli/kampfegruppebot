@@ -33,7 +33,7 @@ export const kmpfMSG = {
                 desc: ' ',
                 data: [
                     { texto: '**PRESENTE** _(DESHABILITADO)_', desc: 'Permite vovler a ser Führer', emoji: '🏠' },
-                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: '⛱️' }
+                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: '⛱' }
                 ]
             }
         ]
