@@ -9,7 +9,7 @@ const questions: Array<{ txt: string; react: boolean }> = [                    /
 const applying: any = [];
 let data_: uProfile = { nombre: '', birth: new Date(), joinAt: 0, lastCon: 0 };
 
-export async function CargarPerfil(user: any, reaction: any) { await firebase.database().ref('/Users/').child(user.id).on('value', data => { if(data.val().nombre == 'undefined') { cargarProfile(reaction, user); } }, (Err: any) => { console.log(Err) }); }
+export async function CargarPerfil(user: any, reaction: any) { await firebase.database().ref('/Users/').child(user.id).on('value', data => { /* if(data.val().nombre == 'undefined') { */ cargarProfile(reaction, user); /* } */ }, (Err: any) => { console.log(Err) }); }
 async function saveData(data: string, idQ: number, raction_: any, user: any) {
 	const guildMember = raction_.message.guild.members.get(user.id);
     switch(idQ) {
