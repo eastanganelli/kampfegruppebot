@@ -3,7 +3,7 @@ import 'firebase/auth';
 import * as Discord from "discord.js";
 import * as MSG_ from "./textos";
 
-const nextReich: number = 3;
+const nextReich: number = 4;
 
 export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
@@ -37,7 +37,9 @@ function changeFuhrer(client: any) {+
                 if((User.val()).nWeek == getWeekNumber() && User.key != u.id) { 
                     guildMem.addRole(role_); 
                     u.removeRole(role_); firebase.database().ref('/NowLD/' + u.key).update({ nWeek:  (getWeekNumber() + nextReich) });
-                } 
+                } else if(User.val().pos == '-') {
+                    
+                }
             });
         })
     });
