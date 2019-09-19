@@ -8,6 +8,7 @@ export function ponerRoles(reaction: any, user: any) {
         switch(reaction.emoji.name) {
             case "🆕":  { profileFn.CargarPerfil(user, reaction); reaction.remove(user.id); break; }
             case "📝":  { user.sendMessage('Función de Actualización de _perfil_ no habilitada aún'); reaction.remove(user.id); break; }
+            case "🔞":  { guildMember.addRole('623668486060638228');    break; }
             case "bf1":  { selecRole(guildMember, '614411015236616206'); break; }
             case "bf4":  { selecRole(guildMember, '614411509036089346'); break; }
             case "bf5":  { selecRole(guildMember, '614410633282191371'); break; }

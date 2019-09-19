@@ -18,6 +18,12 @@ export const kmpfMSG = {
                 { texto: '**CARGAR PERFIL**', desc: 'Nombre, Fecha Nacimiento', emoji: '🆕' },
                 { texto: '**EDITAR PERFIL** _(DESHABILITADO)_', desc: 'Modificar los datos ya cargados', emoji: '📝' }
             ]
+        },{
+            titulo: '_**ROLES**_',
+            desc: 'Seleccionar el roles que quieres',
+            data: [
+                { texto: '**NSFW**', desc: 'Te permite ver el canal <#623672085474050059>', emoji: '🔞' }
+            ]
         }
     ]}, kmpfCoroneles: {
         MC: '620642948660330506',
