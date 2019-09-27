@@ -2,8 +2,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import * as Discord from "discord.js";
 import * as MSG_ from "./textos";
-
-const nextReich: number = 4;
+import { uFuhrer, uCoronel } from './varInterfaces';
 
 export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
@@ -13,7 +12,7 @@ export async function FnPeriodic(client: any) {
     CoronlesKMPFRoles(client);
 }
 async function loadKMPFCMD(client: any) {
-    client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 4 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of MSG_.kmpfMSG.kmpfroles.Arr) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
@@ -28,8 +27,20 @@ async function loadKMPFCMD(client: any) {
         client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).send(embedMSGGame).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
     //#endregion
 }
-function changeFuhrer(client: any) {+
-    firebase.database().ref('/NowLD').on('value', Users => {
+function changeFuhrer(client: any) {
+    firebase.database().ref('/fuhrer').on('value', snap => {
+        let fuhrerDat: uFuhrer = snap.val(), coroneles: Array<uCoronel> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
+        if(fuhrerDat.nmbWeek < getWeekNumber()) {
+            let cntFuhrer: number = fuhrerDat.coroneles.length;
+            if(next < cntFuhrer) { 
+                const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid);
+                const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[next].uid);
+                oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
+                newFuhrer.addRole('521184706142797834');
+            }
+        }
+    })
+    /* firebase.database().ref('/NowLD').on('value', Users => {
         Users.forEach(User => {
             const role_    = client.guilds.find((g: any) => g.id == '451837050618904577').roles.find((role: any) => role.id === "521184706142797834");
             const guildMem = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == User.key);
@@ -42,7 +53,7 @@ function changeFuhrer(client: any) {+
                 }
             });
         })
-    });
+    }); */
 }
 function CoronlesKMPFRoles(client: any) {
     client.channels.get(MSG_.kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
@@ -61,3 +72,16 @@ function getWeekNumber() {
     let yearStart: any = new Date(Date.UTC(d.getUTCFullYear(),0,1));
     return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
 }
+
+/* firebase.database().ref('/fuhrer').set({
+        nmbWeek: getWeekNumber(),
+        leader: 3,
+        coroneles: [
+            { uid: 406645486221524992, vac: true },
+            { uid: 251482884987289600, vac: false },
+            { uid: 327966508242305024, vac: false },
+            { uid: 311264984627675137, vac: false },
+            { uid: 139591319877189643, vac: false },
+        ]
+    
+    }); */

@@ -20,6 +20,7 @@ client.on("ready", () => {
 });
 client.on("message", async msg => {
     mBOT.menuBOT(msg);
+    //msg.guild.fetchMember(u => u.id ===)
 });
 client.on('messageReactionAdd', async (reaction, user) => {
     rolesFN.ponerRoles(reaction, user);

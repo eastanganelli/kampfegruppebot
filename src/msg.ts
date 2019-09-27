@@ -1,8 +1,6 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
-import undefined = require("firebase/database");
-import { UV_UDP_REUSEADDR } from "constants";
 
 let disarmy_: boolean = true;
 const client: Discord.Client = new Discord.Client();
@@ -53,26 +51,6 @@ export async function menuBOT(msg: any) {
                 }, ttle: "Inactividad de Usuarios",
                 fields: userCommands
             }});
-        } else if(!disarmy_/* msg.content.startsWith('kmpf prune') && dmMSG(msg) */) {
-            if(author_.roles.has('517169596059615252') || author_.roles.has('517168972483919929')) {
-                msg.delete(); 
-                msg.guild.pruneMembers(30, true).then((prune: any) => { 
-                    msg.channel.send({embed: {
-                        color: 16711680,
-                        author: {
-                            name: msg.user.username,
-                            icon_url: msg.user.avatarURL
-                        }, ttle: "Inactividad de Usuarios",
-                        fields: [{
-                                name: "Inactivos hace 30 días o más",
-                                value: `Usuarios inactivos: ${prune}`
-                            },
-                            { name: "✅ Para eliminar a los inactivos", value: "." },
-                            { name: "❎ Para cancelar", value: "." }
-                        ]
-                    }}).then((sendEmbed: any) => { sendEmbed.react("❎"); sendEmbed.react("✅"); }).catch((err: any) => {alert(err)});
-                });
-            } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
         } else if(!disarmy_/* msg.content.startsWith('kmpf mv') && dmMSG(msg) */) {
             if(author_.roles.has('517169596059615252') || author_.roles.has('517171083384979456') || author_.roles.has('517168972483919929')) {
                 msg.delete();
@@ -86,19 +64,8 @@ export async function menuBOT(msg: any) {
         } else if(msg.content.startsWith('kmpf perfil') && dmMSG(msg)) {
             if(author_.roles.has('517168972483919929')) {
                 let MSG_ = msg.content.split('kmpf perfil ').slice(0);
-                if(MSG_[1] == 'lista') {
-                    msg.channel.send('__**KMPF USUARIOS**__\n');
-                    msg.guild.members.find((u_: any) => {
-                        firebase.database().ref('/Users/').child(u_.user.id).once('value', snapshot => {
-                            let uData = snapshot.val();
-                            if(uData != null && uData.nombre != 'undefined') {
-                                let hasRoles: boolean = false;
-                                msg.guild.roles.find((r_: any) => { if(u_.roles.find((r: any) => r.name === r_.name)) { hasRoles = true; }; });
-                                msg.channel.send('```' + "<@"+u_.user.id+"> {" + u_.user.name + "}" + '\nCumpleaños: ' + uData.birth + '\tUltima Conexión: ' + uData.lastCon + '\tPerfil Cargado: SI --- : ' + '```');
-                            }
-                        }, (Err: any) => { console.log(Err) });
-                    });
-                }
+                let profileUser: any = null;
+                
             } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
         } else if (msg.content.startsWith('kmpf p ') ||  msg.content.startsWith('kmpf play') && dmMSG(msg)) {
             if (msg.member.voiceChannel) {
@@ -115,13 +82,6 @@ export async function menuBOT(msg: any) {
         } else if(msg.content.startsWith('kmpf jerequote') && dmMSG(msg)) {
             const jereFrases: Array<string> = ['Voy a ser mi propio JEFE', 'Estoy ganando muchos dolares en FOREX', 'Mi team es lo mejor', 'Le debo dolares a Mak', 'SOY RE JUDIO, Y QUE?']; 
             msg.channel.send('JudioJere: ' + jereFrases[Math.floor(Math.floor(Math.random() * 5))]);
-        } else if(!disarmy_/* msg.content.startsWith('kmpf striketroll ') && dmMSG(msg) */) {
-            console.log(msg.content.slice(17));
-            msg.fetchUser(msg.content.slice(17)).then((data: any) => {
-                const coronel_ = ['251482884987289600', '311264984627675137', '406645486221524992', '327966508242305024']
-                for(let i = 0; i < 4; i++) { data.sendMessage("Usted ha recibido un Strike por el coronel <@"+coronel_[i]+">") } 
-                data.sendMessage("En breve le notificaremos, si sera baneado o no.")
-            }); 
         } else { if(dmMSG(msg)) msg.reply(`Lo siento pero el comando no se encontro. Escribe 'kmpf h' para más ayuda`); }
     }
 }
