@@ -22,7 +22,7 @@ function selecRole(guildMember: any, gRole: any) {
     guildMember.addRole(gRole);
     if(!sinRango(guildMember, roleARR)) {
         let flag: boolean = false;
-        console.log('SIN RANGO')
+        console.log('SIN RANGO');
         for(let r_ of RepreARR) {
             if(r_ == gRole) {
                 if(guildMember.roles.has(invitado)) { guildMember.removeRole(invitado); }

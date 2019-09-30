@@ -9,6 +9,7 @@ import * as ConfigFile from "./config";
 import * as readyFNs   from "./periodic";
 import * as rolesFN    from "./roles";
 import * as mBOT       from "./msg"
+import { newUsuario, lastConnectionusuario } from "./users";
 //#endregion
 
 const client: Discord.Client = new Discord.Client();
@@ -18,6 +19,7 @@ client.on("ready", () => {
     console.log("Ready to go!!!");
     readyFNs.FnPeriodic(client);
 });
+client.on("guildMemberAdd", member => { newUsuario(member.id); });
 client.on("message", async msg => {
     mBOT.menuBOT(msg);
     //msg.guild.fetchMember(u => u.id ===)
@@ -32,9 +34,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
-    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot)) { firebase.database().ref('/Users/').child(newMember.id).update({ lastCon: new Date() }); } 
+    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot)) { lastConnectionusuario(newMember.id); } 
     else if(newUserChannel === undefined){ /*Leaves VC*/ }
-  })
+});
 client.on("presenceUpdate", (oldMember, newMember) => {
     if(oldMember.presence.status !== newMember.presence.status) {
         /* firebase.database().ref('/Users/').child(newMember.id).on('value', data => {  

@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import { uProfile } from "./varInterfaces";
+import { uProfile, lProfile } from "./varInterfaces";
 import "firebase/database";
 
 const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
@@ -7,18 +7,35 @@ const questions: Array<{ txt: string; react: boolean }> = [                    /
     { txt: "Cuando es tu Cumple:cake::cake:? **AÑO MES DIA ie: _31/05/2018_**", react: false },                  // Define the questions you'd like the application to have in this array.
 ];  
 const applying: any = [];
-let data_: uProfile = { nombre: '', birth: new Date(), joinAt: 0, lastCon: 0 };
+let uDat: lProfile = {
+	uid: '-',
+	userDat: {
+		nombre: '-',
+		birth: 0,
+		steam: '-',
+		origin: '-',
+		uplay: '-',
+		connect: {
+			joinAt: new Date(),
+			lastAdv: -1,
+			lastCon: -1
+		}
+	}
+};
 
-export async function CargarPerfil(user: any, reaction: any) { await firebase.database().ref('/Users/').child(user.id).on('value', data => { 
-		/* if(data.val().nombre == 'undefined') { */ cargarProfile(reaction, user); /* } */ 
+export async function CargarPerfil(user: any, reaction: any) { 
+	firebase.database().ref('/Users/').child(user.id).on('value', snapshot => { 
+		let uDat: any = snapshot.val();
+		if(uDat.nombre == '-' || uDat.birth == 0) { cargarProfile(reaction, user); }
 	}, (Err: any) => { console.log(Err) }); 
 }
 async function saveData(data: string, idQ: number, raction_: any, user: any) {
 	const guildMember = raction_.message.guild.members.get(user.id);
     switch(idQ) {
-        case 0: { data_.nombre = data; break; }
-        case 1: { data_.birth = data; break; }
-        case 2: {if(isNewMem(guildMember,raction_.message.guild))      { if(!isoldMem(guildMember, raction_.guild)) { guildMember.addRole(raction_.message.guild.roles.get('521709396863090698')); } } 
+        case 0: { uDat.userDat.nombre = data; break; }
+        case 1: { uDat.userDat.birth  = data; break; }
+        case 2: { 
+			if(isNewMem(guildMember,raction_.message.guild))        { if(!isoldMem(guildMember, raction_.guild)) { guildMember.addRole(raction_.message.guild.roles.get('521709396863090698')); } } 
 			else if (!isNewMem(guildMember,raction_.message.guild)) { if(!isoldMem(guildMember, raction_.guild)) { guildMember.addRole(raction_.message.guild.roles.get('533069497561513994')); } }
 			break;
 		}
@@ -48,11 +65,11 @@ async function cargarProfile(reaction: any, user: any) {
 				console.log(`${user.tag} let their application time out.`);
 			});
 		}
-		if(!cancel) { firebase.database().ref('/Users/').child(user.id).set(data_); }
+		if(!cancel) { firebase.database().ref('/Users/').child(user.id).set(uDat); }
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
 		console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
- 	console.log(data_);
+ 	console.log(uDat);
 }
 function isNewMem(guildMember: any, guild: any) {
 	const game_ = ['BF4', 'BF1', 'BFV'];

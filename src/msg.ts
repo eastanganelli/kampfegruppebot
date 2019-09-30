@@ -1,13 +1,14 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
+import { lastConnectionusuario } from "./users";
 
 let disarmy_: boolean = true;
 const client: Discord.Client = new Discord.Client();
 
 export async function menuBOT(msg: any) {
     let author_ = msg.member;
-    if(!(msg.author.bot)) { firebase.database().ref('/Users/').child(author_.id).update({ lastCon: new Date() }); }
+    if(!(msg.author.bot)) { lastConnectionusuario(author_.id); }
     if(msg.author.bot) { return; }
     if(msg.content.startsWith('kmpf')) {
         if(msg.content.startsWith('kmpf h') && dmMSG(msg)) {

@@ -53,3 +53,6 @@ export const juegos: Array<uJuego> = [
     { nombre: 'Euro Truck Simulator 2', code: 'ets2', EID: '613182913676050442' },
     { nombre: 'Grand theft Auto V', code: 'gta5', EID: '617123585701445659' }
 ];
+
+export const serverID:   string = '451837050618904577';
+export const serverLink: string = 'https://discord.gg/zx9UAVx';

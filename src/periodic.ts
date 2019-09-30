@@ -3,6 +3,7 @@ import 'firebase/auth';
 import * as Discord from "discord.js";
 import * as MSG_ from "./textos";
 import { uFuhrer, uCoronel } from './varInterfaces';
+import { loweringRole, kickUsuario } from './users';
 
 export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
@@ -10,6 +11,7 @@ export async function FnPeriodic(client: any) {
     client.user.setPresence({ status: 'online', game: { name: 'kmpf help para ayuda' } });
     setInterval(() => { changeFuhrer(client); },3600*24);
     CoronlesKMPFRoles(client);
+    kickUsuario('asdasdasd', client);
 }
 async function loadKMPFCMD(client: any) {
     client.channels.get(MSG_.kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 4 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
@@ -32,28 +34,18 @@ function changeFuhrer(client: any) {
         let fuhrerDat: uFuhrer = snap.val(), coroneles: Array<uCoronel> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
         if(fuhrerDat.nmbWeek < getWeekNumber()) {
             let cntFuhrer: number = fuhrerDat.coroneles.length;
-            if(next < cntFuhrer) { 
-                const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid);
-                const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[next].uid);
+            if(next < cntFuhrer) {
+                const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid); 
                 oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
-                newFuhrer.addRole('521184706142797834');
+                if(coroneles[next].vac) {
+                    while(!(coroneles[next].vac)) {
+                        const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[next].uid);
+                        newFuhrer.addRole('521184706142797834');
+                    }
+                }
             }
         }
-    })
-    /* firebase.database().ref('/NowLD').on('value', Users => {
-        Users.forEach(User => {
-            const role_    = client.guilds.find((g: any) => g.id == '451837050618904577').roles.find((role: any) => role.id === "521184706142797834");
-            const guildMem = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == User.key);
-            role_.members.find((u: any) => { 
-                if((User.val()).nWeek == getWeekNumber() && User.key != u.id) { 
-                    guildMem.addRole(role_); 
-                    u.removeRole(role_); firebase.database().ref('/NowLD/' + u.key).update({ nWeek:  (getWeekNumber() + nextReich) });
-                } else if(User.val().pos == '-') {
-                    
-                }
-            });
-        })
-    }); */
+    });
 }
 function CoronlesKMPFRoles(client: any) {
     client.channels.get(MSG_.kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
