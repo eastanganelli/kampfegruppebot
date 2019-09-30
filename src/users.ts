@@ -30,7 +30,7 @@ export async function newUsuario(uid: string) {
             connect: {
                 joinAt: new Date(),
                 lastAdv: -1,
-                lastCon: -1
+                laston: -1
             }
         }
     }; escribirUsuario(uDat);
@@ -41,7 +41,7 @@ export async function escribirUsuario(usuario: lProfile) {
         birth: usuario.userDat.birth,
         connect: {
             joinat: usuario.userDat.connect.joinAt,
-            laston: usuario.userDat.connect.lastCon,
+            laston: usuario.userDat.connect.laston,
             lastadv: usuario.userDat.connect.lastAdv
         },
         steam: usuario.userDat.steam,

@@ -18,7 +18,7 @@ let uDat: lProfile = {
 		connect: {
 			joinAt: 0,
 			lastAdv: -1,
-			lastCon: -1
+			laston: -1
 		}
 	}
 };
