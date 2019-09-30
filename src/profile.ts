@@ -65,7 +65,7 @@ async function cargarProfile(reaction: any, user: any) {
 				console.log(`${user.tag} let their application time out.`);
 			});
 		}
-		if(!cancel) { firebase.database().ref('/Users/').child(user.id).set(uDat); }
+		if(!cancel) { firebase.database().ref('/users/').child(user.id).set(uDat.userDat); }
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
 		console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
