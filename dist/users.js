@@ -90,7 +90,7 @@ function emptyUsuario(uid) {
 }
 exports.emptyUsuario = emptyUsuario;
 function lastConnectionusuario(uid) {
-    return __awaiter(this, void 0, void 0, function* () { firebase.database().ref('/Users/').child(uid).child('connect').update({ laston: new Date() }); });
+    return __awaiter(this, void 0, void 0, function* () { firebase.database().ref('/users/').child(uid).child('connect').update({ laston: new Date() }); });
 }
 exports.lastConnectionusuario = lastConnectionusuario;
 function loweringRole(uid, client) {

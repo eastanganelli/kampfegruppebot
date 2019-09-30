@@ -61,7 +61,7 @@ export async function emptyUsuario(uid: string) {
         if(auxDat.nombre != '-' && auxDat.birth != '-') return true; 
     }); return false;
 }
-export async function lastConnectionusuario(uid: string) { firebase.database().ref('/Users/').child(uid).child('connect').update({ laston: new Date() });  }
+export async function lastConnectionusuario(uid: string) { firebase.database().ref('/users/').child(uid).child('connect').update({ laston: new Date() });  }
 export async function loweringRole(uid: string, client: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
         for(let i = 0; i < roles_.length; i++) {
