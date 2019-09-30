@@ -9,7 +9,7 @@ export async function FnPeriodic(client: any) {
     loadKMPFCMD(client);
     await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.name == 'KMPF').id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
     client.user.setPresence({ status: 'online', game: { name: 'kmpf help para ayuda' } });
-    setInterval(() => { changeFuhrer(client); },3600*24);
+    setInterval(() => { changeFuhrer(client); },60000*5);
     CoronlesKMPFRoles(client);
     kickUsuario('asdasdasd', client);
 }
@@ -38,9 +38,15 @@ function changeFuhrer(client: any) {
                 const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid); 
                 oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
                 if(coroneles[next].vac) {
-                    while(!(coroneles[next].vac)) {
-                        const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[next].uid);
-                        newFuhrer.addRole('521184706142797834');
+                    for(let i = next; ; i++) {
+                        if(i + 1 >= cntFuhrer) { i = 0; }
+                        if(coroneles[i] == coroneles[next]) break;
+                        else if(!(coroneles[i].vac)) {
+                            const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[i].uid);
+                            newFuhrer.addRole('521184706142797834');
+                            firebase.database().ref('/fuhrer').update({ nmbWeek: new Date() });
+                            break;
+                        }
                     }
                 }
             }
