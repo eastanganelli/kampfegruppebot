@@ -26,7 +26,7 @@ let uDat: lProfile = {
 export async function CargarPerfil(user: any, reaction: any) { 
 	firebase.database().ref('/Users/').child(user.id).on('value', snapshot => { 
 		let uDat: any = snapshot.val();
-		if(uDat.nombre == '-' || uDat.birth == 0) { cargarProfile(reaction, user); }
+		if(uDat.nombre == '-' || uDat.birth == 0 || snapshot.exists()) { cargarProfile(reaction, user); }
 	}, (Err: any) => { console.log(Err) }); 
 }
 async function saveData(data: string, idQ: number, raction_: any, user: any) {
