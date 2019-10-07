@@ -46,7 +46,7 @@ function changeFuhrer(client: any) {
             oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
             if(coroneles[next].vac) {
                 for(let i = next; ; i++) {
-                    if(coroneles[i] == coroneles[next]) break;
+                    if(coroneles[i] == coroneles[pos]) break;
                     else if(!(coroneles[i].vac)) {
                         const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[i].uid);
                         newFuhrer.addRole('521184706142797834');
