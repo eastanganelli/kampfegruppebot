@@ -4,7 +4,7 @@ import * as Discord from "discord.js";
 import { kmpfMSG } from "./textos";
 import { uFuhrer, uCoronel } from './varInterfaces';
 
-let minute_: number = 2.5 /* 5 default */, inac: number = 20, inacRep: number = 3;
+let minute_: number = 0.25 /* 5 default */, inac: number = 20, inacRep: number = 3;
 export async function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);
@@ -12,7 +12,7 @@ export async function FnPeriodic(client: any) {
     await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.name == 'KMPF').id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
     client.user.setPresence({ status: 'online', game: { name: '_kmpf help_ para ayuda' } });
     setInterval(() => {
-        changeFuhrer(client);
+        //changeFuhrer(client);
         //checkIfAFK(client);
     }, 60000*minute_);
 }
@@ -38,24 +38,27 @@ async function newMemMsg(client: any) {
     client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
 }
 function changeFuhrer(client: any) {
-    firebase.database().ref('/fuhrer').on('value', snap => {
-        let fuhrerDat: uFuhrer = snap.val(), coroneles: Array<uCoronel> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
+    firebase.database().ref('/fuhrer').once('value', snapshot => {
+        let fuhrerDat: uFuhrer = snapshot.val(), coroneles_: Array<any> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
+        let cntFuhrer: number = fuhrerDat.coroneles.length;
+        console.log(pos);
         if(fuhrerDat.nmbWeek < getWeekNumber()) {
-            let cntFuhrer: number = fuhrerDat.coroneles.length;
-            const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid); 
-            oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
-            if(coroneles[next].vac) {
+            let tempUidFu = coroneles_[pos].uid, tempVacNF = coroneles_[next].vac;
+            let Fuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == tempUidFu); 
+            Fuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
+            if(tempVacNF) {
                 for(let i = next; ; i++) {
-                    if(coroneles[i] == coroneles[pos]) break;
-                    else if(!(coroneles[i].vac)) {
-                        const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[i].uid);
-                        newFuhrer.addRole('521184706142797834');
-                        firebase.database().ref('/fuhrer').update({ nmbWeek: new Date() });
+                    const tempVac = coroneles_[i].vac;
+                    const tempUID = coroneles_[i].uid; 
+                    if(tempUID == tempUidFu) break;
+                    else if(!(tempVac)) {
+                        Fuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == tempUID);
+                        Fuhrer.addRole('521184706142797834');
+                        firebase.database().ref('/fuhrer').update({ leader: i , nmbWeek: getWeekNumber() });
                         break;
                     } if(i >= cntFuhrer) { i = 0; }
                 }
-            }
-            
+            } 
         }
     });
 }
