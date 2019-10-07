@@ -4,7 +4,7 @@ import * as Discord from "discord.js";
 import { kmpfMSG } from "./textos";
 import { uFuhrer, uCoronel } from './varInterfaces';
 
-let minute_: number = 5 /* 5 default */, inac: number = 20, inacRep: number = 3;
+let minute_: number = 2.5 /* 5 default */, inac: number = 20, inacRep: number = 3;
 export async function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);
@@ -37,27 +37,25 @@ async function newMemMsg(client: any) {
     }
     client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
 }
-async function changeFuhrer(client: any) {
+function changeFuhrer(client: any) {
     firebase.database().ref('/fuhrer').on('value', snap => {
         let fuhrerDat: uFuhrer = snap.val(), coroneles: Array<uCoronel> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
         if(fuhrerDat.nmbWeek < getWeekNumber()) {
             let cntFuhrer: number = fuhrerDat.coroneles.length;
-            if(next < cntFuhrer) {
-                const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid); 
-                oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
-                if(coroneles[next].vac) {
-                    for(let i = next; ; i++) {
-                        if(i + 1 >= cntFuhrer) { i = 0; }
-                        if(coroneles[i] == coroneles[next]) break;
-                        else if(!(coroneles[i].vac)) {
-                            const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[i].uid);
-                            newFuhrer.addRole('521184706142797834');
-                            firebase.database().ref('/fuhrer').update({ nmbWeek: new Date() });
-                            break;
-                        }
-                    }
+            const oldFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[pos].uid); 
+            oldFuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
+            if(coroneles[next].vac) {
+                for(let i = next; ; i++) {
+                    if(coroneles[i] == coroneles[next]) break;
+                    else if(!(coroneles[i].vac)) {
+                        const newFuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == coroneles[i].uid);
+                        newFuhrer.addRole('521184706142797834');
+                        firebase.database().ref('/fuhrer').update({ nmbWeek: new Date() });
+                        break;
+                    } if(i >= cntFuhrer) { i = 0; }
                 }
             }
+            
         }
     });
 }
