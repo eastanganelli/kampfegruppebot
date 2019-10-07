@@ -5,24 +5,28 @@ export const kmpfMSG = {
         MC: '614258469066768424',
         Arr: [{
             titulo: '_**INFORMACIÓN IMPORTANTE**_',
-            desc: 'Si sos un _USUARIO NUEVO_  y no podes participar dentro de ningún _canal de texto_ o _de voz_, debes:',
             data: [
-                { texto: '**Reacciona a los msj**', desc: 'Haz click en las reaciones para realizar las acciones', emoji: '' },
-                { texto: '**Selecionar juegos**', desc: 'Te hablita los canales ocultos y te signa el role _Invitado_ o _Candidato_', emoji: '' },
-                { texto: '**Crear tu Perfil**', desc: 'Nos permite saber cuando es tu cumple', emoji: '' }
+                { texto: '**Reacciona a los msj**', desc: 'Haz click en las reaciones para realizar las acciones', emoji: '' }
             ]
         },{
-            titulo: '_**PERFIL**_',
-            desc: 'Carga de datos de perfil de _USUARIO_ o edición del mismo',
+            titulo: '_**PERFIL Y ROLES**_',
+            desc: '.',
             data: [
-                { texto: '**CARGAR PERFIL**', desc: 'Nombre, Fecha Nacimiento', emoji: '🆕' },
-                { texto: '**EDITAR PERFIL** _(DESHABILITADO)_', desc: 'Modificar los datos ya cargados', emoji: '📝' }
-            ]
-        },{
-            titulo: '_**ROLES**_',
-            desc: 'Seleccionar el roles que quieres',
-            data: [
+                { texto: '**EDITAR PERFIL**', desc: 'Nombre, Fecha Nacimiento, Nro Celular', emoji: '✏' },
                 { texto: '**NSFW**', desc: 'Te permite ver el canal <#623672085474050059>', emoji: '🔞' }
+            ]
+        }
+    ]}, kmpfrules: {
+        MC: '611501042210963456',
+        Arr: [{
+            titulo: '📚📚 **REGLAS** 📚📚',
+            desc: '**ESCRIBIR** _#acepto_ o _#rechazo_ a las reglas',
+            data: [
+                { texto: '⚠️💤 **INACTIVIDAD** 💤⚠️', desc: '_En canales de **DISCORD** (texto y voz)_\n|-> 20 dias de inactividad, <@594571311171371008> **_(BOT)_** envia una alerta por Mensaje Privado (MP)\n|-> Se tiene un plazo de 3 días para volver a participar en los canales\n|-> Si no se cumple lo dicho anteriormente, descenderá de rango hasta ser @Candidato (@Invitados tienen expulsión directa)\nℹ️ℹ️ _Si es **EXPULSADO**, <@594571311171371008> **(BOT)** le enviara un MP con un URL para reingresar al servidor, pero pierde todos los rangos que tenia_', emoji: '-' },
+                { texto: '📑📑 **CONVIVENCIA** 📑📑', desc: '🎤🎤 __CANALES DE VOZ__\nAl entrar a un CV (Canal de Voz), siempre __SALUDAR A TODOS__. Como cuando uno llega a un lugar saluda a los presentes, igual acá. Saludar a un solo miembro por llevarse bien, y no al resto, termina en una **__advertencia__**\n📜🎤 __CANALES DE VOZ/TEXTO__\nNo hay restricciones en los temas que se hablan dentro de los canales, no hay ningun problema con la ideologia de cualquier miembro del clan, sea cual sea su pensamiento de vida. Respecto a la discriminacion/chistes, no hay restricciones, a **bancarla**, si todo es con humor. **__La persona de mayor rango puede intervenir y cortar la conversacion si se fue de las manos__**', emoji: '-' },
+                { texto: '☠🚫 **STRIKES Y BANEOS** 🚫☠️', desc: '|-> **__PROHIBIDO__** pasar contenido **NSFW** en __**WHATSAPP**__ y en __**DISCORD**__ fuera del canal #nsfw\n|-> Falta de incumplimiento anterior, degradan automaticamente 1 escalafon. En caso de ser <@&521709396863090698>, es  **EXPULSION**\n|-> Los usuarios que no cumplan las reglas, pueden recibir __STRIKES__. Si se llega a la máxima cantidad (3 strikes), el usuario sera __BANEADO__  del servidor, sin posibilidad de volver', emoji: '-' },
+                { texto: '🥡🥡 **JUNTADAS** 🥡🥡', desc: '|-> Salidas por capital\n|----|-> Pueden participar todos los miembros\n|-> Asados\n|----|-> Solo miembros registrados y con rango <@&521709251941629975> hacia arriba\n|-> Reuniones\n|----|-> Solo miembros con Rango <@&517171083384979456> para arriba\n|----|-> Solo <@&517169596059615252> pueden enviar invitaciones a las reuniones\n|----|-> Con derecho de admision\n|----|-> Si un miembro envia una invitacion, podrá recibir un **ban ** o ser ** expulsado**\n|----|-> Participar ayuda a subir de rango', emoji: '❌' },
+                { texto: '📱📱 **SOCIAL MEDIA** 📱📱', desc: '|-> Canal de Youtube\n|----|-> Los miembros pueden pasarle los videos a <@&517169596059615252> para subirlos\n|----|----|-> Los videos se pasan por **DropBox / Mega / Google Drive**\n|----|----|-> Pasar Titulo y descripcion\n|-> **SE SUBE SOLO CONTENIDO DE JUEGOS**', emoji: '✅' }
             ]
         }
     ]}, kmpfCoroneles: {
@@ -45,6 +49,16 @@ export const kmpfMSG = {
         ]
     }
 };
+export const kmpfKicktxt = {
+    kick: {
+        rzn: 'INACTIVIDAD',
+        txt: '**FUE EXPULSADO POR INACTIVIDAD**\nPara reingresar al clan, acepte la invitación '
+    }, 
+    reglasX: {
+        rzn: 'RECHAZO REGLAMENTO',
+        txt: '**USTED A RECHAZO EL REGLAMENTO**\nPara reingresar al clan, acepte la invitación '
+    }
+}
 export const juegos: Array<uJuego> = [
     { nombre: 'Battlefield 1', code: 'bf1', EID: '613181668672536600' },
     { nombre: 'Battlefield 4', code: 'bf4', EID: '613182924745080862' },
@@ -56,3 +70,4 @@ export const juegos: Array<uJuego> = [
 
 export const serverID:   string = '451837050618904577';
 export const serverLink: string = 'https://discord.gg/zx9UAVx';
+/* { texto: '', desc: '', emoji: '-' }, */

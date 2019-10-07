@@ -20,23 +20,26 @@ export async function tieneRegusuario(uid: string) {
 }
 export async function newUsuario(uid: string) {
     let uDat: lProfile = {
-        uid: uid,
+        uid: '-',
         userDat: {
-            nombre: '-',
-            birth: 0,
-            steam: '-',
-            origin: '-',
-            uplay: '-',
+            loaded: false,
+            nombre: '',
+            birth: new Date(0),
+            phone: '',
+            steam: '',
+            origin: '',
+            uplay: '',
             connect: {
-                joinAt: new Date(),
-                lastAdv: -1,
-                laston: -1
+                joinAt: new Date(0),
+                lastAdv: new Date(0),
+                laston: new Date(0)
             }
         }
     }; escribirUsuario(uDat);
 }
 export async function escribirUsuario(usuario: lProfile) {
-    await firebase.database().ref('/users').child(usuario.uid).set({
+    await firebase.database().ref('/users').child(usuario.uid).update({
+        loaded: usuario.userDat.loaded,
         nombre: usuario.userDat.nombre,
         birth: usuario.userDat.birth,
         connect: {
@@ -58,10 +61,12 @@ export async function leerUsuario(uid: string) {
 export async function emptyUsuario(uid: string) {
     firebase.database().ref('/users').child(uid).on('value', snapshot => {
         let auxDat: uProfile = snapshot.val();
-        if(auxDat.nombre != '-' && auxDat.birth != '-') return true; 
+        if(!(auxDat.loaded)) return true; 
     }); return false;
 }
-export async function lastConnectionusuario(uid: string) { firebase.database().ref('/users/').child(uid).child('connect').update({ laston: new Date() });  }
+export async function lastConnectionusuario(uid: string) { 
+    await firebase.database().ref('/users/').child(uid).child('connect').update({ laston: new Date() }); 
+}
 export async function loweringRole(uid: string, client: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
         for(let i = 0; i < roles_.length; i++) {
@@ -74,8 +79,13 @@ export async function loweringRole(uid: string, client: any) {
         }
     });
 }
-export async function kickUsuario(uid: string, client: any) {
+export async function kickUsuario(uid: string, client: any, data: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
-        u.send('**FUE EXPULSADO POR INACTIVIDAD**\nPara reingresar al clan, acepte la invitación ' + serverLink).then(() => { u.kick('INACTIVIDAD'); + '\n Saludos, KMPF'});
+        u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
+    });
+}
+export async function kickUsuarioByMsg(uid: string, client: any, data: any) {
+    client.fetchMember(uid).then((u: any) => {
+        u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
     });
 }

@@ -7,8 +7,8 @@ import "firebase/database";
 //#region Mines
 import * as ConfigFile from "./config";
 import * as readyFNs   from "./periodic";
-import * as rolesFN    from "./roles";
-import * as mBOT       from "./msg"
+import { reactiones, quiteRoles } from "./roles";
+import { menuBOT } from "./msg"
 import { newUsuario, lastConnectionusuario } from "./users";
 //#endregion
 
@@ -18,23 +18,25 @@ var app: firebase.app.App = firebase.initializeApp(ConfigFile.configfb);
 client.on("ready", () => { 
     console.log("Ready to go!!!");
     readyFNs.FnPeriodic(client);
+
 });
-client.on("guildMemberAdd", member => { newUsuario(member.id); });
+client.on("guildMemberAdd", member => {  });
 client.on("message", async msg => {
-    mBOT.menuBOT(msg);
+    if(!(msg.author.bot)) { await lastConnectionusuario(msg.author.id); }
+    menuBOT(msg);
     //msg.guild.fetchMember(u => u.id ===)
 });
 client.on('messageReactionAdd', async (reaction, user) => {
-    rolesFN.ponerRoles(reaction, user);
+    reactiones(reaction, user);
     //console.log(`${user.username} reacted with "${reaction.emoji.name}".`);
 });
 client.on('messageReactionRemove', async (reaction, user) => {
-    rolesFN.quiteRoles(reaction, user);
+    quiteRoles(reaction, user);
     //console.log(`${user.username} removed their "${reaction.emoji.name}" reaction.`); 
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
-    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot)) { lastConnectionusuario(newMember.id); } 
+    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot) && (oldMember.voiceChannelID != '496525236888535042' && newMember.voiceChannelID != '496525236888535042')) { lastConnectionusuario(newMember.id); } 
     else if(newUserChannel === undefined){ /*Leaves VC*/ }
 });
 client.on("presenceUpdate", (oldMember, newMember) => {

@@ -1,14 +1,14 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
-import { lastConnectionusuario } from "./users";
+import { kmpfMSG } from "./textos";
 
 let disarmy_: boolean = true;
 const client: Discord.Client = new Discord.Client();
+const applying: any = [];
 
 export async function menuBOT(msg: any) {
     let author_ = msg.member;
-    if(!(msg.author.bot)) { lastConnectionusuario(author_.id); }
     if(msg.author.bot) { return; }
     if(msg.content.startsWith('kmpf')) {
         if(msg.content.startsWith('kmpf h') && dmMSG(msg)) {
@@ -68,17 +68,7 @@ export async function menuBOT(msg: any) {
                 let profileUser: any = null;
                 
             } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
-        } else if (msg.content.startsWith('kmpf p ') ||  msg.content.startsWith('kmpf play') && dmMSG(msg)) {
-            if (msg.member.voiceChannel) {
-                msg.member.voiceChannel.join().then((connection: any) => { 
-                    msg.reply('I have successfully connected to the channel!');
-                    playSongs(connection, '', msg, 0);
-                }).catch((err: any) => {console.log(err)});
-            } else {
-                msg.reply('You need to join a voice channel first!');
-            }
-        } else if (!disarmy_/* msg.content.startsWith('kmpf d ') ||  msg.content.startsWith('kmpf disconnect') && dmMSG(msg) */) { msg.member.voiceChannel.leave(); }
-          else if(msg.content.startsWith('kmpf ping') && dmMSG(msg)) {
+        } else if(msg.content.startsWith('kmpf ping') && dmMSG(msg)) {
             msg.reply(' Pong');
         } else if(msg.content.startsWith('kmpf jerequote') && dmMSG(msg)) {
             const jereFrases: Array<string> = ['Voy a ser mi propio JEFE', 'Estoy ganando muchos dolares en FOREX', 'Mi team es lo mejor', 'Le debo dolares a Mak', 'SOY RE JUDIO, Y QUE?']; 
@@ -86,9 +76,11 @@ export async function menuBOT(msg: any) {
         } else { if(dmMSG(msg)) msg.reply(`Lo siento pero el comando no se encontro. Escribe 'kmpf h' para más ayuda`); }
     }
 }
+
 function dmMSG(msg: any) { return msg.channel.type != 'dm' }
 function checkChannelAllow() {  }
-function playSongs(connection: any, nextSong: any, msg_: any, pos: number) {
+//#region Code ie
+/* function playSongs(connection: any, nextSong: any, msg_: any, pos: number) {
     const music: Array<any> = ['Daft Punk/(2007) Alive 2007/01 - Alive 2007.mp3', 'GARNiDELiA/Albums/[2016] Violet Cry/MP3/08. Gokuraku Joudo.mp3', '2028/Bring Me The Horizon-Can You Feel My Heart [INF1N1TE Remix].mp3', '2028/((FUTURE OF DUBSTEP 2028))).wma']
     const broadcast = client.createVoiceBroadcast();
     //broadcast.playFile('D:/Ezequiel/My Music/GARNiDELiA/Albums/[2016] Violet Cry/MP3/08. Gokuraku Joudo.mp3');
@@ -101,7 +93,7 @@ function playSongs(connection: any, nextSong: any, msg_: any, pos: number) {
             playSongs(connection, music[pos + 1], msg_, pos + 1);
         }
     });
-}
+} */
 /*
 else if( msg.content.startsWith('kmpf mvtroll') && dmMSG(msg) ) {
     if(author_.roles.has('517169596059615252') || author_.roles.has('517171083384979456') || author_.roles.has('517168972483919929')) {
@@ -112,3 +104,4 @@ else if( msg.content.startsWith('kmpf mvtroll') && dmMSG(msg) ) {
     } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
 }
 */
+//#endregion
