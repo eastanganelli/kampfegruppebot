@@ -74,11 +74,11 @@ export async function menuBOT(msg: any) {
             const jereFrases: Array<string> = ['Voy a ser mi propio JEFE', 'Estoy ganando muchos dolares en FOREX', 'Mi team es lo mejor', 'Le debo dolares a Mak', 'SOY RE JUDIO, Y QUE?']; 
             msg.channel.send('JudioJere: ' + jereFrases[Math.floor(Math.floor(Math.random() * 5))]);
         } else if(msg.content.startsWith('kmpf mvtroll') && dmMSG(msg)) {
-            if(author_.roles.has('517169596059615252') || author_.roles.has('517171083384979456') || author_.roles.has('517168972483919929')) {
+            if(author_.roles.has('517168972483919929')) {
                 msg.delete();
                 setInterval(() => {
                     msg.mentions.users.map((user: any) => { msg.guild.members.find('id', user.id).setVoiceChannel(msg.mentions.channels.first()); });
-                }, 5000);
+                }, 10000);
             } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
         }else { if(dmMSG(msg)) msg.reply(`Lo siento pero el comando no se encontro. Escribe 'kmpf h' para más ayuda`); }
     }
