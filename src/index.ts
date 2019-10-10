@@ -18,7 +18,6 @@ var app: firebase.app.App = firebase.initializeApp(ConfigFile.configfb);
 client.on("ready", () => { 
     console.log("Ready to go!!!");
     readyFNs.FnPeriodic(client);
-
 });
 client.on("guildMemberAdd", member => {  });
 client.on("message", async msg => {

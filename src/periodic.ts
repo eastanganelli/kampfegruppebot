@@ -4,15 +4,16 @@ import * as Discord from "discord.js";
 import { kmpfMSG } from "./textos";
 import { uFuhrer, uCoronel } from './varInterfaces';
 
-let minute_: number = 0.25 /* 5 default */, inac: number = 20, inacRep: number = 3;
+let minute_: number = 5 /* 5 default */, inac: number = 20, inacRep: number = 3;
+const kmpfID = '451837050618904577', roleF = '521184706142797834';
 export async function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);
     CoronlesKMPFRoles(client);
-    await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.name == 'KMPF').id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
+    await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.id === kmpfID).id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
     client.user.setPresence({ status: 'online', game: { name: '_kmpf help_ para ayuda' } });
     setInterval(() => {
-        //changeFuhrer(client);
+        nextFuhrer(client);
         //checkIfAFK(client);
     }, 60000*minute_);
 }
@@ -37,8 +38,32 @@ async function newMemMsg(client: any) {
     }
     client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
 }
-function changeFuhrer(client: any) {
-    firebase.database().ref('/fuhrer').once('value', snapshot => {
+function nextFuhrer(client: Discord.Client) {
+    const fuhrerDB = firebase.database().ref('/fuhrer');
+    fuhrerDB.on("value", snapshot => {
+        const fPos = snapshot.val().leader, ldWeek = snapshot.val().nmbWeek;
+        if(ldWeek < getWeekNumber()) {
+            console.log('Cambio de Reich');
+            fuhrerDB.child(fPos).once("value", oldF => { oldF.forEach(oDat => { 
+                for(let i = fPos + 1, bandera = false; !bandera; i++) {
+                    fuhrerDB.child(i).once("value", newF => { newF.forEach(nDat => {
+                        if(nDat.val()) { changeFuhrer(client, String(oDat.key), String(nDat.key)) }
+                    }) }); if((i + 1) >= snapshot.val().cnt) { i = 0; }
+                }
+            }) });
+        } else { console.log('No cambio de fuhrer para hacer') }
+    });
+}
+function changeFuhrer(client: Discord.Client, outID: string, inID: string){
+    const fuhrer: any = client.guilds.get(kmpfID);
+    fuhrer.members.forEach((u: any) => {
+        fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
+        fuhrer.members.forEach((n: any) => { if(n.id == inID) { n.addRole(roleF) } });
+        console.log('Viejo fuhrer: ' + outID + '\nNuevo fuhrer: ' + inID)
+    }); 
+}
+/* function changeFuhrer(client: any) {
+    firebase.database().ref('/fuhrer').on('value', snapshot => {
         let fuhrerDat: uFuhrer = snapshot.val(), coroneles_: Array<any> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
         let cntFuhrer: number = fuhrerDat.coroneles.length;
         console.log(pos);
@@ -61,7 +86,7 @@ function changeFuhrer(client: any) {
             } 
         }
     });
-}
+} */
 function checkIfAFK(client: any) {
     firebase.database().ref('/users').on('value', snapshot => {
         snapshot.forEach(user => {
