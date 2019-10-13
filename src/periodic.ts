@@ -38,7 +38,7 @@ function loadKMPFCMD(client: any) {
     //#endregion
 }
 function CoronlesKMPFRoles(client: any) {
-    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 15 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
@@ -82,31 +82,6 @@ function changeFuhrer(client: Discord.Client, outID: string, inID: string){
         console.log('Viejo fuhrer: ' + outID + '\nNuevo fuhrer: ' + inID)
     }); 
 }
-/* function changeFuhrer(client: any) {
-    firebase.database().ref('/fuhrer').on('value', snapshot => {
-        let fuhrerDat: uFuhrer = snapshot.val(), coroneles_: Array<any> = fuhrerDat.coroneles, pos: number = fuhrerDat.nmbWeek, next:number = pos + 1;
-        let cntFuhrer: number = fuhrerDat.coroneles.length;
-        console.log(pos);
-        if(fuhrerDat.nmbWeek < getWeekNumber()) {
-            let tempUidFu = coroneles_[pos].uid, tempVacNF = coroneles_[next].vac;
-            let Fuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == tempUidFu); 
-            Fuhrer.members.find((u: any) => { u.removeRole('521184706142797834'); });
-            if(tempVacNF) {
-                for(let i = next; ; i++) {
-                    const tempVac = coroneles_[i].vac;
-                    const tempUID = coroneles_[i].uid; 
-                    if(tempUID == tempUidFu) break;
-                    else if(!(tempVac)) {
-                        Fuhrer = client.guilds.find((g: any) => g.id == '451837050618904577').members.find((u: any) => u.id == tempUID);
-                        Fuhrer.addRole('521184706142797834');
-                        firebase.database().ref('/fuhrer').update({ leader: i , nmbWeek: getWeekNumber() });
-                        break;
-                    } if(i >= cntFuhrer) { i = 0; }
-                }
-            } 
-        }
-    });
-} */
 function checkIfAFK(client: any) {
     firebase.database().ref('/users').on('value', snapshot => {
         snapshot.forEach(user => {
@@ -139,15 +114,3 @@ function getDayOfYear(inDate: any) {
 function profileExists(client: any) {
 
 }
-/* firebase.database().ref('/fuhrer').set({
-    nmbWeek: getWeekNumber(),ñ
-    leader: 3,
-    coroneles: [
-        { uid: 406645486221524992, vac: true },
-        { uid: 251482884987289600, vac: false },
-        { uid: 327966508242305024, vac: false },
-        { uid: 311264984627675137, vac: false },
-        { uid: 139591319877189643, vac: false },
-    ]
-
-}); */

@@ -86,29 +86,3 @@ export async function menuBOT(msg: any) {
 
 function dmMSG(msg: any) { return msg.channel.type != 'dm' }
 function checkChannelAllow() {  }
-//#region Code ie
-/* function playSongs(connection: any, nextSong: any, msg_: any, pos: number) {
-    const music: Array<any> = ['Daft Punk/(2007) Alive 2007/01 - Alive 2007.mp3', 'GARNiDELiA/Albums/[2016] Violet Cry/MP3/08. Gokuraku Joudo.mp3', '2028/Bring Me The Horizon-Can You Feel My Heart [INF1N1TE Remix].mp3', '2028/((FUTURE OF DUBSTEP 2028))).wma']
-    const broadcast = client.createVoiceBroadcast();
-    //broadcast.playFile('D:/Ezequiel/My Music/GARNiDELiA/Albums/[2016] Violet Cry/MP3/08. Gokuraku Joudo.mp3');
-    if(pos == 0) { nextSong = music[0]; }
-    const playing = connection.playFile('D:/Ezequiel/My Music/' + nextSong).on('start', () => {
-    });
-    playing.on('end', (reason_: any) => {
-        if(pos == music.length) { msg_.member.voiceChannel.leave(); }
-        else {
-            playSongs(connection, music[pos + 1], msg_, pos + 1);
-        }
-    });
-} */
-/*
-else if( msg.content.startsWith('kmpf mvtroll') && dmMSG(msg) ) {
-    if(author_.roles.has('517169596059615252') || author_.roles.has('517171083384979456') || author_.roles.has('517168972483919929')) {
-        msg.delete();
-        setInterval(() => {
-            msg.mentions.users.map(user => { msg.guild.members.find('id', user.id).setVoiceChannel(msg.mentions.channels.first()); });
-        }, 5000);
-    } else { msg.delete(); msg.author.send("no tienes el permiso para usar el comando."); }
-}
-*/
-//#endregion
