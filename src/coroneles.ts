@@ -15,7 +15,7 @@ export async function fOnVac(fuhrer: string, inVac: boolean) {
         case '32796650824230500': { pos = 2; break; }
         case '311264984627675140:': { pos = 3; break; }
         case '13959131987718965': { pos = 4; break; }
-    } if(pos > -1 && pos < 5) { firebase.database().ref('/fuhrer').child(String(pos)).update({ fuhrer: inVac }) }
+    } if(pos > -1 && pos < 5) { firebase.database().ref('/fuhrer').child(String(pos)).child(fuhrer).update(inVac) }
 }
 export async function usersNoRegis(dsCh: Discord.Channel) {
     const dsClient: any = dsCh.client;
