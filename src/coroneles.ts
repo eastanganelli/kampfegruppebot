@@ -23,7 +23,7 @@ export async function usersNoRegis(dsCh: Discord.Channel) {
     let fUsers = firebase.database().ref('/users'), arrUID: Array<string> = new Array(0);
     fUsers.on('value', async snapshot => {
         let msgEmb: Discord.RichEmbed = new Discord.RichEmbed;
-        msgEmb.setTitle('**USUARIOS NO REGISTRADOS**').setDescription("_______________").setFooter('El mensaje se eliminara en 5 MIN || ✅ -> Enviar Notificacion');
+        msgEmb.setTitle('**USUARIOS NO REGISTRADOS**').setDescription("_______________\n✅ -> Enviar Notificacion\n_______________").setFooter('El mensaje se eliminara en 2 MIN o al enviar la/s NOTIFICACION/ES');
         snapshot.forEach(snap => {
             let auxU: uProfile = snap.val();
             if(auxU.loaded = false || auxU.loaded == undefined) {

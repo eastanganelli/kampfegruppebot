@@ -6,7 +6,7 @@ import { uFuhrer, uCoronel } from './varInterfaces';
 
 let minute_: number = 5 /* 5 default */, inac: number = 20, inacRep: number = 3;
 const kmpfID = '451837050618904577', roleF = '521184706142797834';
-const STATEbot: number = 2;
+const STATEbot: number = 3;
 export function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);

@@ -15,7 +15,7 @@ const Discord = require("discord.js");
 const textos_1 = require("./textos");
 let minute_ = 5, inac = 20, inacRep = 3;
 const kmpfID = '451837050618904577', roleF = '521184706142797834';
-const STATEbot = 2;
+const STATEbot = 3;
 function FnPeriodic(client) {
     newMemMsg(client);
     loadKMPFCMD(client);
