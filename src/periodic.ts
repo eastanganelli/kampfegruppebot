@@ -2,7 +2,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import * as Discord from "discord.js";
 import { kmpfMSG } from "./textos";
-import { uFuhrer, uCoronel } from './varInterfaces';
 
 let minute_: number = 5 /* 5 default */, inac: number = 20, inacRep: number = 3;
 const kmpfID = '451837050618904577', roleF = '521184706142797834';
