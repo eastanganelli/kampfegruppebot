@@ -11,21 +11,22 @@ export function reactiones(reaction: any, user: any) {
         switch(reaction.message.channel.id) {
             case '614258469066768424':{
                 switch(reaction.emoji.name) {
-                    case "✏":  { CargarPerfil(user, reaction); reaction.remove(user.id); break; }
+                    case "✏":  { CargarPerfil(user, reaction); break; }
                     case "🔞":  { guildMember.addRole('623668486060638228');    break; }
                     
-                } break;
+                } reaction.remove(user.id); 
+                break;
             } case '611501042210963456': {
                 switch(reaction.emoji.name){
-                    case "✅":  { CargarPerfil(user, reaction); reaction.remove(user.id); break; }
-                    case "❌":  { kickUsuarioByMsg(user.id, reaction.message.guild, kmpfKicktxt.reglasX); reaction.remove(user.id); break; }
-                }
+                    case "✅":  { CargarPerfil(user, reaction); break; }
+                    case "❌":  { kickUsuarioByMsg(user.id, reaction.message.guild, kmpfKicktxt.reglasX); break; }
+                } reaction.remove(user.id);
                 break;
             } case '620642948660330506': {
                 switch(reaction.emoji.name){
-                    case "🏠":  { fOnVac(user.id, false); break; }
-                    case "⛱":  { fOnVac(user.id, true); break; }
-                    case "🔴":  { usersNoRegis(reaction.message.channel); break; }
+                    case "🏠":  { fOnVac(user.id, false); reaction.remove(user.id); break; }
+                    case "⛱":  { fOnVac(user.id, true); reaction.remove(user.id); break; }
+                    case "🔴":  { usersNoRegis(reaction.message.channel); reaction.remove(user.id); break; }
                 }
                 break;
             }

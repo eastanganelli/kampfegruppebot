@@ -6,28 +6,48 @@ import { uFuhrer, uCoronel } from './varInterfaces';
 
 let minute_: number = 5 /* 5 default */, inac: number = 20, inacRep: number = 3;
 const kmpfID = '451837050618904577', roleF = '521184706142797834';
-export async function FnPeriodic(client: any) {
+const STATEbot: number = 2;
+export function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);
     CoronlesKMPFRoles(client);
-    await firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.id === kmpfID).id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
-    client.user.setPresence({ status: 'online', game: { name: '_kmpf help_ para ayuda' } });
+    firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.id === kmpfID).id))))).then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
+    BOTstate(client);
     setInterval(() => {
         nextFuhrer(client);
         //checkIfAFK(client);
     }, 60000*minute_);
 }
-async function loadKMPFCMD(client: any) {
+function BOTstate(client: Discord.Client) {
+    let state_: any = new String;
+    switch(STATEbot){
+        case 0: { state_ = { status: 'dnd',    game: { name: 'MODO DESARROLLO' } }; break; }
+        case 1: { state_ = { status: 'idle',   game: { name: 'MODO PRUEBA' } }; break; }
+        case 2: { state_ = { status: 'online', game: { name: 'MODO PRUEBA Y DESARROLLO' } }; break; }
+        case 3: { state_ = { status: 'online', game: { name: '_kmpf help_ para ayuda' } }; break; }
+    } client.user.setPresence(state_);
+}
+function loadKMPFCMD(client: any) {
     client.channels.get(kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 4 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfroles.Arr) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
             for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
+            client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
         }
     //#endregion
 }
-async function newMemMsg(client: any) {
+function CoronlesKMPFRoles(client: any) {
+    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    //#region kmpfMSG
+        for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
+            let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+            for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
+            client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+        }
+    //#endregion
+}
+function newMemMsg(client: any) {
     client.channels.get(kmpfMSG.kmpfrules.MC).fetchMessages({ limit: 1 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     let msg: Discord.RichEmbed = new Discord.RichEmbed, rules_: any = kmpfMSG.kmpfrules.Arr[0], emojiArr: any = new Array(0);
     msg.setTitle(rules_.titulo);
@@ -36,7 +56,7 @@ async function newMemMsg(client: any) {
         msg.addField(rule.texto, rule.desc);
         if(rule.emoji != '-') emojiArr.push(rule.emoji);
     }
-    client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
+    client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
 }
 function nextFuhrer(client: Discord.Client) {
     const fuhrerDB = firebase.database().ref('/fuhrer');
@@ -98,16 +118,6 @@ function checkIfAFK(client: any) {
             }
         });
     });
-}
-function CoronlesKMPFRoles(client: any) {
-    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 3 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
-    //#region kmpfMSG
-        for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
-            let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
-            for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then((sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { sendEmbed.react(String(e_)); } } });
-        }
-    //#endregion
 }
 function getWeekNumber() {
     let d: any = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));

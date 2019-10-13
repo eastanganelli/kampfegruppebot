@@ -1,7 +1,6 @@
 //#region Plug
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
-import * as fs         from "fs";
 import "firebase/database";
 //#endregion
 //#region Mines
