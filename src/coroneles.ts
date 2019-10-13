@@ -10,11 +10,11 @@ export async function perfiluser(msg: Discord.Message) {
 export async function fOnVac(fuhrer: string, inVac: boolean) {
     let pos: string = '';
     switch(fuhrer) {
-        case '406645486221525000':  { pos = '0'; break; }
+        case '406645486221524992':  { pos = '0'; break; }
         case '251482884987289600':  { pos = '1'; break; }
-        case '32796650824230500':   { pos = '2'; break; }
-        case '311264984627675140:': { pos = '3'; break; }
-        case '13959131987718965':   { pos = '4'; break; }
+        case '327966508242305024':   { pos = '2'; break; }
+        case '311264984627675137:': { pos = '3'; break; }
+        case '139591319877189643':   { pos = '4'; break; }
     } firebase.database().ref('/fuhrer').child(pos).child(fuhrer).update(inVac)
 }
 export async function usersNoRegis(dsCh: Discord.Channel) {
