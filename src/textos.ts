@@ -20,7 +20,7 @@ export const kmpfMSG = {
         MC: '611501042210963456',
         Arr: [{
             titulo: '📚📚 **REGLAS** 📚📚',
-            desc: '**ESCRIBIR** _#acepto_ o _#rechazo_ a las reglas',
+            desc: '**✅_ACEPTAR_ o ❌_RECHAZAR_ a las reglas**',
             data: [
                 { texto: '⚠️💤 **INACTIVIDAD** 💤⚠️', desc: '_En canales de **DISCORD** (texto y voz)_\n|-> 20 dias de inactividad, <@594571311171371008> **_(BOT)_** envia una alerta por Mensaje Privado (MP)\n|-> Se tiene un plazo de 3 días para volver a participar en los canales\n|-> Si no se cumple lo dicho anteriormente, descenderá de rango hasta ser @Candidato (@Invitados tienen expulsión directa)\nℹ️ℹ️ _Si es **EXPULSADO**, <@594571311171371008> **(BOT)** le enviara un MP con un URL para reingresar al servidor, pero pierde todos los rangos que tenia_', emoji: '-' },
                 { texto: '📑📑 **CONVIVENCIA** 📑📑', desc: '🎤🎤 __CANALES DE VOZ__\nAl entrar a un CV (Canal de Voz), siempre __SALUDAR A TODOS__. Como cuando uno llega a un lugar saluda a los presentes, igual acá. Saludar a un solo miembro por llevarse bien, y no al resto, termina en una **__advertencia__**\n📜🎤 __CANALES DE VOZ/TEXTO__\nNo hay restricciones en los temas que se hablan dentro de los canales, no hay ningun problema con la ideologia de cualquier miembro del clan, sea cual sea su pensamiento de vida. Respecto a la discriminacion/chistes, no hay restricciones, a **bancarla**, si todo es con humor. **__La persona de mayor rango puede intervenir y cortar la conversacion si se fue de las manos__**', emoji: '-' },
@@ -36,14 +36,15 @@ export const kmpfMSG = {
                 desc: ':exclamation::exclamation: _UTILIZAR LAS ACCIONES CON RESPONSABILIDAD_',
                 data: [
                     { texto: '**PRUNE** _(DESHABILITADO)_', desc: 'Elimina a todos los jugadores ya inactivos hace 30 o más días', emoji: '❌' },
-                    { texto: '**PERFILES DE USUARIOS** _(DESHABILITADO)_', desc: 'Permite ver los perfil de los usuarios, votar para eliminar, enviar msj de advertencia', emoji: '📁' }
+                    /* { texto: '**PERFILES DE USUARIOS** _(DESHABILITADO)_', desc: 'Permite ver los perfil de los usuarios, votar para eliminar, enviar msj de advertencia', emoji: '📁' }, */
+                    { texto: '**LISTA NO REGISTRADOS** ', desc: 'Ver lista de usuarios __NO REGISTRADOS__', emoji: '🔴' }
                 ]
             }, {
                 titulo: '_**KMPF FÜHRER**_',
                 desc: ' ',
                 data: [
-                    { texto: '**PRESENTE** _(DESHABILITADO)_', desc: 'Permite vovler a ser Führer', emoji: '🏠' },
-                    { texto: '**AUSENTE** _(DESHABILITADO)_', desc: 'Le saltea en Orden Führer por ausencia', emoji: '⛱' }
+                    { texto: '**PRESENTE**', desc: 'Permite vovler a ser Führer', emoji: '🏠' },
+                    { texto: '**AUSENTE**', desc: 'Le saltea en Orden Führer por ausencia', emoji: '⛱' }
                 ]
             }
         ]

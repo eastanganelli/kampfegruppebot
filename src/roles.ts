@@ -1,6 +1,7 @@
 import { CargarPerfil } from "./profile";
 import { kickUsuarioByMsg } from "./users";
 import { kmpfKicktxt } from "./textos";
+import { fOnVac, usersNoRegis } from "./coroneles";
 
 const roleARR = ['521184706142797834', '517169596059615252', '517171083384979456', '521709081757745172', '521709251941629975', '517171515071135764', '521709396863090698'];
 const RepreARR = ['614411015236616206', '614411509036089346', '614410633282191371'], candidato = '521709396863090698', invitado = '533069497561513994';
@@ -14,11 +15,17 @@ export function reactiones(reaction: any, user: any) {
                     case "🔞":  { guildMember.addRole('623668486060638228');    break; }
                     
                 } break;
-            }
-            case '611501042210963456': {
+            } case '611501042210963456': {
                 switch(reaction.emoji.name){
                     case "✅":  { CargarPerfil(user, reaction); reaction.remove(user.id); break; }
                     case "❌":  { kickUsuarioByMsg(user.id, reaction.message.guild, kmpfKicktxt.reglasX); reaction.remove(user.id); break; }
+                }
+                break;
+            } case '620642948660330506': {
+                switch(reaction.emoji.name){
+                    case "🏠":  { fOnVac(user.id, false); break; }
+                    case "⛱":  { fOnVac(user.id, true); break; }
+                    case "🔴":  { usersNoRegis(reaction.message.channel); break; }
                 }
                 break;
             }

@@ -73,7 +73,7 @@ export async function menuBOT(msg: any) {
         } else if(msg.content.startsWith('kmpf jerequote') && dmMSG(msg)) {
             const jereFrases: Array<string> = ['Voy a ser mi propio JEFE', 'Estoy ganando muchos dolares en FOREX', 'Mi team es lo mejor', 'Le debo dolares a Mak', 'SOY RE JUDIO, Y QUE?']; 
             msg.channel.send('JudioJere: ' + jereFrases[Math.floor(Math.floor(Math.random() * 5))]);
-        } else if(msg.content.startsWith('kmpf mvtroll') && dmMSG(msg)) {
+        } else if(msg.content.startsWith('kmpf mvtroll') /* && dmMSG(msg) */) {
             if(author_.roles.has('517168972483919929')) {
                 msg.delete();
                 setInterval(() => {
