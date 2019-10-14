@@ -12,8 +12,7 @@ export function reactiones(reaction: any, user: any) {
             case '614258469066768424':{
                 switch(reaction.emoji.name) {
                     case "✏":  { CargarPerfil(user, reaction); break; }
-                    case "🔞":  { guildMember.addRole('623668486060638228');    break; }
-                    
+                    case "🔞":  { guildMember.addRole('623668486060638228'); break; }
                 } reaction.remove(user.id); 
                 break;
             } case '611501042210963456': {
@@ -27,8 +26,7 @@ export function reactiones(reaction: any, user: any) {
                     case "🏠":  { fOnVac(user.id, false); reaction.remove(user.id); break; }
                     case "⛱":  { fOnVac(user.id, true); reaction.remove(user.id); break; }
                     case "🔴":  { usersNoRegis(reaction.message.channel); reaction.remove(user.id); break; }
-                }
-                break;
+                } break;
             }
         }
     }
