@@ -17,13 +17,13 @@ export async function fOnVac(fuhrer: string, inVac: boolean) {
         case '139591319877189643':   { pos = '4'; break; }
     } firebase.database().ref('/fuhrer').child(pos).update({ 'vac': inVac });
 }
-export async function usersNoRegis(dsCh: Discord.Channel) {
+export function usersNoRegis(dsCh: Discord.Channel) {
     const dsClient: any = dsCh.client;
     const dsChnnl: any = dsClient.channels.get(dsCh.id);
     let fUsers = firebase.database().ref('/users'), arrUID: Array<string> = new Array(0);
     fUsers.on('value', async snapshot => {
         let msgEmb: Discord.RichEmbed = new Discord.RichEmbed;
-        msgEmb.setTitle('**USUARIOS NO REGISTRADOS**').setDescription("✅ -> Enviar Notificacion\n_______________").setFooter('El mensaje se eliminara en 2 MIN o al enviar la/s NOTIFICACION/ES');
+        msgEmb.setTitle('**USUARIOS NO REGISTRADOS**').setDescription("✅ -> Enviar Notificacion\n_______________").setFooter('El mensaje se eliminara en 1 MIN o al enviar las NOTIFICACIONES');
         snapshot.forEach(snap => {
             let auxU: uProfile = snap.val();
             if(auxU.loaded = false || auxU.loaded == undefined) {
@@ -34,7 +34,7 @@ export async function usersNoRegis(dsCh: Discord.Channel) {
         dsChnnl.send(msgEmb).then(async (m: Discord.Message) => { 
             m.react('✅');
             const filter = (reaction: Discord.MessageReaction, user: Discord.User) => { return ['✅'].includes(reaction.emoji.name) && !(user.bot); };
-            m.awaitReactions(filter, { max: 1, time: min*2, errors: ['time'] }).then((collected: any) => {
+            m.awaitReactions(filter, { max: 1, time: min*1, errors: ['time'] }).then((collected: any) => {
                 console.log(collected);
                 const reaction = collected.first();
                 if(reaction.emoji.name == '✅') {
@@ -44,4 +44,7 @@ export async function usersNoRegis(dsCh: Discord.Channel) {
             }).catch(() => { m.delete(); })
         })
     })
+}
+export function banUsuario() {
+    
 }

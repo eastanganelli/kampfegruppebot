@@ -23,7 +23,7 @@ function BOTstate(client: Discord.Client) {
         case 0: { state_ = { status: 'dnd',    game: { name: 'MODO DESARROLLO' } }; break; }
         case 1: { state_ = { status: 'idle',   game: { name: 'MODO PRUEBA' } }; break; }
         case 2: { state_ = { status: 'online', game: { name: 'MODO PRUEBA Y DESARROLLO' } }; break; }
-        case 3: { state_ = { status: 'online', game: { name: '_kmpf help_ para ayuda' } }; break; }
+        case 3: { state_ = { status: 'online', game: { name: 'kmpf help para ayuda' } }; break; }
     } client.user.setPresence(state_);
 }
 function loadKMPFCMD(client: any) {
@@ -37,7 +37,7 @@ function loadKMPFCMD(client: any) {
     //#endregion
 }
 function CoronlesKMPFRoles(client: any) {
-    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 15 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 25 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
