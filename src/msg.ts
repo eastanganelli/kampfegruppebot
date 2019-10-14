@@ -54,7 +54,7 @@ function helpMsg(msg: Discord.Message, author: any) {
             case '517168972483919929': { //Dev
                 userCommands.push({ name: "'kmpf -r'",    value: "Reinicia BOT __SOLO DEV LEADER__"});
                 userCommands.push({ name: "'kmpf -s'",    value: "Apaga BOT __SOLO DEV LEADER__"});
-                userCommands.push({ name: "'kmpf state'", value: "Cambia el estado [0: **DESARROLLO** | 1: **ACTIVO**]"});
+                userCommands.push({ name: "'kmpf -st'", value: "Cambia el estado [0: **DESARROLLO** | 1: **ACTIVO**]"});
                 userCommands.push({ name: "'kmpf ping'",  value: "Devuelve el PING"});
                 break;
             }

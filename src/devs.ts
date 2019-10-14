@@ -3,19 +3,20 @@ import * as Discord    from "discord.js";
 import { config } from "./config";
 import * as firebase from 'firebase/app';
 import "firebase/database";
+import { stat } from "fs";
 //#endregion
 
 //#region KMPF CMD
 export function offBOT(author: any, channel: any) {
     if(author.roles.has('517168972483919929') && channel.id === '611502712571559950') {
         const auxClient = channel.client;
-        channel.send('Shutdown...').then((msg: any) => { auxClient.destroy(); msg.delete(15000); });
+        channel.send('Shutdown...').then(async (msg: any) => { await auxClient.destroy(); await msg.delete(10000); });
     }
 }
 export function resetBOT(author: any, channel: any) {
     if(author.roles.has('517168972483919929') && channel.id === '611502712571559950') {
         const auxClient = channel.client;
-        channel.send('Reset...').then((msg: any) => { auxClient.destroy(); msg.delete(15000); }).then(() => auxClient.login(config.token));
+        channel.send('Reset...').then((msg: any) => auxClient.destroy() ).then((msg2: any) => { auxClient.login(config.token); msg2.delete(); });
     }
 }
 //#region  BOT STATE
