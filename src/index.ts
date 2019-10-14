@@ -2,17 +2,17 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
+import { config, configfb } from "./config";
 //#endregion
-//#region Mines
-import * as ConfigFile from "./config";
+//#region FN
 import * as readyFNs   from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg"
-import { newUsuario, lastConnectionusuario } from "./users";
+import { lastConnectionusuario } from "./users";
 //#endregion
 
 const client: Discord.Client = new Discord.Client();
-var app: firebase.app.App = firebase.initializeApp(ConfigFile.configfb);
+var app: firebase.app.App = firebase.initializeApp(configfb);
 
 client.on("ready", () => { 
     console.log("Ready to go!!!");
@@ -21,6 +21,7 @@ client.on("ready", () => {
 client.on("guildMemberAdd", member => {  });
 client.on("message", async msg => {
     if(!(msg.author.bot)) { await lastConnectionusuario(msg.author.id); }
+    if(msg.author.bot)    { return; }
     menuBOT(msg);
     //msg.guild.fetchMember(u => u.id ===)
 });
@@ -51,4 +52,4 @@ client.on("presenceUpdate", (oldMember, newMember) => {
     console.log(newMember.user.username + ' is now ' + newMember.presence.status); } 
 });
  
-client.login(ConfigFile.config.token);
+client.login(config.token);

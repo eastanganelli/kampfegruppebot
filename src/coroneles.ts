@@ -1,12 +1,11 @@
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
+import "firebase/database";
 import { uProfile } from "./varInterfaces";
 
 const min: number = 60000;
 
-export async function perfiluser(msg: Discord.Message) {
-    
-}
+//#region KMPF Emoji
 export async function fOnVac(fuhrer: string, inVac: boolean) {
     let pos: string = '';
     switch(fuhrer) {
@@ -45,6 +44,23 @@ export function usersNoRegis(dsCh: Discord.Channel) {
         })
     })
 }
+//#endregion
+//#region KMPF CMD
+export async function perfiluser(msg: Discord.Message, author_: any) {
+    if(author_.roles.has('517168972483919929')) {
+        let MSG_ = msg.content.split('kmpf perfil ').slice(0);
+        let profileUser: any = null;
+        
+    } else { msg.author.send("no tienes el permiso para usar el comando."); }
+}
+
 export function banUsuario() {
     
 }
+export function dmALL(msg: Discord.Message, author_: any) {
+    if(author_.roles.has('517169596059615252')) {
+        let MSG_ = msg.content.split('kmpf dmall ').slice(1);
+        msg.guild.members.forEach((user: any) => { console.log(MSG_); user.send(MSG_); });
+    } else { msg.author.send("No tienes el permiso para usar el comando."); }
+}
+//#endregion

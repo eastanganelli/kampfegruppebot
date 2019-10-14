@@ -1,5 +1,5 @@
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import * as firebase   from "firebase/app";
+import "firebase/database";
 import { lProfile, uProfile } from './varInterfaces';
 import { serverID, serverLink } from "./textos";
 
@@ -13,30 +13,7 @@ let roles_: Array<string> = [
     '533069497561513994'  //Invitado
 ];
 
-export async function tieneRegusuario(uid: string) {
-    firebase.database().ref('/users').equalTo(uid).once('value', snapshot => {
-        if(!(snapshot.exists())) { newUsuario(uid); }
-    });
-}
-export async function newUsuario(uid: string) {
-    let uDat: lProfile = {
-        uid: '-',
-        userDat: {
-            loaded: false,
-            nombre: '',
-            birth: new Date(0),
-            phone: '',
-            steam: '',
-            origin: '',
-            uplay: '',
-            connect: {
-                joinAt: new Date(0),
-                lastAdv: new Date(0),
-                laston: new Date(0)
-            }
-        }
-    }; escribirUsuario(uDat);
-}
+//#region DB Fns
 export async function escribirUsuario(usuario: lProfile) {
     await firebase.database().ref('/users').child(usuario.uid).update({
         loaded: usuario.userDat.loaded,
@@ -65,6 +42,12 @@ export async function emptyUsuario(uid: string) {
     }); return false;
 }
 export async function lastConnectionusuario(uid: string) { await firebase.database().ref('/users/').child(uid).child('connect').update({ laston: new Date() }) }
+//#endregion
+//#region Server Fns
+//#region Roles
+
+//#endregion
+//#region Inactividad
 export async function loweringRole(uid: string, client: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
         for(let i = 0; i < roles_.length; i++) {
@@ -77,6 +60,8 @@ export async function loweringRole(uid: string, client: any) {
         }
     });
 }
+//#endregion
+//#region Expulsion & Ban
 export async function kickUsuario(uid: string, client: any, data: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
         u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
@@ -87,3 +72,5 @@ export async function kickUsuarioByMsg(uid: string, client: any, data: any) {
         u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
     });
 }
+//#endregion
+//#endregion

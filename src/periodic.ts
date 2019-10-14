@@ -2,10 +2,10 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import * as Discord from "discord.js";
 import { kmpfMSG } from "./textos";
+import { BOTstate } from './devs';
 
 let minute_: number = 60000 /* 5 default */, inac: number = 20, inacRep: number = 3;
 const kmpfID = '451837050618904577', roleF = '521184706142797834';
-const STATEbot: number = 3;
 export function FnPeriodic(client: any) {
     newMemMsg(client);
     loadKMPFCMD(client);
@@ -16,15 +16,6 @@ export function FnPeriodic(client: any) {
         nextFuhrer(client);
         //checkIfAFK(client);
     }, 15*minute_);
-}
-function BOTstate(client: Discord.Client) {
-    let state_: any = new String;
-    switch(STATEbot){
-        case 0: { state_ = { status: 'dnd',    game: { name: 'MODO DESARROLLO' } }; break; }
-        case 1: { state_ = { status: 'idle',   game: { name: 'MODO PRUEBA' } }; break; }
-        case 2: { state_ = { status: 'online', game: { name: 'MODO PRUEBA Y DESARROLLO' } }; break; }
-        case 3: { state_ = { status: 'online', game: { name: 'kmpf help para ayuda' } }; break; }
-    } client.user.setPresence(state_);
 }
 function loadKMPFCMD(client: any) {
     client.channels.get(kmpfMSG.kmpfroles.MC).fetchMessages({ limit: 4 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
