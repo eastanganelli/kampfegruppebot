@@ -40,14 +40,14 @@ export function usersNoRegis(dsCh: Discord.Channel) {
         dsChnnl.send(msgEmb).then(async (m: Discord.Message) => { 
             m.react('📨');
             const filter = (reaction: Discord.MessageReaction, user: Discord.User) => { return ['📨'].includes(reaction.emoji.name) && !(user.bot); };
-            m.awaitReactions(filter, { max: 1, time: min*1, errors: ['time'] }).then((collected: any) => {
+            m.awaitReactions(filter, { max: 1, time: min, errors: ['time'] }).then((collected: any) => {
                 //console.log(collected);
                 const reaction = collected.first();
                 if(reaction.emoji.name == '📨') {
                     for(let id_ of arrUID) { dsClient.guilds.first().members.get(id_).send('<@' + id_ + '>\nTiene que registrarse\nIr a _BOTS_ -> _#kmpf_ -> Hacer click en :pencil2:\n**KMPF**'); }
                     m.delete();
                 }
-            }).then((om: any) => { m.delete() } );
+            }).catch(async () => {  await m.delete(100) } );
         })
     })
 }
