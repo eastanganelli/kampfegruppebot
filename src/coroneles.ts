@@ -38,7 +38,7 @@ export function usersNoRegis(dsCh: Discord.Channel) {
             }
         }); 
         dsChnnl.send(msgEmb).then(async (m: Discord.Message) => { 
-            m.react('✅');
+            m.react('📨');
             const filter = (reaction: Discord.MessageReaction, user: Discord.User) => { return ['📨'].includes(reaction.emoji.name) && !(user.bot); };
             m.awaitReactions(filter, { max: 1, time: min*1, errors: ['time'] }).then((collected: any) => {
                 //console.log(collected);
