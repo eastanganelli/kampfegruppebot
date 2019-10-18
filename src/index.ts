@@ -1,3 +1,4 @@
+//#region IMPORTS
 //#region Plug
 import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
@@ -9,6 +10,7 @@ import * as readyFNs   from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg"
 import { lastConnectionusuario } from "./users";
+//#endregion
 //#endregion
 
 const client: Discord.Client = new Discord.Client();

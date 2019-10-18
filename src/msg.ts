@@ -1,7 +1,13 @@
+//#region IMPORTS
+//#region Plug
 import * as Discord from "discord.js";
 import "firebase/database";
+//#endregion
+//#region KMPF
 import { dmALL } from "./coroneles";
-import { resetBOT, offBOT, BOTstate, changeSTATE } from "./devs";
+import { resetBOT, offBOT, changeSTATE } from "./devs";
+//#endregion
+//#endregion
 
 let disarmy_: boolean = true;
 const client: Discord.Client = new Discord.Client();

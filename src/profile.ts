@@ -1,8 +1,14 @@
+//#region IMPORTS
+//#region Plug
 import * as firebase from "firebase/app";
+import "firebase/database";
+//#endregion
+//#region KMPF
 import { lProfile } from "./varInterfaces";
 import { sinRango } from "./roles";
-import "firebase/database";
 import { escribirUsuario } from "./users";
+//#endregion
+//#endregion
 
 const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
     { txt: "Nombre **ie: _Pedro_**", react: false },                  //

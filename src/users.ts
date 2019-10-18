@@ -1,17 +1,15 @@
+//#region IMPORTS
+//#region Plug
+import * as Discord    from "discord.js";
 import * as firebase   from "firebase/app";
 import "firebase/database";
+//#endregion
+//#region KMPF
 import { lProfile, uProfile } from './varInterfaces';
-import { serverID, serverLink } from "./textos";
-
-let roles_: Array<string> = [
-    '517169596059615252', //Coronel
-    '517171083384979456', //Teniente
-    '521709081757745172', //Subteniente
-    '521709251941629975', //Cabo Primero
-    '517171515071135764', //Soldado Raso
-    '521709396863090698', //Candidato
-    '533069497561513994'  //Invitado
-];
+import { serverID, serverLink, roles } from "./const";
+import { getDayOfYear, getWeekNumber } from "./datentime";
+//#endregion
+//#endregion
 
 //#region DB Fns
 export async function escribirUsuario(usuario: lProfile) {
@@ -48,14 +46,14 @@ export async function lastConnectionusuario(uid: string) { await firebase.databa
 
 //#endregion
 //#region Inactividad
-export async function loweringRole(uid: string, client: any) {
+export async function downgradingRank(uid: string, client: any) {
     client.guilds.find((g: any) => g.id == serverID).fetchMember(uid).then((u: any) => {
-        for(let i = 0; i < roles_.length; i++) {
-            if(u.roles.has(roles_[i])) {
-                console.log('Tiene pos: ' + i);
+        for(let i = 0; i < roles.length; i++) {
+            if(u.roles.has(roles[i]) && i < roles.length) {
+                console.log('Username: ' + u.name);
                 firebase.database().ref('/users').child(uid).child('connect').update({ lastadv: new Date() });
-                u.addRole(roles_[i + 1]);
-                u.removeRole(roles_[i]);
+                u.addRole(roles[i + 1]);
+                u.removeRole(roles[i]);
             }
         }
     });
@@ -71,6 +69,35 @@ export async function kickUsuarioByMsg(uid: string, client: any, data: any) {
     client.fetchMember(uid).then((u: any) => {
         u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
     });
+}
+//#endregion
+//#endregion
+//#region KMPF FNs
+//#region checkIf
+export function checkIfAFK(client: any) {
+    const usersfb = firebase.database().ref('/users');
+    usersfb.once('value', snapshot => {
+        snapshot.forEach(snap => {
+            let auxuser: uProfile = snap.val();
+            let daydif = getDayOfYear(auxuser.connect.laston);
+            if(daydif >= 14 && daydif < 21) {
+                const msg_: string = '<@' + snap.key + '>\nLleva ' + daydif + ' días de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF';
+                client.fetchMember(snap.key).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
+            } else if (daydif >= 21) {
+                if(Number(auxuser.connect.lastAdv) < getWeekNumber()) {
+                    const msg_: string = '<@' + snap.key + '>\nSu rango fue __DESCENDIDO__!\nSeguira descendiendo, hasta que presente actividad.\n:warning::warning:Recuerde: **Si llega a rango __CANDIDATO__, y no presento actividad, sera expulsado.**:warning::warning:\nKMPF';
+                    client.fetchMember(snap.key).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
+                }
+            }
+        });
+    });
+}
+export function checkIfCumple(client: Discord.Client) {
+    const userfb = firebase.database().ref('/users');
+    
+}
+export function checkIfleft() {
+
 }
 //#endregion
 //#endregion

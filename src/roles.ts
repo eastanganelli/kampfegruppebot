@@ -1,7 +1,14 @@
+//#region IMPORTS
+//#region Plug
+
+//#endregion
+//#region KMPF
 import { CargarPerfil } from "./profile";
 import { kickUsuarioByMsg } from "./users";
-import { kmpfKicktxt } from "./textos";
+import { kmpfKicktxt } from "./const";
 import { fOnVac, usersNoRegis } from "./coroneles";
+//#endregion
+//#endregion
 
 const roleARR = ['521184706142797834', '517169596059615252', '517171083384979456', '521709081757745172', '521709251941629975', '517171515071135764', '521709396863090698'];
 const RepreARR = ['614411015236616206', '614411509036089346', '614410633282191371'], candidato = '521709396863090698', invitado = '533069497561513994';
