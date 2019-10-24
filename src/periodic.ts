@@ -12,7 +12,7 @@ import { checkIfAFK, checkIfCumple } from './users';
 //#endregion
 //#endregion
 
-let minute_: number = 60000 /* 5 default */, hour_ = 3600, inac: number = 20, inacRep: number = 3;
+let minute_: number = 60000 /* 5 default */, hour_ = 60, inac: number = 20, inacRep: number = 3;
 
 export function FnPeriodic(client: any) {
     //#region KMPF Loads
@@ -30,11 +30,11 @@ function kmpfFB(client: any) {
 
 }
 function kmpfPeriodic(client: any) {
-    setInterval(() => { nextFuhrer(client) }, 15*minute_ ); //Reich changer
+    setInterval(() => { nextFuhrer(client) }, 15*minute_); //Reich changer
     setInterval(() => { 
         checkIfAFK(client);
         checkIfCumple(client);
-    }, hour_*24 );
+    }, minute_*hour_*24);
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME

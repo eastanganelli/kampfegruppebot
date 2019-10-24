@@ -82,11 +82,11 @@ export function checkIfAFK(client: any) {
             let daydif = getDayOfYear(auxuser.connect.laston);
             if(daydif >= 14 && daydif < 21) {
                 const msg_: string = '<@' + snap.key + '>\nLleva ' + daydif + ' días de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF';
-                client.fetchMember(snap.key).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
+                client.users.get(String(snap.key)).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
             } else if (daydif >= 21) {
                 if(Number(auxuser.connect.lastAdv) < getWeekNumber()) {
                     const msg_: string = '<@' + snap.key + '>\nSu rango fue __DESCENDIDO__!\nSeguira descendiendo, hasta que presente actividad.\n:warning::warning:Recuerde: **Si llega a rango __CANDIDATO__, y no presento actividad, sera expulsado.**:warning::warning:\nKMPF';
-                    client.fetchMember(snap.key).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
+                    client.users.get(String(snap.key)).send(msg_).then(() => { usersfb.child(String(snap.key)).child('connect').update({ lastadv: getWeekNumber() }); });
                 }
             }
         });
