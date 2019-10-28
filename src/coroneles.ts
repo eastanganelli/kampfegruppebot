@@ -81,7 +81,7 @@ export function nextFuhrer(client: Discord.Client) {
             let bandera: boolean = true, i: number = fPos + 1;
             fuhrerDB.child(fPos).once("value", oldF => {
                 do {
-                    if(i >= 4) { i = 0; console.log('reiniciar'); }
+                    if(i >= snapshot.val().cnt) { i = 0; console.log('reiniciar'); }
                     fuhrerDB.child(String(i)).once('value', nextF => { 
                         if(nextF.val().vac == false) { changeFuhrer(client, oldF.val().uid, nextF.val().uid, i); bandera = false; } 
                         else { i++; }
