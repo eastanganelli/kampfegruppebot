@@ -6,7 +6,7 @@ import "firebase/database";
 //#endregion
 //#region KMPF
 import { lProfile, uProfile } from './varInterfaces';
-import { serverID, serverLink, roles } from "./const";
+import { serverID, serverLink, roles, kmpfMSG } from "./const";
 import { getDayOfYear, getWeekNumber } from "./datentime";
 //#endregion
 //#endregion
@@ -92,9 +92,18 @@ export function checkIfAFK(client: any) {
         });
     });
 }
-export function checkIfCumple(client: Discord.Client) {
+export function checkIfCumple(client: any) {
     const userfb = firebase.database().ref('/users');
-    
+    userfb.once('value', async snapshot => {
+        snapshot.forEach(snap => {
+            const disU: uProfile = snap.val(), uBirth = new Date(disU.birth), todday = new Date();
+            if(uBirth.getDate() == todday.getDate() && uBirth.getMonth() == todday.getMonth()) {
+                console.log('CUMPLEAÑOS ' + disU.nombre);
+                let embedMSG: any = new Discord.RichEmbed().setTitle(kmpfMSG.kmpfNews.Arr[0].titulo).setDescription('Que tengas un **Feliz Cumpleaños** <@' + snap.key + '>\nCLAN <@594571311171371008>');
+                client.channels.get(kmpfMSG.kmpfNews.MC).send(embedMSG);
+            }
+       })
+    })
 }
 export function checkIfleft() {
 

@@ -48,7 +48,16 @@ export const kmpfMSG = {
                 ]
             }
         ]
-    }
+    }, kmpfNews: {
+        MC: '611501099450499082',
+        Arr: [{
+            titulo: '🍰🍰 **FELIZ CUMPLE** 🍰🍰',
+            desc: '',
+            data: [
+                { texto: '️KMPF', desc: '-', emoji: '-' },
+            ]
+        }
+    ]}
 };
 export const kmpfKicktxt = {
     kick: {
