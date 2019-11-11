@@ -94,7 +94,7 @@ export function nextFuhrer(client: Discord.Client) {
 }
 function changeFuhrer(client: Discord.Client, outID: string, inID: string, pos: number){
     const fuhrer: any = client.guilds.get(kmpfID);
-    fuhrer.members.forEach(async (u: any) => {
+    fuhrer.members.forEach((u: any) => {
         fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
         fuhrer.members.forEach((n: any) => { if(n.id == inID)  { n.addRole(roleF) } });
         console.log('Viejo fuhrer: ' + outID + ' - Nuevo fuhrer: ' + inID);

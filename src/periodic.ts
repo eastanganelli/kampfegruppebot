@@ -32,7 +32,6 @@ function kmpfFB(client: any) {
 function kmpfPeriodic(client: any) {
     setInterval(() => { 
         nextFuhrer(client);
-        checkIfAFK(client);
     }, 15*minute_); //Reich changer
     setInterval(() => { 
         checkIfAFK(client);
