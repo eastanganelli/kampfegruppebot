@@ -62,7 +62,7 @@ function usersNoRegis(dsCh) {
         dsChnnl.send(msgEmb).then((m) => __awaiter(this, void 0, void 0, function* () {
             m.react('📨');
             const filter = (reaction, user) => { return ['📨'].includes(reaction.emoji.name) && !(user.bot); };
-            yield m.delete(100);
+            yield m.delete(min);
             m.awaitReactions(filter, { max: 1, time: min, errors: ['time'] }).then((collected) => {
                 const reaction = collected.first();
                 if (reaction.emoji.name == '📨') {
