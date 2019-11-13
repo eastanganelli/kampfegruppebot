@@ -47,7 +47,7 @@ export function usersNoRegis(dsCh: Discord.Channel) {
                     for(let id_ of arrUID) { dsClient.guilds.first().members.get(id_).send('<@' + id_ + '>\nTiene que registrarse\nIr a _BOTS_ -> _#kmpf_ -> Hacer click en :pencil2:\n**KMPF**'); }
                     m.delete();
                 }
-            }); await m.delete(min);
+            }); m.delete(100);
         })
     })
 }

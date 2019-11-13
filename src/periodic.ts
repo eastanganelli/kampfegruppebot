@@ -61,7 +61,7 @@ function kmpfTC(client: any) { //KMPF
     //#endregion
 }
 function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
-    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 25 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
+    client.channels.get(kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 50 }).then((messages: any) => { messages.forEach((msg: any)  => { msg.delete(); }) }).catch(console.error);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
             let embedMSG: any = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);

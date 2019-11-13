@@ -76,7 +76,7 @@ function kmpfTC(client) {
     }
 }
 function kmpfCoronelesTC(client) {
-    client.channels.get(const_1.kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 25 }).then((messages) => { messages.forEach((msg) => { msg.delete(); }); }).catch(console.error);
+    client.channels.get(const_1.kmpfMSG.kmpfCoroneles.MC).fetchMessages({ limit: 50 }).then((messages) => { messages.forEach((msg) => { msg.delete(); }); }).catch(console.error);
     for (let t_ of const_1.kmpfMSG.kmpfCoroneles.Arr) {
         let embedMSG = new Discord.RichEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr = new Array(0);
         for (let d_ of t_.data) {

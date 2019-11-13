@@ -25,7 +25,7 @@ export function reactiones(reaction: any, user: any) {
             } case '611501042210963456': {
                 switch(reaction.emoji.name){
                     case "✅":  { CargarPerfil(user, reaction); break; }
-                    case "❌":  { kickUsuarioByMsg(user.id, reaction.message.guild, kmpfKicktxt.reglasX); break; }
+                    case "❌":  { kickUsuarioByMsg(user.id, reaction.message, kmpfKicktxt.reglasX); break; }
                 } reaction.remove(user.id);
                 break;
             } case '620642948660330506': {

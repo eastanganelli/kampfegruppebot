@@ -62,19 +62,13 @@ export async function downgradingRank(uid: string, client: any) {
 }
 //#endregion
 //#region Expulsion & Ban
-export async function kickUsuario(uid: string, client: any, data: any) {
-    const server = client.guilds.find((g: any) => g.id == serverID);
-    server.fetchMember(uid).then((u: any) => {
-        u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
-        server.channels.find((c: any) => c.id === 611501862721552386).send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
-    });
+export async function kickUsuario(uid: string, server: any, data: any) {
+    server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'}); });
+    const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
 }
-export async function kickUsuarioByMsg(uid: string, client: any, data: any) {
-    const server = client.guilds.find((g: any) => g.id == serverID);
-    client.fetchMember(uid).then((u: any) => {
-        u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'});
-        server.channels.find((c: any) => c.id === 611501862721552386).send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
-    });
+export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
+    server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'}); });
+    const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
 }
 //#endregion
 //#endregion
