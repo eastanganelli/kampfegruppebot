@@ -18,7 +18,7 @@ const questions: Array<{ txt: string; react: boolean }> = [                    /
 ];  
 let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0);
 const applying: any = [];
-let uDat: lProfile = {
+let uDat: any = {
 	uid: '-',
 	userDat: {
 		loaded: false,
@@ -30,7 +30,6 @@ let uDat: lProfile = {
 		uplay: '',
 		connect: {
 			joinAt: new Date(0),
-			lastAdv: new Date(0),
 			laston: new Date(0)
 		}
 	}
