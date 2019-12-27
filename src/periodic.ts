@@ -36,7 +36,7 @@ function kmpfPeriodic(client: any) {
     setInterval(() => { 
         checkIfAFK(client);
         checkIfCumple(client);
-    }, minute_*hour_*24);
+    }, 1000*60*60*24);
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME
