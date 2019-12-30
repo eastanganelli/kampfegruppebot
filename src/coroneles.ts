@@ -76,7 +76,7 @@ export function nextFuhrer(client: Discord.Client) {
     const fuhrerDB = firebase.database().ref('/fuhrer');
     fuhrerDB.on("value", snapshot => {
         const fPos = snapshot.val().leader, ldWeek = snapshot.val().nmbWeek;
-        if(ldWeek < getWeekNumber()) {
+        if((ldWeek < getWeekNumber()) || (ldWeek > getWeekNumber())) {
             console.log('Cambio de Reich');
             let bandera: boolean = true, i: number = fPos + 1;
             fuhrerDB.child(fPos).once("value", oldF => {
