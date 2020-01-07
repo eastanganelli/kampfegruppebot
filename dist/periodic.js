@@ -97,7 +97,7 @@ function kmpfCoronelesTC(client) {
 }
 function weekDay(client) {
     switch ((new Date).getDay()) {
-        case 0: {
+        case 1: {
             users_1.checkIfAFK(client);
             break;
         }
