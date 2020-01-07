@@ -12,7 +12,7 @@ import { checkIfAFK, checkIfCumple } from './users';
 //#endregion
 //#endregion
 
-let minute_: number = 60000 /* 5 default */, hour_ = 60, oneDayinSec = 1000*3600/24, inac: number = 20, inacRep: number = 3;
+let minute_: number = 60000 /* 5 default */, hour_ = 60, oneDayinSec = 1000*3600*24, inac: number = 20, inacRep: number = 3;
 
 export function FnPeriodic(client: any) {
     //#region KMPF Loads
@@ -31,7 +31,6 @@ function kmpfFB(client: any) {
 }
 function kmpfPeriodic(client: any) {
     setInterval(() => { 
-        nextFuhrer(client);
     }, 1*minute_); //Reich changer
     setInterval(() => { 
         weekDay(client);
@@ -72,7 +71,10 @@ function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
 }
 function weekDay(client: any) {
     switch ((new Date).getDay()) {
-        case 1: {
+        case 0: {
+            nextFuhrer(client);
+            break;
+        } case 1: {
             checkIfAFK(client);
             break;
         }
