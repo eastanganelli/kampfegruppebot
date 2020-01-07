@@ -117,7 +117,7 @@ export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
         userfb.once('value', async snapshot => {
             snapshot.forEach(snap => {
                 const disU: uProfile = snap.val(), uBirth = new Date(String(disU.birth)), todday = new Date();
-                if(uBirth.getDate() == todday.getDate() && uBirth.getMonth() == todday.getMonth()) {
+                if((uBirth.getDate() + '/' + (uBirth.getMonth() + 1)) == (todday.getDate() + '/' + (todday.getMonth() + 1))) {
                     console.log('CUMPLEAÑOS ' + disU.nombre);
                     let embedMSG: any = new Discord.RichEmbed().setTitle(kmpfMSG.kmpfNews.Arr[0].titulo).setDescription('Que tengas un **Feliz Cumpleaños** <@' + snap.key + '>\nCLAN <@594571311171371008>');
                     client.channels.get(kmpfMSG.kmpfNews.MC).send(embedMSG);

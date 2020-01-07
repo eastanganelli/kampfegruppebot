@@ -9,30 +9,33 @@ import { escribirUsuario } from "./users";
 //#endregion
 //#endregion
 
-const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
-    { txt: "Nombre **ie: _Pedro_**", react: false },                  //
-    { txt: "Cumpleños :cake::cake:? **AÑO MES DIA ie: _31/5/2018_**", react: false },                  // Define the questions you'd like the application to have in this array.
-	{ txt: "Nro Celular :iphone::iphone: **ES PARA WHATSAPP ie: _+54 011 31454151_**", react: false },
-	{ txt: "Ingresar _#war_ si tiene **Battlefield, Warthunder, GTAV** o _#otros_ si no tiene alguno de los anteriormente mencionados", react: true }
-];  
-let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0);
-const applying: any = [];
-let uDat: any = {
-	uid: '-',
-	userDat: {
-		loaded: false,
-		nombre: '',
-		birth: new Date(0),
-		phone: '',
-		steam: '',
-		origin: '',
-		uplay: '',
-		connect: {
-			joinAt: new Date(0),
-			laston: new Date(0)
+//#region Vars
+	const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
+		{ txt: "Nombre **ie: _Pedro_**", react: false },                  //
+		{ txt: "Cumpleños :cake::cake:? **AÑO MES DIA ie: _31/5/2018_**", react: false },                  // Define the questions you'd like the application to have in this array.
+		{ txt: "Nro Celular :iphone::iphone: **ES PARA WHATSAPP ie: _+54 011 31454151_**", react: false },
+		{ txt: "Ingresar _#war_ si tiene **Battlefield, Warthunder, GTAV** o _#otros_ si no tiene alguno de los anteriormente mencionados", react: true }
+	];  
+	let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0);
+	const applying: any = [];
+	let uDat: any = {
+		uid: '-',
+		userDat: {
+			loaded: false,
+			nombre: '',
+			birth: new Date(0),
+			phone: '',
+			steam: '',
+			origin: '',
+			uplay: '',
+			connect: {
+				joinAt: new Date(0),
+				laston: new Date(0)
+			}
 		}
-	}
-};
+	};
+//#endregion
+
 export async function CargarPerfil(user: any, reaction: any) { 
 	firebase.database().ref('/Users/').child(user.id).on('value', snapshot => { 
 		let uDat: any = snapshot.val();
@@ -84,7 +87,7 @@ async function saveData(data: any, idQ: number, reaction: any, user: any) {
         case 0: { uDat.userDat.nombre = data; break; }
 		case 1: { 
 			const fecha = data.split('/');
-			uDat.userDat.birth  = new Date(fecha[2] + '/' + fecha[1] + '/' + fecha[0]);
+			uDat.userDat.birth  = fecha[2] + '/' + fecha[1] + '/' + fecha[0];
 			uDat.userDat.connect.joinAt = guildMember.joinedAt;
 			break; 
 		}
