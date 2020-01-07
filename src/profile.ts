@@ -4,7 +4,6 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 //#endregion
 //#region KMPF
-import { lProfile } from "./varInterfaces";
 import { sinRango } from "./roles";
 import { escribirUsuario } from "./users";
 //#endregion

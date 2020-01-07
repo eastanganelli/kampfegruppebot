@@ -34,7 +34,7 @@ function kmpfPeriodic(client: any) {
         nextFuhrer(client);
     }, 1*minute_); //Reich changer
     setInterval(() => { 
-        checkIfAFK(client);
+        weekDay(client);
         checkIfCumple(client);
     }, oneDayinSec);
 }
@@ -69,5 +69,13 @@ function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
             client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
         }
     //#endregion
+}
+function weekDay(client: any) {
+    switch ((new Date).getDay()) {
+        case 0: {
+            checkIfAFK(client);
+            break;
+        }
+    }
 }
 //#endregion

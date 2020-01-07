@@ -92,4 +92,11 @@ export const fullrank: Array<string> = [
     '521709396863090698', //Candidato
     '533069497561513994'  //Invitado
 ];
+export const stinac = {
+    pri: { s: 7, e: 14 },
+    sec: { s: 14, e: 21 },
+    tri: { s: 21, e: 28 },
+    quad: { s: 28, e: 35 },
+    quin: { s: 35, e: 42 },
+}
 /* { texto: '', desc: '', emoji: '-' }, */
