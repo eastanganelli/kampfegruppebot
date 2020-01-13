@@ -46,7 +46,7 @@ function weekDay(client: any) {
         }
     }
     //#region 
-        if(((new Date).getHours() == 13) || ((new Date).getHours() == 23)) { if(!stCtrl[0]) { checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
+        if(((new Date).getHours() == 8) || ((new Date).getHours() == 20)) { if(!stCtrl[0]) { checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
         if((new Date).getHours() == 8) { if(!stCtrl[1]) { checkIfCumple(client); stCtrl[1] = true; } }                                  else { stCtrl[1] = false; }
     //#endregion
 }
