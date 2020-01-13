@@ -79,35 +79,34 @@ export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
         usersfb.once('value', snapshot => {
             snapshot.forEach(snap => {
                 let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
-                let msg :{ lvl: number; user: string; coroneles: string} = { lvl: -1, user: '', coroneles: '' };
-                if(daydif >= stinac.pri.s && daydif < stinac.pri.e) {
+                let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
+                if(daydif >= stinac.pri.s) {
                     msg = {
-                        lvl: 0,
                         user: '<@' + snap.key + '>\nLleva 1 semana de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF',
                         coroneles: '**El USUARIO** <@' + snap.key +'> Se encuentra inactivo hace ' + daydif + ' diás en el servidor\n Mensaje de Advertencia fue _ENVIADO_'
                     }
-                } else if (daydif >= 14) {
+                    client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { await client.users.get(String(snap.key)).send(msg.user); });
+                }
+            });
+        });
+    }
+    export function isAFK(client: any) {
+        const usersfb = firebase.database().ref('/users');
+        usersfb.once('value', snapshot => {
+            snapshot.forEach(snap => {
+                let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
+                let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
+                if (daydif >= 14) {
                     if(daydif >= stinac.sec.s) {
                         msg = {
-                            lvl: 1,
                             user: '<@' + snap.key + '>\nSu rango fue __DESCENDIDO__!\nSeguira descendiendo, hasta que presente actividad.\n:warning::warning:Recuerde: **Si llega a rango __CANDIDATO__, y no presento actividad, sera expulsado.**:warning::warning:\nKMPF',
                             coroneles: 'El usuario: <@' + snap.key + '> fue __DESCENDIDO__ de rango por INACTIVIDAD' 
                         };
+                        client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { 
+                            await downgradingRank(String(snap.key), client); 
+                            await client.users.get(String(290555731395215361)).send(msg.user);
+                        });
                     }
-                } else { usersfb.child(String(snap.key)).child('connect/lastadv').remove(); }
-                if(msg.lvl != -1) {
-                    client.users.get(String(snap.key)).send(msg.user).then(() => {
-                        switch (msg.lvl) {
-                            case 0:{
-
-                                break;
-                            } case 1: {
-                                downgradingRank(String(snap.key), client);
-                                break;
-                            } default: break;
-                        }
-                    });
-                    client.guilds.find((g: any) => g.id == serverID).channels.get(611501862721552386).send(msg.coroneles);
                 }
             });
         });

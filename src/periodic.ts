@@ -8,11 +8,12 @@ import * as Discord from "discord.js";
 import { kmpfMSG, kmpfID } from "./const";
 import { BOTstate } from './devs';
 import { nextFuhrer } from './coroneles';
-import { checkIfAFK, checkIfCumple } from './users';
+import { checkIfAFK, isAFK, checkIfCumple } from './users';
 //#endregion
 //#endregion
 
 let minute_: number = 60000 /* 5 default */, hour_ = 60, oneDayinSec = 1000*3600*24, inac: number = 20, inacRep: number = 3;
+let stCtrl: Array<boolean> = [false, false];
 
 export function FnPeriodic(client: any) {
     //#region KMPF Loads
@@ -31,11 +32,23 @@ function kmpfFB(client: any) {
 }
 function kmpfPeriodic(client: any) {
     setInterval(() => { 
-    }, 1*minute_); //Reich changer
-    setInterval(() => { 
         weekDay(client);
-        checkIfCumple(client);
-    }, oneDayinSec);
+    }, 0.5*minute_);
+}
+function weekDay(client: any) {
+    switch ((new Date).getDay()) {
+        case 0: {
+            nextFuhrer(client);
+            break;
+        } case 1: {
+            if(((new Date).getHours() == 23)) { isAFK(client); } //Baja Rango/semana
+            break;
+        }
+    }
+    //#region 
+        if(((new Date).getHours() == 13) || ((new Date).getHours() == 23)) { if(!stCtrl[0]) { checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
+        if((new Date).getHours() == 8) { if(!stCtrl[1]) { checkIfCumple(client); stCtrl[1] = true; } }                                  else { stCtrl[1] = false; }
+    //#endregion
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME
@@ -68,16 +81,5 @@ function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
             client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
         }
     //#endregion
-}
-function weekDay(client: any) {
-    switch ((new Date).getDay()) {
-        case 0: {
-            nextFuhrer(client);
-            break;
-        } case 1: {
-            checkIfAFK(client);
-            break;
-        }
-    }
 }
 //#endregion
