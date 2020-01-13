@@ -50,7 +50,7 @@ async function cargarProfile(reaction: any, user: any) {
 	if(!sinRango(guildMember)) { questionsFiltered.push(questions[3]); }
 	try {
 		let cancel: boolean = false, isMeming: boolean = false;
-		console.log(`${user.tag} began applying.`);
+		//console.log(`${user.tag} began applying.`);
 		applying.push(user.id);
 		await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
 		for (let i = 0; i < questionsFiltered.length && cancel === false && !isMeming; i++) {
@@ -62,7 +62,7 @@ async function cargarProfile(reaction: any, user: any) {
 						applying.splice(applying.indexOf(user.id), 1);
 						cancel = true;
 						escribirUsuario(uDat);
-						console.log(`${user.tag} cancelled their application.`);
+						//console.log(`${user.tag} cancelled their application.`);
 					} else {
 						saveData(collected.first().content, i, reaction, user);
 						//console.log(collected.first().content);
@@ -71,15 +71,15 @@ async function cargarProfile(reaction: any, user: any) {
 					user.sendMessage(":hourglass: **Se termino el tiempo.**"); //Application timed out.
 					applying.splice(applying.indexOf(user.id), 1);
 					cancel = true;
-					console.log(`${user.tag} let their application time out.`);
+					//console.log(`${user.tag} let their application time out.`);
 				});
 		}
 		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; escribirUsuario(uDat); }
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
-		console.log(`${user.tag} finished applying.`);
+		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
 	questionsFiltered = new Array(0);
- 	console.log(uDat);
+ 	//console.log(uDat);
 }
 async function saveData(data: any, idQ: number, reaction: any, user: any) {
 	const guildMember = reaction.message.guild.members.get(user.id);

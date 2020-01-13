@@ -85,7 +85,7 @@ export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
                         user: '<@' + snap.key + '>\nLleva 1 semana de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF',
                         coroneles: '**El USUARIO** <@' + snap.key +'> Se encuentra inactivo hace ' + daydif + ' diás en el servidor\n Mensaje de Advertencia fue _ENVIADO_'
                     }
-                    client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { await client.users.get(String(snap.key)).send(msg.user); });
+                    client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { await client.users.get(String(snap.key)).sendMessage(msg.user); });
                 }
             });
         });
@@ -104,7 +104,7 @@ export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
                         };
                         client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { 
                             await downgradingRank(String(snap.key), client); 
-                            await client.users.get(String(290555731395215361)).send(msg.user);
+                            await client.users.get(String(snap.key)).sendMessage(msg.user);
                         });
                     }
                 }
