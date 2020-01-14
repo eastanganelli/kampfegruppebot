@@ -13,7 +13,7 @@ import { checkIfAFK, isAFK, checkIfCumple } from './users';
 //#endregion
 
 let minute_: number = 60000 /* 5 default */, hour_ = 60, oneDayinSec = 1000*3600*24, inac: number = 20, inacRep: number = 3;
-let stCtrl: Array<boolean> = [false, false];
+let stCtrl: Array<boolean> = [false, false, false, false];
 
 export function FnPeriodic(client: any) {
     //#region KMPF Loads
@@ -36,19 +36,16 @@ function kmpfPeriodic(client: any) {
     }, 0.5*minute_);
 }
 function weekDay(client: any) {
+    //#region Daily
+        if(((new Date).getHours() == 8) || ((new Date).getHours() == 20)) { if(!stCtrl[0]) { checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
+        if((new Date).getHours() == 8) { if(!stCtrl[1]) { checkIfCumple(client); stCtrl[1] = true; } }                                 else { stCtrl[1] = false; }
+    //#endregion
     switch ((new Date).getDay()) {
         case 0: {
-            nextFuhrer(client);
+            if(((new Date).getHours() == 23)) { if(!stCtrl[2]) { nextFuhrer(client); isAFK(client); stCtrl[2] = false;stCtrl[2] = true; } } else { stCtrl[2] = false; } //Baja Rango/Week & cambio Fuhrer
             break;
-        } case 1: {
-            if(((new Date).getHours() == 23)) { isAFK(client); } //Baja Rango/semana
-            break;
-        }
+        } 
     }
-    //#region 
-        if(((new Date).getHours() == 8) || ((new Date).getHours() == 20)) { if(!stCtrl[0]) { checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
-        if((new Date).getHours() == 8) { if(!stCtrl[1]) { checkIfCumple(client); stCtrl[1] = true; } }                                  else { stCtrl[1] = false; }
-    //#endregion
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME

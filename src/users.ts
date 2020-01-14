@@ -6,8 +6,8 @@ import "firebase/database";
 //#endregion
 //#region KMPF
 import { lProfile, uProfile } from './varInterfaces';
-import { serverID, serverLink, roles, kmpfMSG, stinac } from "./const";
-import { getDayOfYear, getWeekNumber } from "./datentime";
+import { serverID, serverLink, roles, kmpfMSG, stinac, disTC, fullrank } from "./const";
+import { getDayOfYear } from "./datentime";
 //#endregion
 //#endregion
 
@@ -45,71 +45,90 @@ export async function lastConnectionusuario(uid: string) { await firebase.databa
 //#region Roles
 
 //#endregion
-//#region Inactividad
-export async function downgradingRank(uid: string, client: any) {
-    const server = client.guilds.find((g: any) => g.id == serverID);
-    server.fetchMember(uid).then((u: any) => {
-        for(let i = 0; i < roles.length; i++) {
-            if(u.roles.has(roles[i]) && i < roles.length) {
-                console.log('Username: ' + u.name);
-                firebase.database().ref('/users').child(uid).child('connect').update({ lastadv: new Date() });
-                u.addRole(roles[i + 1]);
-                u.removeRole(roles[i]);
-                server.guild.channels.get(611501862721552386).send('**El USUARIO** <@' + uid +'> fue degrado de <@' + roles[i] + '> a <@' + roles[i+1] + '>');
-            }
-        }
-    });
-}
-//#endregion
 //#region Expulsion & Ban
-export async function kickUsuario(uid: string, server: any, data: any) {
-    server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'}); });
-    const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
-}
-export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
-    server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink).then(() => { u.kick(data.rzn); + '\n Saludos, KMPF'}); });
-    const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
-}
+    export async function kickUsuario(uid: string, server: any, data: any) {
+        server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink+ '\n Saludos, KMPF').then(() => { u.kick(data.rzn); }); });
+        const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
+    }
+    export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
+        server.guild.fetchMember(uid).then((u: any) => { u.send(data.txt + serverLink+ '\n Saludos, KMPF').then(() => { u.kick(data.rzn); }); });
+        const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
+    }
 //#endregion
 //#endregion
 //#region KMPF FNs
 //#region checkIf
-    export function checkIfAFK(client: any) {
-        const usersfb = firebase.database().ref('/users');
-        usersfb.once('value', snapshot => {
-            snapshot.forEach(snap => {
-                let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
-                let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
-                if(daydif >= stinac.pri.s) {
-                    msg = {
-                        user: '<@' + snap.key + '>\nLleva 1 semana de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF',
-                        coroneles: '**El USUARIO** <@' + snap.key +'> Se encuentra inactivo hace ' + daydif + ' diás en el servidor\n Mensaje de Advertencia fue _ENVIADO_'
-                    }
-                    client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { await client.users.get(String(snap.key)).sendMessage(msg.user); });
-                }
-            });
-        });
-    }
-    export function isAFK(client: any) {
-        const usersfb = firebase.database().ref('/users');
-        usersfb.once('value', snapshot => {
-            snapshot.forEach(snap => {
-                let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
-                let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
-                if (daydif >= 14) {
-                    if(daydif >= stinac.sec.s) {
+    //#region AFK
+        export function checkIfAFK(client: any) {
+            const usersfb = firebase.database().ref('/users');
+            usersfb.once('value', snapshot => {
+                snapshot.forEach(snap => {
+                    let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
+                    let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
+                    if(daydif >= stinac.pri.s) {
                         msg = {
-                            user: '<@' + snap.key + '>\nSu rango fue __DESCENDIDO__!\nSeguira descendiendo, hasta que presente actividad.\n:warning::warning:Recuerde: **Si llega a rango __CANDIDATO__, y no presento actividad, sera expulsado.**:warning::warning:\nKMPF',
-                            coroneles: 'El usuario: <@' + snap.key + '> fue __DESCENDIDO__ de rango por INACTIVIDAD' 
-                        };
-                        client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { 
-                            await downgradingRank(String(snap.key), client); 
-                            await client.users.get(String(snap.key)).sendMessage(msg.user);
-                        });
+                            user: '<@' + snap.key + '>\nLleva 1 semana de **INACTIVIDAD** en el servidor.\nPara dejar de recibir este mensaje, presente actividad. Caso contrario, __cada semana que pase descendera un rango__. Si llega a rango **CANDIDATO**, y no presento actividad, sera expulsado.\nSi tiene rol **INVITADO** o **CANDIDATO**, al vencer la semana de advertencia, __será expulsado directamente__.\nKMPF',
+                            coroneles: '**El USUARIO** <@' + snap.key +'> Se encuentra inactivo hace ' + daydif + ' diás en el servidor\n Mensaje de Advertencia fue _ENVIADO_'
+                        }
+                        client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { await client.users.get(String(snap.key)).sendMessage(msg.user); });
                     }
+                });
+            });
+        }
+        export function isAFK(client: any) {
+            const usersfb = firebase.database().ref('/users');
+            usersfb.once('value', snapshot => {
+                snapshot.forEach(snap => {
+                    let auxuser: uProfile = snap.val(),daydif = getDayOfYear(auxuser.connect.laston);
+                    let msg :{ user: string; coroneles: string} = { user: '', coroneles: '' };
+                    if (daydif >= 14) {
+                        if(daydif >= stinac.sec.s) {
+                            msg = {
+                                user: '<@' + snap.key + '>\nSu rango fue __DESCENDIDO__!\nSeguira descendiendo, hasta que presente actividad.\n:warning::warning:Recuerde: **Si llega a rango __CANDIDATO__, y no presento actividad, sera expulsado.**:warning::warning:\nKMPF',
+                                coroneles: 'El usuario: <@' + snap.key + '> fue __DESCENDIDO__ de rango por INACTIVIDAD' 
+                            };
+                            client.channels.get('611501862721552386').send(msg.coroneles).then(async() => { 
+                                await downgradingRank(String(snap.key), client); 
+                                await client.users.get(String(snap.key)).send(msg.user);
+                            });
+                        }
+                    }
+                });
+            });
+        }
+        export async function downgradingRank(uid: string, client: any) { //Inactividad
+            const server = client.guilds.find((g: any) => g.id == serverID);
+            server.fetchMember(uid).then((u: any) => {
+                for(let i = 0; i < roles.length; i++) {
+                    if(u.roles.has(roles[i]) && i < roles.length) {
+                        //console.log('Username: ' + u.name);
+                        firebase.database().ref('/users').child(uid).child('connect').update({ lastadv: new Date() });
+                        u.addRole(roles[i + 1]);
+                        u.removeRole(roles[i]);
+                        server.guild.channels.get(disTC[4]).send('**El USUARIO** <@' + uid +'> fue degrado de <@' + roles[i] + '> a <@' + roles[i+1] + '>');
+                    } else { expulsarPorRank(uid, client); }
                 }
             });
-        });
+        }
+        async function expulsarPorRank(uid: string, client: any) {
+            const server = client.guilds.find((g: any) => g.id == serverID);
+            server.fetchMember(uid).then((u: any) => {
+                if((u.roles.has(fullrank[fullrank.length - 1])) || u.roles.has(fullrank[fullrank.length - 2])) {
+                    server.guild.fetchMember(uid).then((u: any) => { u.send('Fue expulsado por **INACTIVIDAD**\nPuede volver a reingresar al servidor haciendo click en la invitación.' + serverLink + '\n Saludos, KMPF').then(() => { u.kick('EXPULSADO POR INACTIVIDAD'); }); firebase.database().ref('/users').child(uid).remove(); });
+                    const channel = server.guild.channels.get('611501862721552386').send('**El USUARIO** <@' + uid +'> FUE EXPULSADO');
+                }
+            });
+        }
+    //#endregion
+    export function checkIfleft(client: any) {
+        const usersfb = firebase.database().ref('/users'), server = client.guilds.find((g: any) => g.id == serverID);
+        usersfb.once('value', snapshot => {
+            snapshot.forEach(ufb => {
+                server.members((uMem: any) => uMem === ufb.key).catch((err: any) => {
+                    console.log(err)
+                })
+            })
+        })
     }
     export function checkIfCumple(client: any) {
         const userfb = firebase.database().ref('/users');
@@ -123,16 +142,6 @@ export async function kickUsuarioByMsg(uid: string, server: any, data: any) {
                 }
             });
         });
-    }
-    export function checkIfleft(client: any) {
-        const usersfb = firebase.database().ref('/users'), server = client.guilds.find((g: any) => g.id == serverID);
-        usersfb.once('value', snapshot => {
-            snapshot.forEach(ufb => {
-                server.members((uMem: any) => uMem === ufb.key).catch((err: any) => {
-                    console.log(err)
-                })
-            })
-        })
     }
 //#endregion
 //#endregion
