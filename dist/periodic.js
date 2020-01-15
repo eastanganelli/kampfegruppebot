@@ -38,7 +38,7 @@ function kmpfPeriodic(client) {
 }
 function weekDay(client) {
     if ((new Date).getHours() == 8) {
-        if (!stCtrl[1]) {
+        if (!stCtrl[0]) {
             users_1.checkIfCumple(client);
             users_1.checkIfAFK(client);
             stCtrl[0] = true;
@@ -50,7 +50,7 @@ function weekDay(client) {
     switch ((new Date).getDay()) {
         case 0: {
             if (((new Date).getHours() == 23)) {
-                if (!stCtrl[2]) {
+                if (!stCtrl[1]) {
                     coroneles_1.nextFuhrer(client);
                     users_1.isAFK(client);
                     stCtrl[1] = true;

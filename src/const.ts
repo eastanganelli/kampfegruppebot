@@ -6,7 +6,7 @@ import { uJuego } from "./varInterfaces";
     export const kmpfID:     string = '451837050618904577', roleF = '521184706142797834';
 //#endregion
 //#region TextChannels && MSGs
-    export const disTC = ['611501042210963456' /* #WELCOME */, '611501099450499082' /* #NEWS */, '614258469066768424' /* #KMPF */, '620642948660330506' /* #KMPF-CORONELES */,  '611501862721552386' /* CORONELES */];
+    export const disTC = ['611501042210963456' /* #WELCOME */, '611501099450499082' /* #NEWS */, '614258469066768424' /* #KMPF */, '620642948660330506' /* #KMPF-CORONELES */, '667006073441484801' /* KMPF NOTIFY */, '667006413113131008' /* CORONELES */];
     export const kmpfMSG = {
         kmpfrules: {
             MC: disTC[0],
