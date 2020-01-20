@@ -75,6 +75,7 @@ async function cargarProfile(reaction: any, user: any) {
 		}
 		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; escribirUsuario(uDat); }
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
+		await guildMember.addRole('521709396863090698');
 		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
 	questionsFiltered = new Array(0);
