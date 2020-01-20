@@ -13,8 +13,7 @@ import { escribirUsuario } from "./users";
 	const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
 		{ txt: "Nombre **ie: _Pedro_**", react: false },                  //
 		{ txt: "Cumpleños :cake::cake:? **AÑO MES DIA ie: _31/5/2018_**", react: false },                  // Define the questions you'd like the application to have in this array.
-		{ txt: "Nro Celular :iphone::iphone: **ES PARA WHATSAPP ie: _+54 011 31454151_**", react: false },
-		{ txt: "Ingresar _#war_ si tiene **Battlefield, Warthunder, GTAV** o _#otros_ si no tiene alguno de los anteriormente mencionados", react: true }
+		{ txt: "Nro Celular :iphone::iphone: **ES PARA WHATSAPP ie: _+54 011 31454151_**", react: false }
 	];  
 	let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0);
 	const applying: any = [];
@@ -87,18 +86,9 @@ async function saveData(data: any, idQ: number, reaction: any, user: any) {
         case 0: { uDat.userDat.nombre = data; break; }
 		case 1: { 
 			const fecha = data.split('/');
-			uDat.userDat.birth  = fecha[2] + '/' + fecha[1] + '/' + fecha[0];
+			uDat.userDat.birth  = fecha[2] + '/' + fecha[1] + '/2000'/* + fecha[0] */;
 			uDat.userDat.connect.joinAt = guildMember.joinedAt;
 			break; 
-		}
-		case 2: { uDat.userDat.phone  = data; break; }
-		case 3: {
-			if(data.toLowerCase() === "#war") {
-				guildMember.addRole('521709396863090698');
-			} else if(data.toLowerCase() === "#otros") {
-				guildMember.addRole('533069497561513994');
-			}
-			break;
-		}
+		} case 2: { uDat.userDat.phone  = data; break; }
 	}
 }
