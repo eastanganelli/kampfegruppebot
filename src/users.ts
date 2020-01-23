@@ -102,7 +102,6 @@ export async function lastConnectionusuario(uid: string) { await firebase.databa
                 for(let i = 0; i < roles.length; i++) {
                     if(u.roles.has(roles[i]) && i < roles.length) {
                         //console.log('Username: ' + u.name);
-                        firebase.database().ref('/users').child(uid).child('connect').update({ lastadv: new Date() });
                         u.addRole(roles[i + 1]);
                         u.removeRole(roles[i]);
                         server.guild.channels.get(disTC[4]).send('**El USUARIO** <@' + uid +'> fue degrado de <@' + roles[i] + '> a <@' + roles[i+1] + '>');
