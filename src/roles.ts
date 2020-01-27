@@ -11,7 +11,6 @@ import { fOnVac, usersNoRegis } from "./coroneles";
 //#endregion
 
 const roleARR = ['521184706142797834', '517169596059615252', '517171083384979456', '521709081757745172', '521709251941629975', '517171515071135764', '521709396863090698'];
-const RepreARR = ['614411015236616206', '614411509036089346', '614410633282191371'], candidato = '521709396863090698', invitado = '533069497561513994';
 export function reactiones(reaction: any, user: any) {
     const guildMember: any = reaction.message.guild.members.get(user.id);
     if(!user.bot) {
@@ -24,7 +23,7 @@ export function reactiones(reaction: any, user: any) {
                 break;
             } case '611501042210963456': {
                 switch(reaction.emoji.name){
-                    case "✅":  { CargarPerfil(user, reaction); break; }
+                    case "✅":  { guildMember.addRole('521709396863090698'); break; }
                     case "❌":  { kickUsuarioByMsg(user.id, reaction.message, kmpfKicktxt.reglasX); break; }
                 } reaction.remove(user.id);
                 break;
@@ -36,20 +35,6 @@ export function reactiones(reaction: any, user: any) {
                 } break;
             }
         }
-    }
-}
-function selecRole(guildMember: any, gRole: any) {
-    guildMember.addRole(gRole);
-    if(!sinRango(guildMember)) {
-        let flag: boolean = false;
-        console.log('SIN RANGO');
-        for(let r_ of RepreARR) {
-            if(r_ == gRole) {
-                if(guildMember.roles.has(invitado)) { guildMember.removeRole(invitado); }
-                guildMember.addRole(candidato);
-                flag = true;
-            }
-        } if(!flag) { guildMember.addRole(invitado); }
     }
 }
 export function sinRango(guildMember: any) {

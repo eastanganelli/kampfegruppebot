@@ -43,7 +43,7 @@ export async function lastConnectionusuario(uid: string) { await firebase.databa
 //#endregion
 //#region Server Fns
 //#region Roles
-
+    
 //#endregion
 //#region Expulsion & Ban
     export async function kickUsuario(uid: string, server: any, data: any) {
