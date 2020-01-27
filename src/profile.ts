@@ -10,12 +10,12 @@ import { escribirUsuario } from "./users";
 //#endregion
 
 //#region Vars
-	const questions: Array<{ txt: string; react: boolean }> = [                    // ------------------------------------
-		{ txt: "Nombre **ie: _Pedro_**", react: false },                  //
-		{ txt: "Cumpleños :cake::cake:? **AÑO MES DIA ie: _31/5/2018_**", react: false },                  // Define the questions you'd like the application to have in this array.
+	const questions: Array<{ txt: string; react: boolean }> = [                    							// ------------------------------------
+		{ txt: "Nombre **ie: _Pedro_**", react: false },                  									//
+		{ txt: "Cumpleños :cake::cake:? **AÑO MES DIA ie: _31/5/2018_**", react: false },                   // Define the questions you'd like the application to have in this array.
 		{ txt: "Nro Celular :iphone::iphone: **ES PARA WHATSAPP ie: _+54 011 31454151_**", react: false }
 	];  
-	let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0);
+	/* let questionsFiltered: Array<{ txt: string; react: boolean }> = new Array(0); */
 	const applying: any = [];
 	let uDat: any = {
 		uid: '-',
@@ -45,15 +45,14 @@ export async function CargarPerfil(user: any, reaction: any) {
 async function cargarProfile(reaction: any, user: any) {
 	const guildMember = reaction.message.guild.members.get(user.id);
 	if (applying.includes(user.id)) return; 
-	for(let i = 0; i < questions.length; i++) { questionsFiltered.push(questions[i]); }
-	if(!sinRango(guildMember)) { questionsFiltered.push(questions[3]); }
+	/* if(!sinRango(guildMember)) { questionsFiltered.push(questions[3]); } */
 	try {
-		let cancel: boolean = false, isMeming: boolean = false;
+		let cancel: boolean = false;
 		//console.log(`${user.tag} began applying.`);
 		applying.push(user.id);
 		await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
-		for (let i = 0; i < questionsFiltered.length && cancel === false && !isMeming; i++) {
-			await user.sendMessage(questionsFiltered[i].txt);
+		for (let i = 0; i < questions.length && cancel === false; i++) {
+			await user.sendMessage(questions[i].txt);
 			await user.dmChannel.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
 				.then((collected: any) => {
 					if (collected.first().content.toLowerCase() === "#cancelar") { //#cancel
@@ -77,7 +76,6 @@ async function cargarProfile(reaction: any, user: any) {
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**").then(() => { guildMember.addRole('521709396863090698'); }); //You're all done!
 		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
-	questionsFiltered = new Array(0);
  	//console.log(uDat);
 }
 async function saveData(data: any, idQ: number, reaction: any, user: any) {
@@ -89,6 +87,6 @@ async function saveData(data: any, idQ: number, reaction: any, user: any) {
 			uDat.userDat.birth  = fecha[2] + '/' + fecha[1] + '/2000'/* + fecha[0] */;
 			uDat.userDat.connect.joinAt = guildMember.joinedAt;
 			break; 
-		} case 2: { uDat.userDat.phone  = data; break; }
+		} case 2: { uDat.userDat.phone  = String(data); break; }
 	}
 }
