@@ -45,7 +45,7 @@ export async function CargarPerfil(user: any, reaction: any) {
 async function cargarProfile(reaction: any, user: any) {
 	const guildMember = reaction.message.guild.members.get(user.id);
 	if (applying.includes(user.id)) return; 
-	for(let i = 0; i < 3; i++) { questionsFiltered.push(questions[i]); }
+	for(let i = 0; i < questions.length; i++) { questionsFiltered.push(questions[i]); }
 	if(!sinRango(guildMember)) { questionsFiltered.push(questions[3]); }
 	try {
 		let cancel: boolean = false, isMeming: boolean = false;
@@ -74,8 +74,7 @@ async function cargarProfile(reaction: any, user: any) {
 				});
 		}
 		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; escribirUsuario(uDat); }
-		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**"); //You're all done!
-		await guildMember.addRole('521709396863090698');
+		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**").then(() => { guildMember.addRole('521709396863090698'); }); //You're all done!
 		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
 	questionsFiltered = new Array(0);
