@@ -1,4 +1,8 @@
 import { uJuego } from "./varInterfaces";
+import * as Discord from "discord.js";
+import * as firebase from "firebase/app";
+import "firebase/database";
+import { client } from './index';
 
 //#region Bot & Server data
     export const serverID:   string = '451837050618904577';
@@ -41,7 +45,8 @@ import { uJuego } from "./varInterfaces";
                 titulo: '_**PERFIL Y ROLES**_',
                 desc: '.',
                 data: [
-                    { texto: '**EDITAR PERFIL**', desc: 'Nombre, Fecha Nacimiento, Nro Celular', emoji: '✏' },
+                    { texto: '**WHATSAPP GRUPO**', desc: 'Te añade al grupo de Whatsapp', emoji: '☎️' },
+                    { texto: '**FELIX CUMPLE**', desc: 'Te añade tu fecha de cumpleaños', emoji: '🎂' },
                     { texto: '**NSFW**', desc: 'Te permite ver el canal <#623672085474050059>', emoji: '🔞' }
                 ]
             }
@@ -106,5 +111,32 @@ import { uJuego } from "./varInterfaces";
         quin: { s: 35, e: 42 },
     }
 //#endregion
+//#region API Client
+    export function getUser(userID: string) {
+        return new Promise((resolve, reject) => {
+            client.fetchUser(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject(err));
+        });
+    }
+    export function getServer(serverID: string) {
+        return new Promise((resolve, reject) => {
+            client.guilds.forEach((s: Discord.Guild) => {
+                if(s.id == serverID) { resolve(s) } 
+            }); reject('NOT FOUND');
+        });
+    }
+    export function getTChannel(channelID: string) {
+        return new Promise((resolve, reject) => {
+            client.channels.forEach((c: Discord.Channel) => {
+                if(c.id == channelID) { resolve(c); }
+            }); reject('NOT FOUND');
+        })
+    }
+//#endregion
+//#region Firebase
+    /* export const tbBot    = firebase.database().ref('/bot');
+    export const tbFuhrer = firebase.database().ref('/fuhrer');
+    export const tbUsers  = firebase.database().ref('/users'); */
+//#endregion
+
 
 /* { texto: '', desc: '', emoji: '-' }, */

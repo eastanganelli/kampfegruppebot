@@ -13,7 +13,7 @@ import { lastConnectionusuario } from "./users";
 //#endregion
 //#endregion
 
-const client: Discord.Client = new Discord.Client();
+export const client: Discord.Client = new Discord.Client();
 var app: firebase.app.App = firebase.initializeApp(configfb);
 
 client.on("ready", () => { 

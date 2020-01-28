@@ -4,7 +4,6 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 //#endregion
 //#region KMPF
-import { sinRango } from "./roles";
 import { escribirUsuario } from "./users";
 //#endregion
 //#endregion
@@ -20,13 +19,8 @@ import { escribirUsuario } from "./users";
 	let uDat: any = {
 		uid: '-',
 		userDat: {
-			loaded: false,
-			nombre: '',
 			birth: new Date(0),
-			phone: '',
-			steam: '',
-			origin: '',
-			uplay: '',
+			points: 0,
 			connect: {
 				joinAt: new Date(0),
 				laston: new Date(0)

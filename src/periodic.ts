@@ -37,13 +37,25 @@ function kmpfPeriodic(client: any) {
 }
 function weekDay(client: any) {
     //#region Daily
-        if((new Date).getHours() == 8) { if(!stCtrl[0]) { checkIfCumple(client); checkIfAFK(client); stCtrl[0] = true; } } else { stCtrl[0] = false; }
+        if((new Date).getHours() == 8) { 
+            if(!stCtrl[0]) { 
+                checkIfCumple(client);
+                checkIfAFK(client);
+                stCtrl[0] = true;
+            }
+        } else { stCtrl[0] = false; }
     //#endregion
     switch ((new Date).getDay()) {
         case 0: {
-            if(((new Date).getHours() == 23)) { if(!stCtrl[1]) { nextFuhrer(client); isAFK(client); stCtrl[1] = true; } }  else { stCtrl[1] = false; } //Baja Rango/Week & cambio Fuhrer
+            if(((new Date).getHours() == 22)) { 
+                if(!stCtrl[1]) { 
+                    nextFuhrer(client);
+                    isAFK(client);
+                    stCtrl[1] = true; 
+                } 
+            } else { stCtrl[1] = false; } //Baja Rango/Week & Cambio Fuhrer
             break;
-        } 
+        }
     }
 }
 //#region Textos Canales

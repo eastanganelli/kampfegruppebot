@@ -72,7 +72,7 @@ export function dmALL(msg: Discord.Message, author_: any) {
 }
 //#endregion
 //#region Fuhrer FNs
-export function nextFuhrer(client: Discord.Client) {
+/* export function nextFuhrerOld(client: Discord.Client) { //OLD MOD
     const fuhrerDB = firebase.database().ref('/fuhrer');
     fuhrerDB.on("value", snapshot => {
         const fPos = snapshot.val().leader, ldWeek = snapshot.val().nmbWeek;
@@ -90,6 +90,22 @@ export function nextFuhrer(client: Discord.Client) {
             });
         } else { console.log('Sigue Reich') }
     });
+} */
+export function nextFuhrer(client: Discord.Client) {
+    const fuhrerDB = firebase.database().ref('/fuhrer');
+    fuhrerDB.on("value", snapshot => {
+        const fPos = snapshot.val().leader;
+        let bandera: boolean = true, i: number = fPos + 1;
+        fuhrerDB.child(fPos).once("value", oldF => {
+            do {
+                if(i >= snapshot.val().cnt) { i = 0; console.log('reiniciar'); }
+                fuhrerDB.child(String(i)).once('value', nextF => { 
+                    if(!(nextF.val().vac)) { changeFuhrer(client, oldF.val().uid, nextF.val().uid, i); bandera = false; } 
+                    i++;
+                });
+            } while(bandera);
+        });
+    });
 }
 function changeFuhrer(client: Discord.Client, outID: string, inID: string, pos: number){
     const fuhrer: any = client.guilds.get(kmpfID);
@@ -97,7 +113,7 @@ function changeFuhrer(client: Discord.Client, outID: string, inID: string, pos: 
         fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
         fuhrer.members.forEach((n: any) => { if(n.id == inID)  { n.addRole(roleF) } });
         console.log('Viejo fuhrer: ' + outID + ' - Nuevo fuhrer: ' + inID);
-        firebase.database().ref('/fuhrer').update({ leader: pos, nmbWeek: getWeekNumber() });
+        firebase.database().ref('/fuhrer').update({ leader: pos });
     }); 
 }
 //#endregion
