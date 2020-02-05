@@ -47,7 +47,7 @@ function weekDay(client: any) {
     //#endregion
     switch ((new Date).getDay()) {
         case 0: {
-            if(((new Date).getHours() == 22)) { 
+            if(((new Date).getHours() == 1)) { 
                 if(!stCtrl[1]) { 
                     nextFuhrer(client);
                     isAFK(client);
