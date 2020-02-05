@@ -46,7 +46,7 @@ function weekDay(client: any) {
         } else { stCtrl[0] = false; }
     //#endregion
     switch ((new Date).getDay()) {
-        case 0: {
+        case 1: {
             if(((new Date).getHours() == 1)) { 
                 if(!stCtrl[1]) { 
                     nextFuhrer(client);

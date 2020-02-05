@@ -48,7 +48,7 @@ function weekDay(client) {
         stCtrl[0] = false;
     }
     switch ((new Date).getDay()) {
-        case 0: {
+        case 1: {
             if (((new Date).getHours() == 1)) {
                 if (!stCtrl[1]) {
                     coroneles_1.nextFuhrer(client);
