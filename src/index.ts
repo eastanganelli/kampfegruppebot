@@ -14,7 +14,7 @@ import { lastConnectionusuario } from "./users";
 //#endregion
 
 export const client: Discord.Client = new Discord.Client();
-var app: firebase.app.App = firebase.initializeApp(configfb);
+let app: firebase.app.App = firebase.initializeApp(configfb);
 
 client.on("ready", () => { 
     console.log("Ready to go!!!");
