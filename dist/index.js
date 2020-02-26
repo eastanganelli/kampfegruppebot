@@ -18,7 +18,7 @@ const roles_1 = require("./roles");
 const msg_1 = require("./msg");
 const users_1 = require("./users");
 exports.client = new Discord.Client();
-var app = firebase.initializeApp(config_1.configfb);
+let app = firebase.initializeApp(config_1.configfb);
 exports.client.on("ready", () => {
     console.log("Ready to go!!!");
     readyFNs.FnPeriodic(exports.client);

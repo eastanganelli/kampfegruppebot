@@ -45,9 +45,10 @@ function weekDay(client: any) {
             }
         } else { stCtrl[0] = false; }
     //#endregion
-    switch ((new Date).getDay()) {
-        case 1: {
-            if(((new Date).getHours() == 1)) { 
+    const diaSemana: number = (new Date).getDay();
+    switch (diaSemana) {
+        case 0: {
+            if(((new Date).getHours() == 8)) { 
                 if(!stCtrl[1]) { 
                     nextFuhrer(client);
                     isAFK(client);

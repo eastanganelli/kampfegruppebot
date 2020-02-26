@@ -7,7 +7,6 @@ import "firebase/database";
 //#region KMPF
 import { uProfile } from "./varInterfaces";
 import { kmpfID, roleF } from "./const";
-import { getWeekNumber } from "./datentime";
 //#endregion
 //#endregion
 const min: number = 60000;
