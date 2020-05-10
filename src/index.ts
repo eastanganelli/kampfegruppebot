@@ -29,6 +29,7 @@ client.on("message", async msg => {
 });
 client.on('messageReactionAdd', async (reaction, user) => {
     reactiones(reaction, user);
+    console.log(reaction.emoji.name)
     //console.log(`${user.username} reacted with "${reaction.emoji.name}".`);
 });
 client.on('messageReactionRemove', async (reaction, user) => {

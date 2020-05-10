@@ -6,7 +6,7 @@ import "firebase/database";
 //#endregion
 //#region KMPF
 import { uProfile } from "./varInterfaces";
-import { kmpfID, roleF } from "./const";
+import { kmpfID, roleF, serverID } from "./const";
 //#endregion
 //#endregion
 const min: number = 60000;
@@ -91,28 +91,24 @@ export function dmALL(msg: Discord.Message, author_: any) {
     });
 } */
 export function nextFuhrer(client: Discord.Client) {
-    const fuhrerDB = firebase.database().ref('/fuhrer');
-    fuhrerDB.on("value", snapshot => {
-        const fPos = snapshot.val().leader;
-        let bandera: boolean = true, i: number = fPos + 1;
-        fuhrerDB.child(fPos).once("value", oldF => {
-            do {
-                if(i >= snapshot.val().cnt) { i = 0; console.log('reiniciar'); }
-                fuhrerDB.child(String(i)).once('value', nextF => { 
-                    if(!(nextF.val().vac)) { changeFuhrer(client, oldF.val().uid, nextF.val().uid, i); bandera = false; } 
-                    i++;
-                });
-            } while(bandera);
-        });
-    });
+    const CORONELES: Array<string> = ['251482884987289600','406645486221524992','327966508242305024','311264984627675137','139591319877189643'];
+    const ActualFuhrer: any = client.guilds.get(serverID)?.roles.get(roleF)?.members.firstKey();
+    let i=0;
+    for(i=0; i<CORONELES.length; i++) {
+        if(CORONELES[i]==ActualFuhrer) {
+            if(i>=(CORONELES.length-1)) {
+                changeFuhrer(client, CORONELES[i], CORONELES[0]);
+            } changeFuhrer(client, CORONELES[i], CORONELES[i+1]);
+        }
+    }
 }
-function changeFuhrer(client: Discord.Client, outID: string, inID: string, pos: number){
+function changeFuhrer(client: Discord.Client, outID: string, inID: string/* , pos: number */){
     const fuhrer: any = client.guilds.get(kmpfID);
     fuhrer.members.forEach((u: any) => {
         fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
         fuhrer.members.forEach((n: any) => { if(n.id == inID)  { n.addRole(roleF) } });
         console.log('Viejo fuhrer: ' + outID + ' - Nuevo fuhrer: ' + inID);
-        firebase.database().ref('/fuhrer').update({ leader: pos });
+        //firebase.database().ref('/fuhrer').update({ leader: pos });
     }); 
 }
 //#endregion
