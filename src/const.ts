@@ -1,5 +1,4 @@
 import * as Discord from "discord.js";
-import "firebase/database";
 import { client } from './index';
 
 //#region Bot & Server data

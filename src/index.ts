@@ -4,8 +4,8 @@ import { config } from "./config";
 import * as readyFNs from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg";
-import { lastconPUT } from "./api";
-import { noboroles } from "./const";
+import { lastconPUT, userGET } from "./api";
+import { getUser, noboroles } from "./const";
 //#endregion
 
 export const client: Discord.Client = new Discord.Client();
@@ -33,7 +33,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
             if(newMember.roles.has(noboroles[i])) flag = true;
 
         if(!flag) 
-            lastconPUT(newMember.id);
+            lastconPUT((Number)(newMember.id));
     } 
     else if(newUserChannel === undefined) { /*Leaves VC*/ }
 });

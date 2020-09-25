@@ -22,14 +22,14 @@ export async function usersGET() {
         axios.get(webhost + 'users').then((data:any) => resolve(data)).catch(err => reject(err));
     });
 }
-export async function userGET(id: string) {
+export async function userGET(id: number) {
     return new Promise((resolve, reject) => {
         axios.get(webhost + 'users/'+id).then((data:any) => resolve(data)).catch(err => reject(err));
     });
 }
 //#endregion
 //#region POST
-export async function userPOST(id: string, data: { id:string; birth: Date; lastcon: Date; }) {
+export async function userPOST(id: number, data: { id:number; birth: Date; lastcon: Date; }) {
     return new Promise((resolve, reject) => {
         data.lastcon = new Date();
         axios.post(webhost + 'users/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
@@ -37,29 +37,29 @@ export async function userPOST(id: string, data: { id:string; birth: Date; lastc
 }
 //#endregion
 //#region PUT
-export async function birthPUT(id: string, data: { birth: Date; }) {
+export async function birthPUT(id: number, data: { birth: Date; }) {
     return new Promise((resolve, reject) => {
         axios.put(webhost + 'users/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
     });
 }
-export async function lastconPUT(id: string) {
+export async function lastconPUT(id: number) {
     return new Promise((resolve, reject) => {
         axios.put(webhost + 'users/'+id).then(ans => resolve(ans)).catch(err => reject(err));
     });
 }
-export async function incpointsPUT(id: string, data: { points: number; }) {
+export async function incpointsPUT(id: number, data: { points: number; }) {
     return new Promise((resolve, reject) => {
         axios.put(webhost + 'useruppts/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
     });
 }
-export async function decpointsPUT(id: string, data: { points: number; }) {
+export async function decpointsPUT(id: number, data: { points: number; }) {
     return new Promise((resolve, reject) => {
         axios.put(webhost + 'userdopts/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
     });
 }
 //#endregion
 //#region DELETE
-export async function userDELETE(id: string) {
+export async function userDELETE(id: number) {
     return new Promise((resolve, reject) => {
         axios.delete(webhost + 'user/'+id).then(ans => resolve(ans)).catch(err => reject(err));
     });

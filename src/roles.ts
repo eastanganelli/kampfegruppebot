@@ -1,11 +1,6 @@
 //#region IMPORTS
-//#region Plug
-
-//#endregion
-//#region KMPF
 import { kickUsuarioByMsg, addToWpp, addFCumple } from "./users";
 import { kmpfKicktxt, kmpfMSG } from "./const";
-//#endregion
 //#endregion
 
 export function reactiones(reaction: any, user: any) {
