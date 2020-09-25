@@ -1,11 +1,4 @@
 //#region IMPORTS
-//#region Plug
-import * as firebase from "firebase/app";
-import "firebase/database";
-//#endregion
-//#region KMPF
-import { escribirUsuario } from "./users";
-//#endregion
 //#endregion
 
 //#region Vars
@@ -28,14 +21,6 @@ import { escribirUsuario } from "./users";
 		}
 	};
 //#endregion
-
-export async function CargarPerfil(user: any, reaction: any) { 
-	firebase.database().ref('/Users/').child(user.id).on('value', snapshot => { 
-		let uDat: any = snapshot.val();
-		if(!(snapshot.exists())) { cargarProfile(reaction, user); }
-		else if(snapshot.exists() && uDat.nombre == '-' || uDat.birth == 0) { cargarProfile(reaction, user); }
-	}, (Err: any) => { console.log(Err) }); 
-}
 async function cargarProfile(reaction: any, user: any) {
 	const guildMember = reaction.message.guild.members.get(user.id);
 	if (applying.includes(user.id)) return; 
@@ -53,7 +38,7 @@ async function cargarProfile(reaction: any, user: any) {
 						user.sendMessage(":x: **Carga cancelada!**"); //Application cancelled.
 						applying.splice(applying.indexOf(user.id), 1);
 						cancel = true;
-						escribirUsuario(uDat);
+						//escribirUsuario(uDat);
 						//console.log(`${user.tag} cancelled their application.`);
 					} else {
 						saveData(collected.first().content, i, reaction, user);
@@ -66,7 +51,7 @@ async function cargarProfile(reaction: any, user: any) {
 					//console.log(`${user.tag} let their application time out.`);
 				});
 		}
-		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; escribirUsuario(uDat); }
+		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; /*escribirUsuario(uDat);*/ }
 		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**").then(() => { guildMember.addRole('521709396863090698'); }); //You're all done!
 		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }

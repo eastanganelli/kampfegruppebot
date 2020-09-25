@@ -1,11 +1,10 @@
 //#region IMPORTS
 //#region Plug
 import * as Discord from "discord.js";
-import "firebase/database";
 //#endregion
 //#region KMPF
 import { dmALL } from "./coroneles";
-import { resetBOT, offBOT, changeSTATE } from "./devs";
+import { resetBOT, offBOT } from "./devs";
 //#endregion
 //#endregion
 
@@ -34,7 +33,7 @@ export async function menuBOT(msg: any) {
             }
             case '-r':  { resetBOT(author_, msg.channel); break; }
             case '-s':  { offBOT(author_, msg.channel);   break; }
-            case '-st': { changeSTATE(author_, msg);      break; }
+            case '-st': { /*changeSTATE(author_, msg);      break;*/ }
             case 'ping': { msg.reply(' Pong'); break; }
             default: { msg.reply(`Lo siento pero el comando no se encontro. Escribe __kmpf h__ o __kmpf help__ para más ayuda`); break; }
         }

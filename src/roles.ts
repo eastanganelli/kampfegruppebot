@@ -3,10 +3,8 @@
 
 //#endregion
 //#region KMPF
-import { CargarPerfil } from "./profile";
 import { kickUsuarioByMsg, addToWpp, addFCumple } from "./users";
 import { kmpfKicktxt, kmpfMSG } from "./const";
-import { fOnVac, usersNoRegis } from "./coroneles";
 //#endregion
 //#endregion
 
@@ -26,14 +24,14 @@ export function reactiones(reaction: any, user: any) {
                     case "❌":  { kickUsuarioByMsg(user.id, reaction.message, kmpfKicktxt.reglasX); break; }
                 } reaction.remove(user.id);
                 break;
-            } case kmpfMSG.kmpfCoroneles.MC: {
+            } /*case kmpfMSG.kmpfCoroneles.MC: {
                 switch(reaction.emoji.name){
                     case "🏠":  { fOnVac(user.id, false); break; }
                     case "⛱":  { fOnVac(user.id, true); break; }
                     case "🔴":  { usersNoRegis(reaction.message.channel); break; }
                 } reaction.remove(user.id);
                 break;
-            }
+            }*/
         }
     }
 }

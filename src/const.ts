@@ -1,6 +1,4 @@
-import { uJuego } from "./varInterfaces";
 import * as Discord from "discord.js";
-import * as firebase from "firebase/app";
 import "firebase/database";
 import { client } from './index';
 
@@ -18,7 +16,7 @@ import { client } from './index';
                 titulo: '📚📚 **REGLAS** 📚📚',
                 desc: '**✅_ACEPTAR_ O ❌_RECHAZAR_ LAS REGLAS**',
                 data: [
-                    { texto: '⚠️💤 **INACTIVIDAD** 💤⚠️', desc: '_En canales de **DISCORD** (texto y voz)_\n|-> 20 dias de inactividad, <@594571311171371008> **_(BOT)_** envia una alerta por Mensaje Privado (MP)\n|-> Se tiene un plazo de 3 días para volver a participar en los canales\n|-> Si no se cumple lo dicho anteriormente, descenderá de rango hasta ser @Candidato (@Invitados tienen expulsión directa)\nℹ️ℹ️ _Si es **EXPULSADO**, <@594571311171371008> **(BOT)** le enviara un MP con un URL para reingresar al servidor, pero pierde todos los rangos que tenia_', emoji: '-' },
+                    { texto: '⚠️💤 **INACTIVIDAD** 💤⚠️', desc: '|-> Considera actividad el estar conectado en VC (Voice Channel), con 1 o más miembros por almenos 10 minutos\n|-> 2 semanas de inactividad, <@594571311171371008> **_(BOT)_** envia por Mensaje Privado (MP) dónde se notificará el descenso de rango\nℹ️ℹ️ _Si se queda **SIN RANGO** puede volver a aceptar las reglas.ℹ️ℹ️', emoji: '-' },
                     { texto: '📑📑 **CONVIVENCIA** 📑📑', desc: '🎤🎤 __CANALES DE VOZ__\nAl entrar a un CV (Canal de Voz), siempre __SALUDAR A TODOS__. Como cuando uno llega a un lugar saluda a los presentes, igual acá. Saludar a un solo miembro por llevarse bien, y no al resto, termina en una **__advertencia__**\n📜🎤 __CANALES DE VOZ/TEXTO__\nNo hay restricciones en los temas que se hablan dentro de los canales, no hay ningun problema con la ideologia de cualquier miembro del clan, sea cual sea su pensamiento de vida. Respecto a la discriminacion/chistes, no hay restricciones, a **bancarla**, si todo es con humor. **__La persona de mayor rango puede intervenir y cortar la conversacion si se fue de las manos__**', emoji: '-' },
                     { texto: '☠🚫 **STRIKES Y BANEOS** 🚫☠️', desc: '|-> **__PROHIBIDO__** pasar contenido **NSFW** en __**WHATSAPP**__ y en __**DISCORD**__ fuera del canal #nsfw\n|-> Falta de incumplimiento anterior, degradan automaticamente 1 escalafon. En caso de ser <@&521709396863090698>, es  **EXPULSION**\n|-> Los usuarios que no cumplan las reglas, pueden recibir __STRIKES__. Si se llega a la máxima cantidad (3 strikes), el usuario sera __BANEADO__  del servidor, sin posibilidad de volver', emoji: '-' },
                     { texto: '🥡🥡 **JUNTADAS** 🥡🥡', desc: '|-> Salidas por capital\n|----|-> Pueden participar todos los miembros\n|-> Asados\n|----|-> Solo miembros registrados y con rango <@&521709251941629975> hacia arriba\n|-> Reuniones\n|----|-> Solo miembros con Rango <@&517171083384979456> para arriba\n|----|-> Solo <@&517169596059615252> pueden enviar invitaciones a las reuniones\n|----|-> Con derecho de admision\n|----|-> Si un miembro envia una invitacion, podrá recibir un **ban ** o ser ** expulsado**\n|----|-> Participar ayuda a subir de rango', emoji: '✅' },
@@ -72,10 +70,6 @@ import { client } from './index';
         }
     };
     export const kmpfKicktxt = {
-        kick: {
-            rzn: 'INACTIVIDAD',
-            txt: '**FUE EXPULSADO POR INACTIVIDAD**\nPara reingresar al clan, acepte la invitación '
-        }, 
         reglasX: {
             rzn: 'RECHAZO REGLAMENTO',
             txt: '**USTED A RECHAZO EL REGLAMENTO**\nPara reingresar al clan, acepte la invitación '
@@ -83,17 +77,28 @@ import { client } from './index';
     }
 //#endregion
 //#region roles
-    export const roles = ['517171083384979456' /*Teniente*/, '521709081757745172' /*Subteniente*/, '521709251941629975' /*Soldado Raso*/, '517171515071135764' /*Cabo Primero*/, '521709396863090698' /*Candidato*/];
-    export const fullrank: Array<string> = [
+    export const roles: Array<string> = [
         '517169596059615252', //Coronel
         '517171083384979456', //Teniente
         '521709081757745172', //Subteniente
         '521709251941629975', //Cabo Primero
         '517171515071135764', //Soldado Raso
         '521709396863090698', //Candidato
-        '533069497561513994'  //Invitado
     ];
-    export const juegos: Array<uJuego> = [
+    export const noboroles: Array<string> = [
+        '517169596059615252', //Coronel
+        '517171083384979456', //Teniente
+        '757614592720633957', //Secundario
+        '517168972483919929', //Dev Team
+        '613554375062847501' //Devs
+    ];
+    export const rolespoints: Array<{id: string; points: number}> = [
+        { id: '521709081757745172', points: 3900}, //Subteniente
+        { id: '521709251941629975', points: 2500}, //Cabo Primero
+        { id: '517171515071135764', points: 1000}, //Soldado Raso
+        { id: '521709396863090698', points: 0 }, //Candidato
+    ];
+    export const juegos: Array<{nombre: string; code: string; EID: string;}> = [
         { nombre: 'Battlefield 1',          code: 'bf1',  EID: '613181668672536600' },
         { nombre: 'Battlefield 4',          code: 'bf4',  EID: '613182924745080862' },
         { nombre: 'Battlefield V',          code: 'bf5',  EID: '613181661273653291' },
@@ -101,15 +106,6 @@ import { client } from './index';
         { nombre: 'Euro Truck Simulator 2', code: 'ets2', EID: '613182913676050442' },
         { nombre: 'Grand theft Auto V',     code: 'gta5', EID: '617123585701445659' }
     ];
-//#endregion
-//#region Inactvidad
-    export const stinac = {
-        pri: { s: 7, e: 14 },
-        sec: { s: 14, e: 21 },
-        tri: { s: 21, e: 28 },
-        quad: { s: 28, e: 35 },
-        quin: { s: 35, e: 42 },
-    }
 //#endregion
 //#region API Client
     export function getUser(userID: string) {
@@ -131,11 +127,6 @@ import { client } from './index';
             }); reject('NOT FOUND');
         })
     }
-//#endregion
-//#region Firebase
-    /* export const tbBot    = firebase.database().ref('/bot');
-    export const tbFuhrer = firebase.database().ref('/fuhrer');
-    export const tbUsers  = firebase.database().ref('/users'); */
 //#endregion
 
 

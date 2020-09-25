@@ -1,14 +1,11 @@
 //#region IMPORTS
 //#region Plug
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
 import * as Discord from "discord.js";
 //#endregion
 //#region KMPF
 import { kmpfMSG, kmpfID } from "./const";
-import { BOTstate } from './devs';
 import { nextFuhrer } from './coroneles';
-import { checkIfAFK, isAFK, checkIfCumple } from './users';
+import { isAFK, checkIfCumple } from './users';
 //#endregion
 //#endregion
 
@@ -22,14 +19,9 @@ export function FnPeriodic(client: any) {
     kmpfTC(client);
     kmpfCoronelesTC(client);
     //#endregion
-    BOTstate(client);
     kmpfPeriodic(client);
 }
-function kmpfFB(client: any) {
-    firebase.auth().signInWithEmailAndPassword('kmpf@discordbot.com', String(Math.abs((Number(client.user.id))*(Number(client.guilds.find((g_: any) => g_.id === kmpfID).id)))))
-    .then(() => { console.log('BOT DB Connected') }).catch(Err => { console.log(Err); });
-
-}
+function kmpfFB(client: any) { console.log('BOT DB Connected'); }
 function kmpfPeriodic(client: any) {
     setInterval(() => { 
         weekDay(client);
@@ -40,7 +32,6 @@ function weekDay(client: any) {
         if((new Date).getHours() == 8) { 
             if(!stCtrl[0]) { 
                 checkIfCumple(client);
-                checkIfAFK(client);
                 stCtrl[0] = true;
             }
         } else { stCtrl[0] = false; }
