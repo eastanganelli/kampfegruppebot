@@ -1,7 +1,4 @@
 //#region IMPORTS
-//#region Plug
-import * as Discord    from "discord.js";
-//#endregion
 //#region KMPF
 import { config } from "./config";
 //#endregion

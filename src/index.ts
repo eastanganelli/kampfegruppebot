@@ -4,7 +4,7 @@ import { config } from "./config";
 import * as readyFNs from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg";
-import { birthPUT, lastconPUT, userGET } from "./api";
+import { lastconPUT } from "./api";
 import { noboroles } from "./const";
 //#endregion
 

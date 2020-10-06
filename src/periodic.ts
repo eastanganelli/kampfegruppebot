@@ -3,7 +3,7 @@
 import * as Discord from "discord.js";
 //#endregion
 //#region KMPF
-import { kmpfMSG, kmpfID } from "./const";
+import { kmpfMSG } from "./const";
 import { nextFuhrer } from './coroneles';
 import { isAFK, checkIfCumple } from './users';
 //#endregion
