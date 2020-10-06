@@ -26,7 +26,7 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
             await myUser.dmChannel.awaitMessages((m: any) => m.author.id === userID, { max: 1, time: 300000, errors: ["time"] })
                 .then((collected: any) => {
                     console.log(collected.first().content);
-                    birthPUT((Number)(myUser.id), { birth: collected.first().content });
+                    birthPUT(myUser.id, { birth: collected.first().content })/*.then(done => console.log(done)).catch(err => console.debug(err))*/;
                 }); await myUser.sendMessage('Su fecha ya fue guardada\n**Saludos, KMPF!**');
         });
     }
@@ -61,7 +61,7 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
                     if(u.roles.has(rolespoints[i]) && i < roles.length) {
                         u.addRole(rolespoints[i + 1]);
                         u.removeRole(rolespoints[i]);
-                        decpointsPUT((Number)(uid), { points: 500 });
+                        decpointsPUT(uid, { points: 500 });
                         server.guild.channels.get(disTC[4]).send('**El USUARIO** <@' + uid +'> fue degrado de <@' + roles[i] + '> a <@' + roles[i+1] + '>');
                     }
                 }
@@ -84,7 +84,7 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
                 usersIDs.forEach(user => {
                     getUser(user.id).catch((err) => { 
                         console.log(err);
-                        userDELETE((Number)(user.id));
+                        userDELETE(user.id);
                     });
                 });
             });

@@ -1,6 +1,7 @@
 //#region IMPORTS
 import { kickUsuarioByMsg, addToWpp, addFCumple } from "./users";
 import { kmpfKicktxt, kmpfMSG } from "./const";
+import { userPOST } from "./api";
 //#endregion
 
 export function reactiones(reaction: any, user: any) {
@@ -15,7 +16,11 @@ export function reactiones(reaction: any, user: any) {
                 } break;
             } case kmpfMSG.kmpfrules.MC: {
                 switch(reaction.emoji.name){
-                    case "✅":  { guildMember.addRole('521709396863090698'); break; }
+                    case "✅":  { 
+                        userPOST({ id: user.id });
+                        guildMember.addRole('521709396863090698'); 
+                        break;
+                    }
                     case "❌":  { kickUsuarioByMsg(user.id, reaction.message, kmpfKicktxt.reglasX); break; }
                 } reaction.remove(user.id);
                 break;

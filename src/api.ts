@@ -1,82 +1,67 @@
 import axios from "axios";
 /*LOCALHOST*/ const localhost: any = 'http://localhost:8000/api/v1/';
-/*WEBHOST*/   const webhost:   any = 'https://deltapinc.000webhostapp.com/api/v1/';
+/*WEBHOST*/   const webhost:   any = 'http://pofbatto.heliohost.org/api/v1/';
+
+const apiClient = axios.create({
+    baseURL: webhost,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    timeout: 20000
+  });
 
 //#region TODAY GET
 export async function birthsGET() {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'birthlist').then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+    return (await apiClient.get('birthlist')).data;
 }
 export async function redlightsGET() {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'redlist/').then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+    return (await apiClient.get('redlist')).data;
 }
 //#endregion
 
 //#region  USER
 //#region  GET
 export async function usersGET() {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'users').then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+    return (await apiClient.get('users')).data;
 }
-export async function userGET(id: number) {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'users/'+id).then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+export async function userGET(id: any) {
+    return (await apiClient.get('user/'+id)).data;
 }
 //#endregion
 //#region POST
-export async function userPOST(id: number, data: { id:number; birth: Date; lastcon: Date; }) {
-    return new Promise((resolve, reject) => {
-        data.lastcon = new Date();
-        axios.post(webhost + 'users/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function userPOST(data_: { id: any; }) {
+    return (await apiClient.post<{ id: any; }>('users', data_)).request;
 }
 //#endregion
 //#region PUT
-export async function birthPUT(id: number, data: { birth: Date; }) {
-    return new Promise((resolve, reject) => {
-        axios.put(webhost + 'users/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function birthPUT(id: string, data_: { birth: any|null; }) {
+    let response = apiClient.put<{ birth: any|null; }>('users/'+id.toString(), data_);
+    console.log(response);
 }
-export async function lastconPUT(id: number) {
-    return new Promise((resolve, reject) => {
-        axios.put(webhost + 'users/'+id).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function lastconPUT(id: string) {
+    return (await apiClient.put('userlaston/'+id)).request;
 }
-export async function incpointsPUT(id: number, data: { points: number; }) {
-    return new Promise((resolve, reject) => {
-        axios.put(webhost + 'useruppts/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function incpointsPUT(id: string, data_: { points: number; }) {
+    return (await apiClient.put<{ points: number; }>('useruppts/'+id, data_)).request;
 }
-export async function decpointsPUT(id: number, data: { points: number; }) {
-    return new Promise((resolve, reject) => {
-        axios.put(webhost + 'userdopts/'+id, data).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function decpointsPUT(id: string, data_: { points: number; }) {
+    return (await apiClient.put<{ points: number; }>('userdopts/'+id, data_)).request;
 }
 //#endregion
 //#region DELETE
-export async function userDELETE(id: number) {
-    return new Promise((resolve, reject) => {
-        axios.delete(webhost + 'user/'+id).then(ans => resolve(ans)).catch(err => reject(err));
-    });
+export async function userDELETE(id: string) {
+    return (await apiClient.delete('userdopts/'+id)).request;
 }
 //#endregion 
 //#endregion
 //#region FUHRER
 //#region GET
 export async function fuhrersGET() {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'fuhrers').then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+    return (await apiClient.get('fuhrers')).data;
 }
 export async function fuhrerGET(id: string) {
-    return new Promise((resolve, reject) => {
-        axios.get(webhost + 'fuhrer/'+id).then((data:any) => resolve(data)).catch(err => reject(err));
-    });
+    return (await apiClient.get('fuhrer/'+id)).data;
 }
 //#endregion
 //#endregion

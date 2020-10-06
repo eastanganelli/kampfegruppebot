@@ -4,18 +4,18 @@ import { config } from "./config";
 import * as readyFNs from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg";
-import { lastconPUT, userGET } from "./api";
-import { getUser, noboroles } from "./const";
+import { birthPUT, lastconPUT, userGET } from "./api";
+import { noboroles } from "./const";
 //#endregion
 
 export const client: Discord.Client = new Discord.Client();
 
-client.on("ready", () => { 
-    console.log("Ready to go!!!");
-    readyFNs.FnPeriodic(client);
+client.on("ready", async() => { 
+    await console.log("Ready to go!!!");
+    await readyFNs.FnPeriodic(client);
 });
 client.on("guildMemberAdd", member => {  });
-client.on("message", async msg => {
+client.on("message", async (msg) => {
     if(msg.author.bot) return;
     menuBOT(msg);
 });
@@ -33,7 +33,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
             if(newMember.roles.has(noboroles[i])) flag = true;
 
         if(!flag) 
-            lastconPUT((Number)(newMember.id));
+            lastconPUT(newMember.id);
     } 
     else if(newUserChannel === undefined) { /*Leaves VC*/ }
 });
