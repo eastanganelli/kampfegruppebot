@@ -10,9 +10,9 @@ import { noboroles } from "./const";
 
 export const client: Discord.Client = new Discord.Client();
 
-client.on("ready", async() => { 
-    await console.log("Ready to go!!!");
-    await readyFNs.FnPeriodic(client);
+client.on("ready", () => { 
+    console.log("Ready to go!!!");
+    readyFNs.FnPeriodic(client);
 });
 client.on("guildMemberAdd", member => {  });
 client.on("message", async (msg) => {
