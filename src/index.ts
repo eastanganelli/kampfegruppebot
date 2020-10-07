@@ -5,7 +5,7 @@ import * as readyFNs from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg";
 import { lastconPUT } from "./api";
-import { noboroles } from "./const";
+//import { noboroles } from "./const";
 //#endregion
 
 export const client: Discord.Client = new Discord.Client();
@@ -28,11 +28,11 @@ client.on('messageReactionRemove', async (reaction, user) => {
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
     if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot) && (oldMember.voiceChannelID != '496525236888535042' && newMember.voiceChannelID != '496525236888535042')) { 
-        let flag: boolean = false;
+        /*let flag: boolean = false;
         for(let i=0; i<noboroles.length; i++)
             if(newMember.roles.has(noboroles[i])) flag = true;
 
-        if(!flag) 
+        if(!flag) */
             lastconPUT(newMember.id);
     } 
     else if(newUserChannel === undefined) { /*Leaves VC*/ }

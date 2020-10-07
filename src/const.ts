@@ -109,7 +109,7 @@ import { client } from './index';
 //#region API Client
     export function getUser(userID: string) {
         return new Promise((resolve, reject) => {
-            client.fetchUser(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject(err));
+            client.fetchUser(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject('NOT FOUND'));
         });
     }
     export function getServer(serverID: string) {
@@ -117,6 +117,15 @@ import { client } from './index';
             client.guilds.forEach((s: Discord.Guild) => {
                 if(s.id == serverID) { resolve(s) } 
             }); reject('NOT FOUND');
+        });
+    }
+    export function getUserGuild(userID: string) {
+        return new Promise((resolve, reject) => {
+            getServer(kmpfID).then((kmpfServer: Discord.Guild|any) => {
+                getUser(userID).then((userServer: Discord.GuildMember|any) => {
+                    resolve(kmpfServer.member(userServer));
+                }).catch(err => reject(err));
+            }).catch(err => reject(err));
         });
     }
     export function getTChannel(channelID: string) {
