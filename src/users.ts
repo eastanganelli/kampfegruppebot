@@ -44,17 +44,19 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
         let afklst: Array<{ id_: string; msg: string}> = new Array(0);
         redlightsGET().then((AFKlist: any) => {
             let IDs: Array<{id: string; daysinac: number}> = AFKlist;
-            IDs.forEach(user => {
-                getUserGuild(user.id).then((userGuikd: Discord.GuildMember|any) => {
-                    let flag: boolean = false;
-                    for(let i=0; i<noboroles.length; i++) //Check If User has roles not alertable by AFK
-                        if(userGuikd.roles.has(noboroles[i])) flag = true;
-                    if(!flag){
-                        afklst.push({id_: user.id, msg: '<@' + user.id + '>\nSu rango fue __DESCENDIDO__ por INACTIVIDAD!\nKMPF'});
-                        msgem.addField(user.id + ' | ' + user.daysinac + ' Dias Inactivo', false);
-                    }
+            if(IDs.length > 0){
+                IDs.forEach(user => {
+                    getUserGuild(user.id).then((userGuikd: Discord.GuildMember|any) => {
+                        let flag: boolean = false;
+                        for(let i=0; i<noboroles.length; i++) //Check If User has roles not alertable by AFK
+                            if(userGuikd.roles.has(noboroles[i])) flag = true;
+                        if(!flag){
+                            afklst.push({id_: user.id, msg: '<@' + user.id + '>\nSu rango fue __DESCENDIDO__ por INACTIVIDAD!\nKMPF'});
+                            msgem.addField(user.id + ' | ' + user.daysinac + ' Dias Inactivo', false);
+                        }
+                    });
                 });
-            });
+            }
             client.channels.get(disTC[4]).send(msgem).then(() => {
                 afklst.forEach(async user_ => {
                     await downgradingRank(user_.id_, client); 
