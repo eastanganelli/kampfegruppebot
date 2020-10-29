@@ -1,5 +1,5 @@
 import * as Discord      from "discord.js";
-import { kmpfID, roleF, serverID } from "./const";
+import { getTChannel, kmpfID, roleF, serverID } from "./const";
 import { fuhrersGET } from "./api";
 const min: number = 60000;
 
@@ -38,6 +38,9 @@ function changeFuhrer(client: Discord.Client, outID: string, inID: string/* , po
         fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
         fuhrer.members.forEach((n: any) => { if(n.id == inID)  { n.addRole(roleF) } });
         console.log('Viejo fuhrer: ' + outID + ' - Nuevo fuhrer: ' + inID);
+        getTChannel('620642948660330506').then((ch: any) => {
+            ch.send('Führer __SALIENTE__: <@' + outID + '> - __ENTRANTE__: <@' + inID + '>');
+        })
     }); 
 }
 //#endregion

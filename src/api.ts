@@ -1,15 +1,16 @@
 import axios from "axios";
-/*LOCALHOST*/ const localhost: any = 'http://localhost:8000/api/v1/';
-/*WEBHOST*/   const webhost:   any = 'http://pofbatto.heliohost.org/api/v1/';
-
-const apiClient = axios.create({
-    baseURL: webhost,
-    responseType: 'json',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    timeout: 20000
-  });
+//#region API DATA
+    /*LOCALHOST*/ const localhost: any = 'http://localhost:8000/api/v1/';
+    /*WEBHOST*/   const webhost:   any = 'http://pofbatto.heliohost.org/api/v1/';
+    const apiClient = axios.create({
+        baseURL: webhost,
+        responseType: 'json',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        timeout: 20000
+    });
+//#endregion
 
 //#region TODAY GET
     export async function birthsGET() {

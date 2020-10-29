@@ -25,7 +25,7 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
             await myUser.sendMessage('Por favor, ingrese su fecha de cumpleaños\n:warning: El formato debe ser AÑO-MES-DIA\n__(ie: 2018-5-31)__');
             await myUser.dmChannel.awaitMessages((m: any) => m.author.id === userID, { max: 1, time: 300000, errors: ["time"] })
                 .then((collected: any) => {
-                    console.log(collected.first().content);
+                    //console.log(collected.first().content);
                     birthPUT(myUser.id, { birth: collected.first().content })/*.then(done => console.log(done)).catch(err => console.debug(err))*/;
                 }); await myUser.sendMessage('Su fecha ya fue guardada\n**Saludos, KMPF!**');
         });
@@ -103,7 +103,7 @@ import { birthPUT, birthsGET, decpointsPUT, redlightsGET, userDELETE, usersGET, 
         birthsGET().then((cumples: any) => {
             let IDs: Array<{id:string}> = cumples;
             IDs.forEach(user => {
-                let embedMSG: any = new Discord.RichEmbed().setTitle(kmpfMSG.kmpfNews.Arr[0].titulo).setDescription('Que tengas un **Feliz Cumpleaños** <@' + user.id + '>\nCLAN <@594571311171371008>\n\n@here');
+                let embedMSG: any = new Discord.RichEmbed().setTitle(kmpfMSG.kmpfNews.Arr[0].titulo).setDescription('Que tengas un **Feliz Cumpleaños** <@' + (user.id).toString() + '>\nCLAN <@594571311171371008>\n\n@here');
                 client.channels.get(kmpfMSG.kmpfNews.MC).send(embedMSG);
             }) ;
         });
