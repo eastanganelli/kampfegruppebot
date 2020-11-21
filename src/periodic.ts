@@ -62,34 +62,34 @@ function cronJOB(client: any) {
     //#endregion
 }
 //#region Textos Canales
-function welcomeTC(client: any) { //#WELCOME
-    getChannelMsgs(kmpfMSG.kmpfrules.MC, 1);
+async function welcomeTC(client: any) { //#WELCOME
+    await getChannelMsgs(kmpfMSG.kmpfrules.MC, 1);
     let msg: Discord.MessageEmbed = new Discord.MessageEmbed, rules_: any = kmpfMSG.kmpfrules.Arr[0], emojiArr: any = new Array(0);
-    msg.setTitle(rules_.titulo);
-    msg.setDescription(rules_.desc);
+    await msg.setTitle(rules_.titulo);
+    await msg.setDescription(rules_.desc);
     for(let rule of rules_.data) {
         msg.addField(rule.texto, rule.desc);
         if(rule.emoji != '-') emojiArr.push(rule.emoji);
     }
-    client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+    await client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
 }
-function kmpfTC(client: any) { //KMPF
-    getChannelMsgs(kmpfMSG.kmpfroles.MC, 4);
+async function kmpfTC(client: any) { //KMPF
+    await getChannelMsgs(kmpfMSG.kmpfroles.MC, 4);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfroles.Arr) {
             let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
             for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+            await client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
         }
     //#endregion
 }
-function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
-    getChannelMsgs(kmpfMSG.kmpfCoroneles.MC, 50);
+async function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
+    await getChannelMsgs(kmpfMSG.kmpfCoroneles.MC, 50);
     //#region kmpfMSG
         for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
             let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
             for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+            await client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
         }
     //#endregion
 }
