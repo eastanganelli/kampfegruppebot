@@ -48,6 +48,7 @@ function weekDay(client: any) {
             } else { stCtrl[1] = false; } //Baja Rango/Week & Cambio Fuhrer
             break;
         }
+        
     }
 }
 //#region Textos Canales
