@@ -62,36 +62,37 @@ function cronJOB(client: any) {
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME
-    getChannelMsgs(kmpfMSG.kmpfrules.MC, 1).then(() => console.log("CLEAN")).catch(err => console.log(err));
-
-    let msg: Discord.MessageEmbed = new Discord.MessageEmbed, rules_: any = kmpfMSG.kmpfrules.Arr[0], emojiArr: any = new Array(0);
-    msg.setTitle(rules_.titulo);
-    msg.setDescription(rules_.desc);
-    for(let rule of rules_.data) {
-        msg.addField(rule.texto, rule.desc);
-        if(rule.emoji != '-') emojiArr.push(rule.emoji);
-    }
-    client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+    getChannelMsgs(kmpfMSG.kmpfrules.MC, 1).then(() => {
+        let msg: Discord.MessageEmbed = new Discord.MessageEmbed, rules_: any = kmpfMSG.kmpfrules.Arr[0], emojiArr: any = new Array(0);
+        msg.setTitle(rules_.titulo);
+        msg.setDescription(rules_.desc);
+        for(let rule of rules_.data) {
+            msg.addField(rule.texto, rule.desc);
+            if(rule.emoji != '-') emojiArr.push(rule.emoji);
+        }
+        client.channels.get(kmpfMSG.kmpfrules.MC).send(msg).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+    }).catch(err => console.log(err));
 }
 function kmpfTC(client: any) { //KMPF
-    
-    getChannelMsgs(kmpfMSG.kmpfroles.MC, 4).then(() => console.log("CLEAN")).catch(err => console.log(err));
-    //#region kmpfMSG
-        for(let t_ of kmpfMSG.kmpfroles.Arr) {
-            let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
-            for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
-        }
-    //#endregion
+    getChannelMsgs(kmpfMSG.kmpfroles.MC, 4).then(() => {
+        //#region kmpfMSG
+            for(let t_ of kmpfMSG.kmpfroles.Arr) {
+                let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+                for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
+                client.channels.get(kmpfMSG.kmpfroles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+            }
+        //#endregion
+    }).catch(err => console.log(err));
 }
 function kmpfCoronelesTC(client: any) { //#KMPF-CORONELES
-    getChannelMsgs(kmpfMSG.kmpfCoroneles.MC, 50).then(() => console.log("CLEAN")).catch(err => console.log(err));
-    //#region kmpfMSG
-        for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
-            let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
-            for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
-            client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
-        }
-    //#endregion
+    getChannelMsgs(kmpfMSG.kmpfCoroneles.MC, 50).then(() => {
+        //#region kmpfMSG
+            for(let t_ of kmpfMSG.kmpfCoroneles.Arr) {
+                let embedMSG: any = new Discord.MessageEmbed().setTitle(t_.titulo).setDescription(t_.desc), emojiArr: Array<any> = new Array(0);
+                for(let d_ of t_.data) { if(d_.emoji != '') { embedMSG.addField(d_.emoji + ' ➽ ' + d_.texto, d_.desc, false); emojiArr.push(d_.emoji); } else { embedMSG.addField(d_.texto, d_.desc, false); } }
+                client.channels.get(kmpfMSG.kmpfCoroneles.MC).send(embedMSG).then(async (sendEmbed: any) => { if(emojiArr.length > 0) { for(let e_ of emojiArr) { await sendEmbed.react(String(e_)); } } });
+            }
+        //#endregion
+    }).catch(err => console.log(err));
 }
 //#endregion
