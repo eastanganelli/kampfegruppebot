@@ -146,17 +146,15 @@ import { client } from './index';
             }).catch(err => reject(err));
         });
     }
-    export function getChannelMsgs(ChannelID: any, MsgLim: number): Promise<Discord.Message> {
-        return new Promise((resolve, reject) => {
-            getTChannel(ChannelID).then((Ch: Discord.Channel) => {
-                if(Ch.isText()){
-                    Ch.messages.fetch({ limit: MsgLim }).then((msgs: any) => { 
-                        msgs.forEach((msg: Discord.Message) => { 
-                            msg.delete();
-                        })
-                    }).catch(console.error);
-                }
-            });
+    export function getChannelMsgs(ChannelID: any, MsgLim: number) {
+        getTChannel(ChannelID).then((Ch: Discord.Channel) => {
+            if(Ch.isText()){
+                Ch.messages.fetch({ limit: MsgLim }).then((msgs: any) => { 
+                    msgs.forEach((msg: Discord.Message) => { 
+                        msg.delete();
+                    });
+                }).catch(console.error);
+            }
         });
     }
 //#endregion
