@@ -6,6 +6,11 @@ import { client } from './index';
     export const serverLink: string = 'https://discord.gg/zx9UAVx';
     export const kmpfID:     string = '451837050618904577', roleF = '521184706142797834';
 //#endregion
+//#region CRONJOBS HEADERS
+    export const nextFuhrerCron = '00 00 * * 1 *';
+    export const birthdayCron   = '00 08 * * * *';
+    export const AFKusersCron   = '00 00 * * 1 *';
+//#endregion
 //#region TextChannels && MSGs
     export const disTC = ['611501042210963456' /* #WELCOME */, '611501099450499082' /* #NEWS */, '614258469066768424' /* #KMPF */, '620642948660330506' /* #KMPF-CORONELES */, '667006073441484801' /* KMPF NOTIFY */, '667006413113131008' /* CORONELES */];
     export const kmpfMSG = {
@@ -74,6 +79,7 @@ import { client } from './index';
             txt: '**USTED A RECHAZO EL REGLAMENTO**\nPara reingresar al clan, acepte la invitación '
         }
     }
+    export const AFKch = '496525236888535042';
 //#endregion
 //#region roles
     export const roles: Array<string> = [
@@ -107,33 +113,51 @@ import { client } from './index';
     ];
 //#endregion
 //#region API Client
-    export function getUser(userID: string) {
+    export function getUser(userID: any): Promise<Discord.User> {
         return new Promise((resolve, reject) => {
-            client.fetchUser(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject('NOT FOUND'));
+            client.user?.fetch(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject('NOT FOUND'));
         });
     }
-    export function getServer(serverID: string) {
+    export function getServer(serverID: any): Promise<Discord.Guild> {
         return new Promise((resolve, reject) => {
-            client.guilds.forEach((s: Discord.Guild) => {
-                if(s.id == serverID) { resolve(s) } 
-            }); reject('NOT FOUND');
+            client.guilds.fetch(serverID).then((s: Discord.Guild) => { resolve(s) }).catch(err => reject('NOT FOUND'));
         });
     }
-    export function getUserGuild(userID: string) {
+    export function getUserGuild(serverID: any, userID: string): Promise<Discord.GuildMember> {
         return new Promise((resolve, reject) => {
-            getServer(kmpfID).then((kmpfServer: Discord.Guild|any) => {
-                getUser(userID).then((userServer: Discord.GuildMember|any) => {
-                    resolve(kmpfServer.member(userServer));
+            getServer(serverID)?.then((G: any) => {
+                getUser(userID)?.then((userG: any) => {
+                    G.member(userG);
                 }).catch(err => reject(err));
             }).catch(err => reject(err));
         });
     }
-    export function getTChannel(channelID: string) {
+    export function getTChannel(channelID: any): Promise<Discord.GuildChannel> {
         return new Promise((resolve, reject) => {
-            client.channels.forEach((c: Discord.Channel) => {
-                if(c.id == channelID) { resolve(c); }
+            client.channels.fetch(channelID).then((C: any) => {
+                resolve(C);
             }); reject('NOT FOUND');
-        })
+        });
+    }
+    export function getChannelType(channelID: any): Promise<string> {
+        return new Promise((resolve, reject) => {
+            getTChannel(channelID).then((C: Discord.GuildChannel) => {
+                resolve(C.type);
+            }).catch(err => reject(err));
+        });
+    }
+    export function getChannelMsgs(ChannelID: any, MsgLim: number): Promise<Discord.Message> {
+        return new Promise((resolve, reject) => {
+            getTChannel(ChannelID).then((Ch: Discord.Channel) => {
+                if(Ch.isText()){
+                    Ch.messages.fetch({ limit: MsgLim }).then((msgs: any) => { 
+                        msgs.forEach((msg: Discord.Message) => { 
+                            msg.delete();
+                        })
+                    }).catch(console.error);
+                }
+            });
+        });
     }
 //#endregion
 

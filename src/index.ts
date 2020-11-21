@@ -5,6 +5,7 @@ import * as readyFNs from "./periodic";
 import { reactiones, quiteRoles } from "./roles";
 import { menuBOT } from "./msg";
 import { lastconPUT } from "./api";
+import { AFKch } from "./const";
 //import { noboroles } from "./const";
 //#endregion
 
@@ -26,8 +27,8 @@ client.on('messageReactionRemove', async (reaction, user) => {
     quiteRoles(reaction, user);
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-    let newUserChannel = newMember.voiceChannel, oldUserChannel = oldMember.voiceChannel;
-    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.user.bot) && (oldMember.voiceChannelID != '496525236888535042' && newMember.voiceChannelID != '496525236888535042')) { 
+    let newUserChannel = newMember.member, oldUserChannel = oldMember.member;
+    if(oldUserChannel === undefined && newUserChannel !== undefined && !(newMember.member?.user.bot) && (oldMember.channelID != AFKch && newMember.channelID != AFKch)) { 
         /*let flag: boolean = false;
         for(let i=0; i<noboroles.length; i++)
             if(newMember.roles.has(noboroles[i])) flag = true;

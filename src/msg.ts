@@ -42,6 +42,7 @@ export async function menuBOT(msg: any) {
 function dmMSG(msg: Discord.Message) { return msg.channel.type != 'dm' }
 function helpMsg(msg: Discord.Message, author: any) {
     let userCommands: Array<{name: string; value: string}> = new Array(0);
+    let msgEmbed: Discord.MessageEmbed = new Discord.MessageEmbed().setColor(16711680).setTitle("Commandos").setAuthor({ name: msg.author.username, icon_url: msg.author.avatarURL });
     author.roles.map((roles_: any) => {
         switch(roles_.id) {
             case '521184706142797834': { //Führer
@@ -73,5 +74,7 @@ function helpMsg(msg: Discord.Message, author: any) {
                 break;
             } */
         }
-    }); msg.channel.send({embed: { color: 16711680, author: { name: msg.author.username, icon_url: msg.author.avatarURL }, ttle: "Inactividad de Usuarios", fields: userCommands }});
+    }); 
+    msgEmbed.addFields(userCommands);
+    msg.channel.send(msgEmbed);
 }
