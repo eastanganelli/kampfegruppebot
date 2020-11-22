@@ -21,10 +21,12 @@ client.on("message", async (msg) => {
     menuBOT(msg);
 });
 client.on('messageReactionAdd', async (reaction, user) => {
-    reactiones(reaction, user);
+    if(!user.bot)
+        reactiones(reaction, user);
 });
 client.on('messageReactionRemove', async (reaction, user) => {
-    quiteRoles(reaction, user);
+    if(!user.bot)
+        quiteRoles(reaction, user);
 });
 client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.member, oldUserChannel = oldMember.member;

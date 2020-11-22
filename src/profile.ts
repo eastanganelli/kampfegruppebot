@@ -1,4 +1,5 @@
 //#region IMPORTS
+import * as Discord from "discord.js";
 //#endregion
 
 //#region Vars
@@ -22,20 +23,20 @@
 	};
 //#endregion
 async function cargarProfile(reaction: any, user: any) {
-	const guildMember = reaction.message.guild.members.get(user.id);
+	const guildMember: Discord.GuildMember = reaction.message.guild?.member(user.id);
 	if (applying.includes(user.id)) return; 
 	/* if(!sinRango(guildMember)) { questionsFiltered.push(questions[3]); } */
 	try {
 		let cancel: boolean = false;
 		//console.log(`${user.tag} began applying.`);
 		applying.push(user.id);
-		await user.sendMessage(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
+		await user.send(":pencil: **Comencemos!** Escribe `#cancelar` para salir."); //**Application started!** Type `#cancel` to exit.
 		for (let i = 0; i < questions.length && cancel === false; i++) {
-			await user.sendMessage(questions[i].txt);
-			await user.dmChannel.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
+			await user.send(questions[i].txt);
+			await user.dmChannel?.awaitMessages((m: any) => m.author.id === user.id, { max: 1, time: 300000, errors: ["time"] })
 				.then((collected: any) => {
 					if (collected.first().content.toLowerCase() === "#cancelar") { //#cancel
-						user.sendMessage(":x: **Carga cancelada!**"); //Application cancelled.
+						user.send(":x: **Carga cancelada!**"); //Application cancelled.
 						applying.splice(applying.indexOf(user.id), 1);
 						cancel = true;
 						//escribirUsuario(uDat);
@@ -45,20 +46,20 @@ async function cargarProfile(reaction: any, user: any) {
 						//console.log(collected.first().content);
 					}
 				}).catch(() => {
-					user.sendMessage(":hourglass: **Se termino el tiempo.**"); //Application timed out.
+					user.send(":hourglass: **Se termino el tiempo.**"); //Application timed out.
 					applying.splice(applying.indexOf(user.id), 1);
 					cancel = true;
 					//console.log(`${user.tag} let their application time out.`);
 				});
 		}
 		if(!cancel) { uDat.userDat.loaded = true; uDat.uid = user.id; /*escribirUsuario(uDat);*/ }
-		await user.sendMessage(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**").then(() => { guildMember.addRole('521709396863090698'); }); //You're all done!
+		await user.send(":thumbsup: **Hemos Terminado,\nSaludos KMPF!**").then(() => {  guildMember.roles.add('521709396863090698'); }); //You're all done!
 		//console.log(`${user.tag} finished applying.`);
 	} catch(err) { console.error(err); }
  	//console.log(uDat);
 }
 async function saveData(data: any, idQ: number, reaction: any, user: any) {
-	const guildMember = reaction.message.guild.members.get(user.id);
+	const guildMember = reaction.message.guild?.members.fetch(user.id);
     switch(idQ) {
         case 0: { uDat.userDat.nombre = data; break; }
 		case 1: { 

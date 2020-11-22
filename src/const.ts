@@ -115,12 +115,12 @@ import { client } from './index';
 //#region API Client
     export function getUser(userID: any): Promise<Discord.User> {
         return new Promise((resolve, reject) => {
-            client.user?.fetch(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject('NOT FOUND'));
+            client.user?.fetch(userID).then((uData: Discord.User) => resolve(uData)).catch(err => reject(err));
         });
     }
     export function getServer(serverID: any): Promise<Discord.Guild> {
         return new Promise((resolve, reject) => {
-            client.guilds.fetch(serverID).then((s: Discord.Guild) => { resolve(s) }).catch(err => reject('NOT FOUND'));
+            client.guilds.fetch(serverID).then((s: Discord.Guild) => { resolve(s) }).catch(err => reject(err));
         });
     }
     export function getUserGuild(serverID: any, userID: string): Promise<Discord.GuildMember> {
@@ -136,7 +136,7 @@ import { client } from './index';
         return new Promise((resolve, reject) => {
             client.channels.fetch(channelID).then((C: any) => {
                 resolve(C);
-            }); reject('NOT FOUND');
+            }).catch(err => reject(err));
         });
     }
     export function getChannelType(channelID: any): Promise<string> {
@@ -154,7 +154,7 @@ import { client } from './index';
                     msgs.forEach(msg => msg.delete() );
                 });
             }
-        });
+        }).catch(err => console.log(err));
     }
 //#endregion
 
