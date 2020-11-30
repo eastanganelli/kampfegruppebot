@@ -50,7 +50,7 @@ function cronJOB(client: any) {
     //#endregion
     //#region CRONJOB USER AFKs
     let cronAFKusers: CronJob;
-    cronBirthday = new CronJob(AFKusersCron, async() => {
+    cronAFKusers = new CronJob(AFKusersCron, async() => {
         try {
             isAFK(client);
         } catch(e) {
@@ -60,6 +60,9 @@ function cronJOB(client: any) {
         cronAFKusers.start();
     },undefined,true, timezone);
     //#endregion
+    cronFuhrer.start();
+    cronBirthday.start();
+    cronAFKusers.start();
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME
