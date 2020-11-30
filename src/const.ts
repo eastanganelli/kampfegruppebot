@@ -8,7 +8,7 @@ import { client } from './index';
 //#endregion
 //#region CRONJOBS HEADERS
     export const timezone = 'America/Argentina/Buenos_Aires';
-    export const nextFuhrerCron = '23 00 * * 1 *';
+    export const nextFuhrerCron = '25 00 * * 1 *';
     export const birthdayCron   = '00 08 * * * *';
     export const AFKusersCron   = '00 00 * * 1 *';
 //#endregion

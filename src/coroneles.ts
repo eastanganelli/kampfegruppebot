@@ -38,8 +38,8 @@ export function nextFuhrer(client: Discord.Client) {
 function changeFuhrer(client: Discord.Client, outID: string, inID: string/* , pos: number */){
     const fuhrer: any = client.guilds.fetch(kmpfID);
     fuhrer.members.forEach((u: any) => {
-        fuhrer.members.forEach((o: any) => { if(o.id == outID) { o.removeRole(roleF); } });
-        fuhrer.members.forEach((n: any) => { if(n.id == inID)  { n.addRole(roleF) } });
+        fuhrer.members.forEach((o: Discord.GuildMember) => { if(o.id == outID) { o.roles.remove(roleF); } });
+        fuhrer.members.forEach((n: Discord.GuildMember) => { if(n.id == inID)  { n.roles.add(roleF) } });
         console.log('Viejo fuhrer: ' + outID + ' - Nuevo fuhrer: ' + inID);
         getTChannel('620642948660330506').then((ch: any) => {
             ch.send('Führer __SALIENTE__: <@' + outID + '> - __ENTRANTE__: <@' + inID + '>');
