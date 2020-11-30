@@ -4,7 +4,7 @@ import * as Discord from "discord.js";
 import { CronJob } from 'cron';
 //#endregion
 //#region KMPF
-import { birthdayCron, kmpfMSG, nextFuhrerCron, AFKusersCron, getChannelMsgs, getTChannel } from "./const";
+import { birthdayCron, kmpfMSG, nextFuhrerCron, AFKusersCron, getChannelMsgs, getTChannel, timezone } from "./const";
 import { nextFuhrer } from './coroneles';
 import { isAFK, checkIfCumple } from './users';
 //#endregion
@@ -34,7 +34,7 @@ function cronJOB(client: any) {
         }
         if (!cronFuhrer.running)
             cronFuhrer.start();
-    });
+    },undefined,true, timezone);
     //#endregion
     //#region CRONJOB BIRTHDAY
     let cronBirthday: CronJob;
@@ -46,7 +46,7 @@ function cronJOB(client: any) {
         }
         if (!cronBirthday.running)
         cronBirthday.start();
-    });
+    },undefined,true, timezone);
     //#endregion
     //#region CRONJOB USER AFKs
     let cronAFKusers: CronJob;
@@ -58,7 +58,7 @@ function cronJOB(client: any) {
         }
         if (!cronAFKusers.running)
         cronAFKusers.start();
-    });
+    },undefined,true, timezone);
     //#endregion
 }
 //#region Textos Canales
