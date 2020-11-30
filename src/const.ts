@@ -7,8 +7,8 @@ import { client } from './index';
     export const kmpfID:     string = '451837050618904577', roleF = '521184706142797834';
 //#endregion
 //#region CRONJOBS HEADERS
-    export const timezone = "America/Argentina/Buenos_Aires";
-    export const nextFuhrerCron = '17 00 * * 1 *';
+    export const timezone = 'America/Argentina/Buenos_Aires';
+    export const nextFuhrerCron = '23 00 * * 1 *';
     export const birthdayCron   = '00 08 * * * *';
     export const AFKusersCron   = '00 00 * * 1 *';
 //#endregion

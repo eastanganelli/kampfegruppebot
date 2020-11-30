@@ -34,7 +34,7 @@ function cronJOB(client: any) {
         }
         if (!cronFuhrer.running)
             cronFuhrer.start();
-    },undefined,true, timezone);
+    },null,true, timezone);
     //#endregion
     //#region CRONJOB BIRTHDAY
     let cronBirthday: CronJob;
@@ -46,7 +46,7 @@ function cronJOB(client: any) {
         }
         if (!cronBirthday.running)
         cronBirthday.start();
-    },undefined,true, timezone);
+    },null,true, timezone);
     //#endregion
     //#region CRONJOB USER AFKs
     let cronAFKusers: CronJob;
@@ -58,11 +58,8 @@ function cronJOB(client: any) {
         }
         if (!cronAFKusers.running)
         cronAFKusers.start();
-    },undefined,true, timezone);
+    },null,true, timezone);
     //#endregion
-    cronFuhrer.start();
-    cronBirthday.start();
-    cronAFKusers.start();
 }
 //#region Textos Canales
 function welcomeTC(client: any) { //#WELCOME
