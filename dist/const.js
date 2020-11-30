@@ -5,7 +5,7 @@ const index_1 = require("./index");
 exports.serverID = '451837050618904577';
 exports.serverLink = 'https://discord.gg/zx9UAVx';
 exports.kmpfID = '451837050618904577', exports.roleF = '521184706142797834';
-exports.nextFuhrerCron = '00 00 * * 1 *';
+exports.nextFuhrerCron = '30 06 * * 1 *';
 exports.birthdayCron = '00 08 * * * *';
 exports.AFKusersCron = '00 00 * * 1 *';
 exports.disTC = ['611501042210963456', '611501099450499082', '614258469066768424', '620642948660330506', '667006073441484801', '667006413113131008'];
